@@ -4,8 +4,8 @@
 {
     protected override void ConfigureHowToFindSaga(SagaPropertyMapper<TheSagaData> mapper) =>
         mapper
-            .ConfigureMapping<NotFoundSagaMessage>(_ => _.Property)
-            .ToSaga(s => s.Property);
+            .MapSaga(s => s.Property)
+            .ToMessage<NotFoundSagaMessage>(m => m.Property);
 
     public class TheSagaData :
         ContainSagaData

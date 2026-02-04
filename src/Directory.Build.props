@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup>
-    <Version>12.1.0</Version>
+    <Version>13.0.0</Version>
     <NoWarn>NU1608</NoWarn>
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <LangVersion>preview</LangVersion>

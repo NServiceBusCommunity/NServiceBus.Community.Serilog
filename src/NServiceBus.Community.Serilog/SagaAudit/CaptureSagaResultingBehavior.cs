@@ -9,12 +9,13 @@
 
     static void AppendMessageToState(IOutgoingLogicalMessageContext context)
     {
-        if (!context.Extensions.TryGet(out SagaUpdatedMessage updatedMessage))
+        if (!context.Extensions.TryGet(out SagaUpdatedMessage? updatedMessage))
         {
             return;
         }
 
         var logicalMessage = context.Message;
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
         if (logicalMessage is null)
         {
             //this can happen on control messages

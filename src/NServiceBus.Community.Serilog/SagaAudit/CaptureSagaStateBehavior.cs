@@ -33,7 +33,7 @@
 
         var finishTime = DateTimeOffset.Now;
 
-        if (!context.Extensions.TryGet(out ActiveSagaInstance activeSagaInstance))
+        if (!context.Extensions.TryGet(out ActiveSagaInstance? activeSagaInstance))
         {
             return;
         }

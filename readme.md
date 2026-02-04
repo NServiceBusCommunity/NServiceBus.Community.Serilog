@@ -483,6 +483,7 @@ serilogTracing.EnableMessageTracing();
         IncomingMessageType: StartHandler,
         IncomingMessageTypeLong: StartHandler, Tests, Version=0.0.0.0,
         MessageIntent: Send,
+        OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartHandler,
         OriginatingHostId: Guid_3,
         OriginatingMachine: TheMachineName,
@@ -501,6 +502,7 @@ serilogTracing.EnableMessageTracing();
         ConversationId: Guid_1,
         CorrelationId: Guid_2,
         MessageIntent: Send,
+        OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartHandler,
         OriginatingHostId: Guid_3,
         OriginatingMachine: TheMachineName,
@@ -523,7 +525,7 @@ serilogTracing.EnableMessageTracing();
   ]
 }
 ```
-<sup><a href='/src/Tests/IntegrationTests.Handler.verified.txt#L1-L76' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Handler.verified.txt' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/IntegrationTests.Handler.verified.txt#L1-L78' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Handler.verified.txt' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

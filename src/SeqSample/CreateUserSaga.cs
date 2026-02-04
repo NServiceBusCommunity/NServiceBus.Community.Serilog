@@ -4,8 +4,8 @@
 {
     protected override void ConfigureHowToFindSaga(SagaPropertyMapper<CreateUserSagaData> mapper) =>
         mapper
-            .ConfigureMapping<CreateUser>(message => message.UserName)
-            .ToSaga(sagaData => sagaData.UserName);
+            .MapSaga(sagaData => sagaData.UserName)
+            .ToMessage<CreateUser>(message => message.UserName);
 
     public Task Handle(CreateUser message, HandlerContext context)
     {

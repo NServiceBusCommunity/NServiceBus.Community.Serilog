@@ -10,7 +10,7 @@
     <PackageReference Include="Serilog" />
     <PackageReference Include="ProjectDefaults" PrivateAssets="all" />
     <PackageReference Include="Polyfill" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.Sbom.Targets" PrivateAssets="all" Condition="$(Configuration)=='Release'" />
+    <PackageReference Include="Microsoft.Sbom.Targets" PrivateAssets="all" Condition="'$(CI)' == 'true'" />
     <Content Include="buildTransitive\NServiceBus.Serilog.props" PackagePath="buildTransitive\NServiceBus.Serilog.props" />
     <Content Include="buildTransitive\NServiceBus.Serilog.props" PackagePath="build\NServiceBus.Serilog.props" />
   </ItemGroup>

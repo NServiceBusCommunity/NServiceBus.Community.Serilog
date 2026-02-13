@@ -11,7 +11,7 @@
     <PackageVersion Include="NServiceBus.Testing" Version="10.0.1" />
     <PackageVersion Include="ProjectDefaults" Version="1.0.172" />
     <PackageVersion Include="Polyfill" Version="9.8.1" />
-    <PackageVersion Include="Serilog" Version="4.3.0" />
+    <PackageVersion Include="Serilog" Version="4.3.1" />
     <PackageVersion Include="Serilog.Exceptions" Version="8.4.0" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageVersion Include="Serilog.Formatting.Compact" Version="3.0.0" />
@@ -20,7 +20,7 @@
     <PackageVersion Include="Serilog.Sinks.PeriodicBatching" Version="5.0.0" />
     <PackageVersion Include="Verify.DiffPlex" Version="3.1.2" />
     <PackageVersion Include="Verify.NServiceBus" Version="11.0.1" />
-    <PackageVersion Include="Verify.NUnit" Version="31.12.4" />
+    <PackageVersion Include="Verify.NUnit" Version="31.12.5" />
     <PackageVersion Include="NUnit" Version="4.4.0" />
     <PackageVersion Include="NUnit3TestAdapter" Version="5.2.0" Pinned="true" />
     <PackageVersion Include="Microsoft.Sbom.Targets" Version="4.1.5" />

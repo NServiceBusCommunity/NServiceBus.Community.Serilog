@@ -1,5 +1,4 @@
-﻿[TestFixture]
-public class HandlerUsingContextLoggerTests
+﻿public class HandlerUsingContextLoggerTests
 {
     [Test]
     public Task Simple()

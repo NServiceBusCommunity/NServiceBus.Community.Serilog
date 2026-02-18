@@ -1,4 +1,3 @@
-
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -12,23 +11,21 @@
     <PackageReference Include="Serilog.Sinks.File" />
     <PackageReference Include="Verify.DiffPlex" />
     <PackageReference Include="Verify.NServiceBus" />
-    <PackageReference Include="Verify.NUnit" />
+    <PackageReference Include="Verify.TUnit" />
     <PackageReference Include="Argon" />
     <PackageReference Include="DiffEngine" />
     <PackageReference Include="EmptyFiles" />
     <PackageReference Include="SimpleInfoName" />
     <PackageReference Include="Verify" />
     <PackageReference Include="Serilog.Exceptions" />
-    <PackageReference Include="NUnit" />
     <PackageReference Include="NServiceBus.Persistence.NonDurable" />
-    <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="MarkdownSnippets.MsBuild" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NServiceBus" />
     <PackageReference Include="Serilog.Sinks.Seq" />
     <PackageReference Include="Serilog" />
     <ProjectReference Include="..\NServiceBus.Community.Serilog\NServiceBus.Community.Serilog.csproj" />
     <PackageReference Include="ProjectDefaults" PrivateAssets="all" />
     <Using Include="NUnit.Framework.Legacy.ClassicAssert" Static="True" />
+    <PackageReference Include="TUnit" />
   </ItemGroup>
 </Project>

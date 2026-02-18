@@ -1,6 +1,4 @@
 ﻿using TypeNameConverter = NServiceBus.Serilog.TypeNameConverter;
-
-[TestFixture]
 public class TypeNameConverterTests
 {
     [Test]

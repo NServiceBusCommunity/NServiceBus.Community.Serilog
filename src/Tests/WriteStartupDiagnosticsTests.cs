@@ -1,5 +1,4 @@
-﻿[TestFixture]
-public class WriteStartupDiagnosticsTests
+﻿public class WriteStartupDiagnosticsTests
 {
     [Test]
     public Task Can_extract_settings()

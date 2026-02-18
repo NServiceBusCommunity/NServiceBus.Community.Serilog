@@ -1,7 +1,7 @@
 ﻿using Serilog.Exceptions;
 using TypeNameConverter = NServiceBus.Serilog.TypeNameConverter;
+using System.Threading.Tasks;
 
-[TestFixture]
 public class IntegrationTests
 {
     static List<LogEvent> logs;

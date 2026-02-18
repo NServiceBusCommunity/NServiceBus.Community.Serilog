@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-public class IncomingLogicalBehaviorTests
+﻿public class IncomingLogicalBehaviorTests
 {
     [Test]
     public async Task Simple()

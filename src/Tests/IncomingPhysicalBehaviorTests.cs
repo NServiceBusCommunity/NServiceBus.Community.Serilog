@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-public class IncomingPhysicalBehaviorTests
+﻿public class IncomingPhysicalBehaviorTests
 {
     [Test]
     public async Task Empty()

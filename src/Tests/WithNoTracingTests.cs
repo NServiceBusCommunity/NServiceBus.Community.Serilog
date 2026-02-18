@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-public class WithNoTracingTests
+﻿public class WithNoTracingTests
 {
     [Test]
     public async Task Handler()

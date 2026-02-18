@@ -1,6 +1,4 @@
-﻿using Serilog.Exceptions;
-using TypeNameConverter = NServiceBus.Serilog.TypeNameConverter;
-using System.Threading.Tasks;
+﻿using TypeNameConverter = NServiceBus.Serilog.TypeNameConverter;
 
 public class IntegrationTests
 {

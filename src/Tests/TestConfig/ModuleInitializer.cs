@@ -18,7 +18,9 @@
         });
         VerifierSettings.AddExtraDateTimeOffsetFormat("yyyy-MM-dd HH:mm:ss:ffffff Z");
         VerifierSettings
-            .ScrubMember("ElapsedTime");
+            .ScrubMembers(
+                "ElapsedTime",
+                "TraceParent");
         VerifierSettings.AddExtraDateTimeOffsetFormat("yyyy-MM-ddTHH:mm:ss.fffzz");
     }
 }

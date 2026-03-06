@@ -83,7 +83,8 @@
         ProcessingEndpoint: SerilogTestsStartHandlerThatThrows,
         ReplyToAddress: SerilogTestsStartHandlerThatThrows,
         SourceContext: NServiceBus.ImmediateRetry,
-        TimeSent: DateTimeOffset_5
+        TimeSent: DateTimeOffset_5,
+        TraceParent: {Scrubbed}
       }
     },
     {
@@ -139,7 +140,8 @@
         ProcessingEndpoint: SerilogTestsStartHandlerThatThrows,
         ReplyToAddress: SerilogTestsStartHandlerThatThrows,
         SourceContext: NServiceBus.DelayedRetry,
-        TimeSent: DateTimeOffset_5
+        TimeSent: DateTimeOffset_5,
+        TraceParent: {Scrubbed}
       }
     },
     {
@@ -189,7 +191,7 @@
         IncomingMessageType: StartHandlerThatThrows,
         IncomingTransportMessageId: Guid_5,
         MessageIntent: Send,
-        OpenTelemetry.StartNewTrace: False,
+        OpenTelemetry.StartNewTrace: True,
         OriginatingEndpoint: SerilogTestsStartHandlerThatThrows,
         OriginatingHostId: Guid_3,
         OriginatingMachine: TheMachineName,
@@ -198,66 +200,8 @@
         Retries: 1,
         Retries.Timestamp: DateTimeOffset_15,
         SourceContext: NServiceBus.ImmediateRetry,
-        TimeSent: DateTimeOffset_5
-      }
-    },
-    {
-      MessageTemplate: Moving message '00000000-0000-0000-0000-000000000001' to the error queue 'error' because processing failed due to an exception:,
-      Level: Error,
-      Properties: {
-        ContentType: application/json,
-        ConversationId: Guid_1,
-        CorrelationId: Guid_2,
-        DeliverAt: DateTimeOffset_10,
-        ExceptionDetail: {
-          Elements: {
-            "Type": System.Exception,
-            "Data": {
-              Elements: {
-                "Message type": StartHandlerThatThrows,
-                "Handler type": TheHandlerThatThrows,
-                "Handler start time": DateTimeOffset_16,
-                "Handler failure time": DateTimeOffset_17,
-                "Handler canceled": false,
-                "ExceptionLogState": {
-                  TypeTag: ExceptionLogState
-                },
-                "Message ID": Guid_2,
-                "Transport message ID": Guid_5,
-                "Pipeline canceled": false
-              }
-            },
-            "HResult": -2146233088,
-            "Message": Exception of type 'System.Exception' was thrown.,
-            "Source": Tests,
-            "TargetSite": Void MoveNext()
-          }
-        },
-        HandlerFailureTime: DateTimeOffset_18,
-        HandlerStartTime: DateTimeOffset_19,
-        HandlerType: TheHandlerThatThrows,
-        IncomingMessage: {
-          TypeTag: StartHandlerThatThrows,
-          Properties: [
-            {
-              Property: TheProperty
-            }
-          ]
-        },
-        IncomingMessageId: Guid_2,
-        IncomingMessageType: StartHandlerThatThrows,
-        IncomingTransportMessageId: Guid_5,
-        MessageIntent: Send,
-        OpenTelemetry.StartNewTrace: False,
-        OriginatingEndpoint: SerilogTestsStartHandlerThatThrows,
-        OriginatingHostId: Guid_3,
-        OriginatingMachine: TheMachineName,
-        ProcessingEndpoint: SerilogTestsStartHandlerThatThrows,
-        ReplyToAddress: SerilogTestsStartHandlerThatThrows,
-        Retries: 1,
-        Retries.Timestamp: DateTimeOffset_15,
-        SourceContext: NServiceBus.MoveToError,
-        TimeSent: DateTimeOffset_5
+        TimeSent: DateTimeOffset_5,
+        TraceParent: {Scrubbed}
       }
     }
   ]

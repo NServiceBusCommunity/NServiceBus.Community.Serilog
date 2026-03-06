@@ -24,7 +24,8 @@
         ReplyToAddress: SerilogTestsStartHandlerThatLogs,
         SourceContext: StartHandlerThatLogs,
         StartTime: DateTimeOffset_2,
-        TimeSent: DateTimeOffset_3
+        TimeSent: DateTimeOffset_3,
+        TraceParent: {Scrubbed}
       }
     },
     {

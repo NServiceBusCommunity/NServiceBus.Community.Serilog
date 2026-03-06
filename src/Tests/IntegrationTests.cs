@@ -1,5 +1,6 @@
 ﻿using TypeNameConverter = NServiceBus.Serilog.TypeNameConverter;
 
+[NotInParallel]
 public class IntegrationTests
 {
     static List<LogEvent> logs;
@@ -35,7 +36,6 @@ public class IntegrationTests
     [Test]
     public async Task Handler()
     {
-        Recording.Start();
         var events = await Send(
             new StartHandler
             {
@@ -47,7 +47,6 @@ public class IntegrationTests
     [Test]
     public async Task GenericHandler()
     {
-        Recording.Start();
         var events = await Send(
             new StartGenericHandler<string>
             {
@@ -59,7 +58,6 @@ public class IntegrationTests
     [Test]
     public async Task WithCustomHeader()
     {
-        Recording.Start();
         var events = await Send(
             new StartHandler
             {
@@ -72,7 +70,6 @@ public class IntegrationTests
     [Test]
     public async Task WithConvertedCustomHeader()
     {
-        Recording.Start();
         var events = await Send(
             new StartHandler
             {
@@ -97,7 +94,6 @@ public class IntegrationTests
     [Test]
     public async Task HandlerThatLogs()
     {
-        Recording.Start();
         var events = await Send(new StartHandlerThatLogs());
         await Verify<StartHandlerThatLogs>(events);
     }
@@ -105,7 +101,6 @@ public class IntegrationTests
     [Test]
     public async Task HandlerThatThrows()
     {
-        Recording.Start();
         var events = await Send(
             new StartHandlerThatThrows
             {
@@ -134,7 +129,6 @@ public class IntegrationTests
     [Test]
     public async Task BehaviorThatThrows()
     {
-        Recording.Start();
         var events = await Send(
             new StartBehaviorThatThrows
             {
@@ -214,6 +208,7 @@ public class IntegrationTests
         optionsAction?.Invoke(sendOptions);
         sendOptions.SetMessageId("00000000-0000-0000-0000-000000000001");
         sendOptions.RouteToThisEndpoint();
+        Recording.Start();
         await endpoint.Send(message, sendOptions);
         if (!resetEvent.WaitOne(TimeSpan.FromSeconds(10)))
         {

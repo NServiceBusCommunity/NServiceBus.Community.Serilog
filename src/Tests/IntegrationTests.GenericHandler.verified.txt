@@ -43,7 +43,8 @@
         ReplyToAddress: SerilogTestsStartGenericHandler_String_,
         SourceContext: StartGenericHandler<String>,
         StartTime: DateTimeOffset_2,
-        TimeSent: DateTimeOffset_3
+        TimeSent: DateTimeOffset_3,
+        TraceParent: {Scrubbed}
       }
     },
     {

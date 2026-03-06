@@ -491,7 +491,8 @@ serilogTracing.EnableMessageTracing();
         ReplyToAddress: SerilogTestsStartHandler,
         SourceContext: StartHandler,
         StartTime: DateTimeOffset_2,
-        TimeSent: DateTimeOffset_3
+        TimeSent: DateTimeOffset_3,
+        TraceParent: {Scrubbed}
       }
     },
     {
@@ -525,7 +526,7 @@ serilogTracing.EnableMessageTracing();
   ]
 }
 ```
-<sup><a href='/src/Tests/IntegrationTests.Handler.verified.txt#L1-L78' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Handler.verified.txt' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/IntegrationTests.Handler.verified.txt#L1-L79' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Handler.verified.txt' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

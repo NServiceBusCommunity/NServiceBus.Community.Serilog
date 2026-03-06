@@ -74,7 +74,8 @@
         ProcessingEndpoint: SerilogTestsStartBehaviorThatThrows,
         ReplyToAddress: SerilogTestsStartBehaviorThatThrows,
         SourceContext: NServiceBus.ImmediateRetry,
-        TimeSent: DateTimeOffset_1
+        TimeSent: DateTimeOffset_1,
+        TraceParent: {Scrubbed}
       }
     },
     {
@@ -121,7 +122,8 @@
         ProcessingEndpoint: SerilogTestsStartBehaviorThatThrows,
         ReplyToAddress: SerilogTestsStartBehaviorThatThrows,
         SourceContext: NServiceBus.DelayedRetry,
-        TimeSent: DateTimeOffset_1
+        TimeSent: DateTimeOffset_1,
+        TraceParent: {Scrubbed}
       }
     },
     {
@@ -162,7 +164,7 @@
         IncomingMessageId: Guid_2,
         IncomingTransportMessageId: Guid_5,
         MessageIntent: Send,
-        OpenTelemetry.StartNewTrace: False,
+        OpenTelemetry.StartNewTrace: True,
         OriginatingEndpoint: SerilogTestsStartBehaviorThatThrows,
         OriginatingHostId: Guid_3,
         OriginatingMachine: TheMachineName,
@@ -171,57 +173,8 @@
         Retries: 1,
         Retries.Timestamp: DateTimeOffset_3,
         SourceContext: NServiceBus.ImmediateRetry,
-        TimeSent: DateTimeOffset_1
-      }
-    },
-    {
-      MessageTemplate: Moving message '00000000-0000-0000-0000-000000000001' to the error queue 'error' because processing failed due to an exception:,
-      Level: Error,
-      Properties: {
-        ContentType: application/json,
-        ConversationId: Guid_1,
-        CorrelationId: Guid_2,
-        DeliverAt: DateTimeOffset_2,
-        ExceptionDetail: {
-          Elements: {
-            "Type": System.Exception,
-            "Data": {
-              Elements: {
-                "ExceptionLogState": {
-                  TypeTag: ExceptionLogState
-                },
-                "Message ID": Guid_2,
-                "Transport message ID": Guid_5,
-                "Pipeline canceled": false
-              }
-            },
-            "HResult": -2146233088,
-            "Message": The Exception,
-            "Source": Tests,
-            "TargetSite": System.Threading.Tasks.Task Invoke(NServiceBus.Pipeline.IInvokeHandlerContext, System.Func`1[System.Threading.Tasks.Task])
-          }
-        },
-        IncomingMessage: {
-          TypeTag: StartBehaviorThatThrows,
-          Properties: [
-            {
-              Property: TheProperty
-            }
-          ]
-        },
-        IncomingMessageId: Guid_2,
-        IncomingTransportMessageId: Guid_5,
-        MessageIntent: Send,
-        OpenTelemetry.StartNewTrace: False,
-        OriginatingEndpoint: SerilogTestsStartBehaviorThatThrows,
-        OriginatingHostId: Guid_3,
-        OriginatingMachine: TheMachineName,
-        ProcessingEndpoint: SerilogTestsStartBehaviorThatThrows,
-        ReplyToAddress: SerilogTestsStartBehaviorThatThrows,
-        Retries: 1,
-        Retries.Timestamp: DateTimeOffset_3,
-        SourceContext: NServiceBus.MoveToError,
-        TimeSent: DateTimeOffset_1
+        TimeSent: DateTimeOffset_1,
+        TraceParent: {Scrubbed}
       }
     }
   ]

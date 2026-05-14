@@ -8,6 +8,7 @@
             var enrich = _.Enrich;
             enrich.WithExceptionDetails();
             enrich.WithNsbExceptionDetails();
+            _.Filter.ByExcluding(logEvent => logEvent.MessageTemplate.Text.StartsWith("Operation canceled while stopping"));
         });
         VerifierSettings.InitializePlugins();
         var nsbVersion = FileVersionInfo.GetVersionInfo(typeof(Endpoint).Assembly.Location);
@@ -19,7 +20,21 @@
         VerifierSettings
             .ScrubMembers(
                 "ElapsedTime",
-                "TraceParent");
+                "TraceParent",
+                "Task",
+                "TargetSite");
+        VerifierSettings.ScrubLinesContaining(
+            "NServiceBus.TimeSent :",
+            "NServiceBus.ConversationId :",
+            "NServiceBus.Retries.Timestamp :",
+            "NServiceBus.DeliverAt :",
+            "NServiceBus.TimeOfFailure :",
+            "NServiceBus.ExceptionInfo.Data.Handler start time :",
+            "NServiceBus.ExceptionInfo.Data.Handler failure time :",
+            "NServiceBus.ExceptionInfo.Data.Transport message ID :",
+            "traceparent :",
+            "tunit.test.id",
+            "Completing processing for");
         VerifierSettings.AddExtraDateTimeOffsetFormat("yyyy-MM-ddTHH:mm:ss.fffzz");
 
         LogManager.Use<SerilogFactory>();

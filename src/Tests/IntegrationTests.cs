@@ -1,4 +1,4 @@
-﻿using TypeNameConverter = NServiceBus.Serilog.TypeNameConverter;
+using TypeNameConverter = NServiceBus.Serilog.TypeNameConverter;
 
 [NotInParallel]
 public class IntegrationTests
@@ -6,6 +6,7 @@ public class IntegrationTests
     [Test]
     public async Task Handler()
     {
+        Recording.Start();
         await Send(
             new StartHandler
             {
@@ -17,6 +18,7 @@ public class IntegrationTests
     [Test]
     public async Task GenericHandler()
     {
+        Recording.Start();
         await Send(
             new StartGenericHandler<string>
             {
@@ -28,6 +30,7 @@ public class IntegrationTests
     [Test]
     public async Task WithCustomHeader()
     {
+        Recording.Start();
         await Send(
             new StartHandler
             {
@@ -40,6 +43,7 @@ public class IntegrationTests
     [Test]
     public async Task WithConvertedCustomHeader()
     {
+        Recording.Start();
         await Send(
             new StartHandler
             {
@@ -51,6 +55,7 @@ public class IntegrationTests
     [Test]
     public async Task HandlerThatLogs()
     {
+        Recording.Start();
         await Send(new StartHandlerThatLogs());
         await Verify();
     }
@@ -58,6 +63,7 @@ public class IntegrationTests
     [Test]
     public async Task HandlerThatThrows()
     {
+        Recording.Start();
         await Send(
             new StartHandlerThatThrows
             {
@@ -71,12 +77,12 @@ public class IntegrationTests
     [Test]
     public async Task Saga()
     {
-        var events = await Send(
+        Recording.Start();
+        await Send(
             new StartSaga
             {
                 Property = "TheProperty"
             });
-        var logEvents = events.ToList();
         await Verify()
             .ScrubMember("Serilog.SagaStateChange");
     }
@@ -86,6 +92,7 @@ public class IntegrationTests
     [Test]
     public async Task BehaviorThatThrows()
     {
+        Recording.Start();
         await Send(
             new StartBehaviorThatThrows
             {
@@ -99,6 +106,7 @@ public class IntegrationTests
         Action<SendOptions>? optionsAction = null,
         Action<EndpointConfiguration>? extraConfiguration = null)
     {
+        Recording.Pause();
         var suffix = TypeNameConverter
             .GetName(message.GetType())
             .MessageTypeName
@@ -143,7 +151,7 @@ public class IntegrationTests
         optionsAction?.Invoke(sendOptions);
         sendOptions.SetMessageId("00000000-0000-0000-0000-000000000001");
         sendOptions.RouteToThisEndpoint();
-        Recording.Start();
+        Recording.Resume();
         await endpoint.Send(message, sendOptions);
         if (!resetEvent.WaitOne(TimeSpan.FromSeconds(10)))
         {

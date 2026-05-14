@@ -447,15 +447,100 @@ serilogTracing.EnableMessageTracing();
 <a id='snippet-IntegrationTests.Handler.verified.txt'></a>
 ```txt
 {
-  logsForTarget: [
+  log: [
     {
-      MessageTemplate: Hello from {@Handler}.,
-      Level: Information,
+      Debug: Started polling for new messages in {SolutionDirectory}.learningtransport\SerilogTestsStartHandler,
       Properties: {
-        ConversationId: Guid_1,
-        CorrelationId: Guid_2,
+        SourceContext: NServiceBus.LearningTransportMessagePump
+      }
+    },
+    {
+      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
+      Properties: {
+        0: StartHandler, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
+        1: Guid_1,
+        2: StartHandler,
+        SourceContext: NServiceBus.SerializeMessageConnector
+      }
+    },
+    {
+      Information: Sent message {OutgoingMessageType} {OutgoingMessageId}.,
+      Properties: {
+        ContentType: application/json,
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
+        MessageIntent: Send,
+        OpenTelemetry.StartNewTrace: False,
+        OriginatingEndpoint: SerilogTestsStartHandler,
+        OriginatingHostId: Guid_3,
+        OriginatingMachine: TheMachineName,
+        OutgoingMessage: {
+          TypeTag: StartHandler,
+          Property: TheProperty
+        },
+        OutgoingMessageId: Guid_1,
+        OutgoingMessageType: StartHandler,
+        ProcessingEndpoint: SerilogTestsStartHandler,
+        ReplyToAddress: SerilogTestsStartHandler,
+        Route: SerilogTestsStartHandler,
+        SourceContext: StartHandler
+      }
+    },
+    {
+      Debug:
+Destination: SerilogTestsStartHandler
+Message headers:
+NServiceBus.MessageId : 00000000-0000-0000-0000-000000000001
+NServiceBus.OpenTelemetry.StartNewTrace : False
+NServiceBus.MessageIntent : Send
+NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
+NServiceBus.ReplyToAddress : SerilogTestsStartHandler
+NServiceBus.OriginatingMachine : TheMachineName
+NServiceBus.OriginatingEndpoint : SerilogTestsStartHandler
+$.diagnostics.originating.hostid : 00930595711f151052bf6577017ed870
+NServiceBus.ContentType : application/json
+NServiceBus.EnclosedMessageTypes : StartHandler, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
+NServiceBus.Version : NsbVersion
+,
+      Properties: {
+        SourceContext: NServiceBus.RoutingToDispatchConnector
+      }
+    },
+    {
+      Debug: No envelope handler found for the current message (NativeID: {0}, assuming the default NServiceBus format,
+      Properties: {
+        0: Guid_4,
+        SourceContext: NServiceBus.EnvelopeUnwrapper
+      }
+    },
+    {
+      Debug:
+Processing message type: StartHandler
+Message headers:
+NServiceBus.MessageId : 00000000-0000-0000-0000-000000000001
+NServiceBus.OpenTelemetry.StartNewTrace : False
+NServiceBus.MessageIntent : Send
+NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
+NServiceBus.ReplyToAddress : SerilogTestsStartHandler
+NServiceBus.OriginatingMachine : TheMachineName
+NServiceBus.OriginatingEndpoint : SerilogTestsStartHandler
+$.diagnostics.originating.hostid : 00930595711f151052bf6577017ed870
+NServiceBus.ContentType : application/json
+NServiceBus.EnclosedMessageTypes : StartHandler, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
+NServiceBus.Version : NsbVersion
+Handlers to invoke:
+TheHandler,
+      Properties: {
+        SourceContext: NServiceBus.LoadHandlersConnector
+      }
+    },
+    {
+      Information: Hello from {@Handler}.,
+      Properties: {
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
         Handler: TheHandler,
-        IncomingMessageId: Guid_2,
+        IncomingMessageId: Guid_1,
         IncomingMessageType: StartHandler,
         IncomingMessageTypeLong: StartHandler, Tests, Version=0.0.0.0,
         ProcessingEndpoint: SerilogTestsStartHandler,
@@ -463,23 +548,31 @@ serilogTracing.EnableMessageTracing();
       }
     },
     {
-      MessageTemplate: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
-      Level: Information,
+      Information: Initiating shutdown.,
+      Properties: {
+        SourceContext: NServiceBus.RunningEndpointInstance
+      }
+    },
+    {
+      Debug: Stopping {0} receiver,
+      Properties: {
+        0: Main,
+        SourceContext: NServiceBus.ReceiveComponent
+      }
+    },
+    {
+      Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_1,
-        CorrelationId: Guid_2,
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
         ElapsedTime: {Scrubbed},
         FinishTime: DateTimeOffset_1,
         IncomingMessage: {
           TypeTag: StartHandler,
-          Properties: [
-            {
-              Property: TheProperty
-            }
-          ]
+          Property: TheProperty
         },
-        IncomingMessageId: Guid_2,
+        IncomingMessageId: Guid_1,
         IncomingMessageType: StartHandler,
         IncomingMessageTypeLong: StartHandler, Tests, Version=0.0.0.0,
         MessageIntent: Send,
@@ -487,6 +580,9 @@ serilogTracing.EnableMessageTracing();
         OriginatingEndpoint: SerilogTestsStartHandler,
         OriginatingHostId: Guid_3,
         OriginatingMachine: TheMachineName,
+        OtherHeaders: {
+          baggage: 
+        },
         ProcessingEndpoint: SerilogTestsStartHandler,
         ReplyToAddress: SerilogTestsStartHandler,
         SourceContext: StartHandler,
@@ -496,37 +592,28 @@ serilogTracing.EnableMessageTracing();
       }
     },
     {
-      MessageTemplate: Sent message {OutgoingMessageType} {OutgoingMessageId}.,
-      Level: Information,
+      Debug: ,
       Properties: {
-        ContentType: application/json,
-        ConversationId: Guid_1,
-        CorrelationId: Guid_2,
-        MessageIntent: Send,
-        OpenTelemetry.StartNewTrace: False,
-        OriginatingEndpoint: SerilogTestsStartHandler,
-        OriginatingHostId: Guid_3,
-        OriginatingMachine: TheMachineName,
-        OutgoingMessage: {
-          TypeTag: StartHandler,
-          Properties: [
-            {
-              Property: TheProperty
-            }
-          ]
-        },
-        OutgoingMessageId: Guid_2,
-        OutgoingMessageType: StartHandler,
-        ProcessingEndpoint: SerilogTestsStartHandler,
-        ReplyToAddress: SerilogTestsStartHandler,
-        Route: SerilogTestsStartHandler,
-        SourceContext: StartHandler
+        SourceContext: NServiceBus.LearningTransportMessagePump
+      }
+    },
+    {
+      Debug: Stopped {0} receiver,
+      Properties: {
+        0: Main,
+        SourceContext: NServiceBus.ReceiveComponent
+      }
+    },
+    {
+      Information: Shutdown complete.,
+      Properties: {
+        SourceContext: NServiceBus.RunningEndpointInstance
       }
     }
   ]
 }
 ```
-<sup><a href='/src/Tests/IntegrationTests.Handler.verified.txt#L1-L79' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Handler.verified.txt' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/IntegrationTests.Handler.verified.txt#L1-L166' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Handler.verified.txt' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

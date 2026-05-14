@@ -43,7 +43,6 @@ NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
 NServiceBus.ReplyToAddress : SerilogTestsStartGenericHandler_String_
 NServiceBus.OriginatingMachine : TheMachineName
 NServiceBus.OriginatingEndpoint : SerilogTestsStartGenericHandler_String_
-$.diagnostics.originating.hostid : 00930595711f151052bf6577017ed870
 NServiceBus.ContentType : application/json
 NServiceBus.EnclosedMessageTypes : StartGenericHandler`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
 NServiceBus.Version : NsbVersion
@@ -70,7 +69,6 @@ NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
 NServiceBus.ReplyToAddress : SerilogTestsStartGenericHandler_String_
 NServiceBus.OriginatingMachine : TheMachineName
 NServiceBus.OriginatingEndpoint : SerilogTestsStartGenericHandler_String_
-$.diagnostics.originating.hostid : 00930595711f151052bf6577017ed870
 NServiceBus.ContentType : application/json
 NServiceBus.EnclosedMessageTypes : StartGenericHandler`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
 NServiceBus.Version : NsbVersion

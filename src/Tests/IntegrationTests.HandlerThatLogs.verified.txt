@@ -1,12 +1,6 @@
 ﻿{
   log: [
     {
-      Debug: Started polling for new messages in {SolutionDirectory}.learningtransport\SerilogTestsStartHandlerThatLogs,
-      Properties: {
-        SourceContext: NServiceBus.LearningTransportMessagePump
-      }
-    },
-    {
       Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
       Properties: {
         0: StartHandlerThatLogs, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
@@ -48,7 +42,6 @@ NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
 NServiceBus.ReplyToAddress : SerilogTestsStartHandlerThatLogs
 NServiceBus.OriginatingMachine : TheMachineName
 NServiceBus.OriginatingEndpoint : SerilogTestsStartHandlerThatLogs
-$.diagnostics.originating.hostid : 00930595711f151052bf6577017ed870
 NServiceBus.ContentType : application/json
 NServiceBus.EnclosedMessageTypes : StartHandlerThatLogs, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
 NServiceBus.Version : NsbVersion
@@ -75,7 +68,6 @@ NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
 NServiceBus.ReplyToAddress : SerilogTestsStartHandlerThatLogs
 NServiceBus.OriginatingMachine : TheMachineName
 NServiceBus.OriginatingEndpoint : SerilogTestsStartHandlerThatLogs
-$.diagnostics.originating.hostid : 00930595711f151052bf6577017ed870
 NServiceBus.ContentType : application/json
 NServiceBus.EnclosedMessageTypes : StartHandlerThatLogs, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
 NServiceBus.Version : NsbVersion

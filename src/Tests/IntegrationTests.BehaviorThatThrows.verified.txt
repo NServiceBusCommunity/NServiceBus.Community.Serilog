@@ -1,12 +1,6 @@
 ﻿{
   log: [
     {
-      Debug: Started polling for new messages in {SolutionDirectory}.learningtransport\SerilogTestsStartBehaviorThatThrows,
-      Properties: {
-        SourceContext: NServiceBus.LearningTransportMessagePump
-      }
-    },
-    {
       Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
       Properties: {
         0: StartBehaviorThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
@@ -49,7 +43,6 @@ NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
 NServiceBus.ReplyToAddress : SerilogTestsStartBehaviorThatThrows
 NServiceBus.OriginatingMachine : TheMachineName
 NServiceBus.OriginatingEndpoint : SerilogTestsStartBehaviorThatThrows
-$.diagnostics.originating.hostid : 00930595711f151052bf6577017ed870
 NServiceBus.ContentType : application/json
 NServiceBus.EnclosedMessageTypes : StartBehaviorThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
 NServiceBus.Version : NsbVersion
@@ -76,7 +69,6 @@ NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
 NServiceBus.ReplyToAddress : SerilogTestsStartBehaviorThatThrows
 NServiceBus.OriginatingMachine : TheMachineName
 NServiceBus.OriginatingEndpoint : SerilogTestsStartBehaviorThatThrows
-$.diagnostics.originating.hostid : 00930595711f151052bf6577017ed870
 NServiceBus.ContentType : application/json
 NServiceBus.EnclosedMessageTypes : StartBehaviorThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
 NServiceBus.Version : NsbVersion
@@ -152,7 +144,6 @@ NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
 NServiceBus.ReplyToAddress : SerilogTestsStartBehaviorThatThrows
 NServiceBus.OriginatingMachine : TheMachineName
 NServiceBus.OriginatingEndpoint : SerilogTestsStartBehaviorThatThrows
-$.diagnostics.originating.hostid : 00930595711f151052bf6577017ed870
 NServiceBus.ContentType : application/json
 NServiceBus.EnclosedMessageTypes : StartBehaviorThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
 NServiceBus.Version : NsbVersion
@@ -215,7 +206,6 @@ NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
 NServiceBus.ReplyToAddress : SerilogTestsStartBehaviorThatThrows
 NServiceBus.OriginatingMachine : TheMachineName
 NServiceBus.OriginatingEndpoint : SerilogTestsStartBehaviorThatThrows
-$.diagnostics.originating.hostid : 00930595711f151052bf6577017ed870
 NServiceBus.ContentType : application/json
 NServiceBus.EnclosedMessageTypes : StartBehaviorThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
 NServiceBus.Version : NsbVersion
@@ -249,7 +239,6 @@ NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
 NServiceBus.ReplyToAddress : SerilogTestsStartBehaviorThatThrows
 NServiceBus.OriginatingMachine : TheMachineName
 NServiceBus.OriginatingEndpoint : SerilogTestsStartBehaviorThatThrows
-$.diagnostics.originating.hostid : 00930595711f151052bf6577017ed870
 NServiceBus.ContentType : application/json
 NServiceBus.EnclosedMessageTypes : StartBehaviorThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
 NServiceBus.Version : NsbVersion
@@ -329,7 +318,6 @@ NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
 NServiceBus.ReplyToAddress : SerilogTestsStartBehaviorThatThrows
 NServiceBus.OriginatingMachine : TheMachineName
 NServiceBus.OriginatingEndpoint : SerilogTestsStartBehaviorThatThrows
-$.diagnostics.originating.hostid : 00930595711f151052bf6577017ed870
 NServiceBus.ContentType : application/json
 NServiceBus.EnclosedMessageTypes : StartBehaviorThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
 NServiceBus.Version : NsbVersion
@@ -396,28 +384,21 @@ NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
 NServiceBus.ReplyToAddress : SerilogTestsStartBehaviorThatThrows
 NServiceBus.OriginatingMachine : TheMachineName
 NServiceBus.OriginatingEndpoint : SerilogTestsStartBehaviorThatThrows
-$.diagnostics.originating.hostid : 00930595711f151052bf6577017ed870
 NServiceBus.ContentType : application/json
 NServiceBus.EnclosedMessageTypes : StartBehaviorThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
 NServiceBus.Version : NsbVersion
 NServiceBus.ProcessingMachine : TheMachineName
 NServiceBus.ProcessingEndpoint : SerilogTestsStartBehaviorThatThrows
-$.diagnostics.hostid : 00930595711f151052bf6577017ed870
 $.diagnostics.hostdisplayname : TheMachineName
 NServiceBus.FailedQ : SerilogTestsStartBehaviorThatThrows
 NServiceBus.ExceptionInfo.ExceptionType : System.Exception
 NServiceBus.ExceptionInfo.Message : The Exception
 NServiceBus.ExceptionInfo.Source : Tests
 NServiceBus.ExceptionInfo.StackTrace : System.Exception: The Exception
-   at BehaviorThatThrows.Invoke(IInvokeHandlerContext context, Func`1 next) in {ProjectDirectory}BehaviorThatThrows\BehaviorThatThrows.cs:line 11
    at NServiceBus.SagaPersistenceBehavior.Invoke(IInvokeHandlerContext context, Func`2 next) in /_/src/NServiceBus.Core/Sagas/SagaPersistenceBehavior.cs:line 34
-   at CaptureSagaStateBehavior.Invoke(IInvokeHandlerContext context, Func`1 next) in {SolutionDirectory}NServiceBus.Community.Serilog\SagaAudit\CaptureSagaStateBehavior.cs:line 17
    at NServiceBus.LoadHandlersConnector.Invoke(IIncomingLogicalMessageContext context, Func`2 stage) in /_/src/NServiceBus.Core/Pipeline/Incoming/LoadHandlersConnector.cs:line 59
    at NServiceBus.LoadHandlersConnector.Invoke(IIncomingLogicalMessageContext context, Func`2 stage) in /_/src/NServiceBus.Core/Pipeline/Incoming/LoadHandlersConnector.cs:line 80
-   at LogIncomingBehavior.Invoke(IIncomingLogicalMessageContext context, Func`1 next) in {SolutionDirectory}NServiceBus.Community.Serilog\MessageAudit\LogIncomingBehavior.cs:line 38
-   at IncomingLogicalBehavior.Invoke(IIncomingLogicalMessageContext context, Func`1 next) in {SolutionDirectory}NServiceBus.Community.Serilog\LogInjection\IncomingLogicalBehavior.cs:line 18
    at NServiceBus.DeserializeMessageConnector.Invoke(IIncomingPhysicalMessageContext context, Func`2 stage) in /_/src/NServiceBus.Core/Pipeline/Incoming/DeserializeMessageConnector.cs:line 38
-   at IncomingPhysicalBehavior.Invoke(IIncomingPhysicalMessageContext context, Func`1 next) in {SolutionDirectory}NServiceBus.Community.Serilog\LogInjection\IncomingPhysicalBehavior.cs:line 67
    at NServiceBus.ProcessingStatisticsBehavior.Invoke(IIncomingPhysicalMessageContext context, Func`2 next) in /_/src/NServiceBus.Core/Performance/Statistics/ProcessingStatisticsBehavior.cs:line 27
    at NServiceBus.TransportReceiveToPhysicalMessageConnector.Invoke(ITransportReceiveContext context, Func`2 next) in /_/src/NServiceBus.Core/Pipeline/Incoming/TransportReceiveToPhysicalMessageConnector.cs:line 38
    at NServiceBus.TransportReceiveToPhysicalMessageConnector.Invoke(ITransportReceiveContext context, Func`2 next) in /_/src/NServiceBus.Core/Pipeline/Incoming/TransportReceiveToPhysicalMessageConnector.cs:line 44

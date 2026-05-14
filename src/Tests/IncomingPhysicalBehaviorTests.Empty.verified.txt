@@ -1,39 +1,40 @@
 ﻿{
-  Extensions: {
-    ExceptionLogState: {
-      ProcessingEndpoint: {
-        ProcessingEndpoint: endpoint
-      },
-      CorrelationId: CorrelationId,
-      ConversationId: ConversationId,
-      IncomingHeaders: {
-        NServiceBus.ConversationId: ConversationId,
-        NServiceBus.CorrelationId: CorrelationId,
-        NServiceBus.MessageId: MessageId,
-        NServiceBus.OriginatingEndpoint: DefaultOriginatingEndpoint,
-        NServiceBus.ReplyToAddress: ReplyToAddress,
-        NServiceBus.TimeSent: DateTimeOffset_1
-      }
-    },
-    Serilog.ILogger: {
-      Enrichers: [
-        {
-          IncomingMessageId: MessageId
+  target: {
+    Extensions: {
+      ExceptionLogState: {
+        ProcessingEndpoint: {
+          ProcessingEndpoint: endpoint
         },
-        {
-          IncomingMessageTypes: []
-        },
-        {
-          IncomingMessageTypesLong: []
-        },
-        {
-          CorrelationId: CorrelationId
-        },
-        {
-          ConversationId: ConversationId
+        CorrelationId: CorrelationId,
+        ConversationId: ConversationId,
+        IncomingHeaders: {
+          NServiceBus.ConversationId: ConversationId,
+          NServiceBus.CorrelationId: CorrelationId,
+          NServiceBus.MessageId: MessageId,
+          NServiceBus.OriginatingEndpoint: DefaultOriginatingEndpoint,
+          NServiceBus.ReplyToAddress: ReplyToAddress,
+          NServiceBus.TimeSent: DateTimeOffset_1
         }
-      ],
-      ContextKey: UnknownMessageTypes
+      },
+      Serilog.ILogger: {
+        Enrichers: [
+          {
+            IncomingMessageId: MessageId
+          },
+          {},
+          {},
+          {
+            CorrelationId: CorrelationId
+          },
+          {
+            ConversationId: ConversationId
+          }
+        ],
+        ContextKey: UnknownMessageTypes
+      }
     }
+  },
+  log: {
+    Error: LogMessage
   }
 }

@@ -3,110 +3,67 @@
 [NotInParallel]
 public class IntegrationTests
 {
-    static List<LogEvent> logs;
-
-    static IntegrationTests()
-    {
-        logs = [];
-        var eventSink = new EventSink(logs.Add);
-
-        var configuration = new LoggerConfiguration();
-        var enrich = configuration.Enrich;
-        enrich.WithExceptionDetails();
-        enrich.WithNsbExceptionDetails();
-        configuration.MinimumLevel.Verbose();
-        configuration.WriteTo.Sink(eventSink);
-        Log.Logger = configuration.CreateLogger();
-        LogManager.Use<SerilogFactory>();
-    }
-
-//#if NETCOREAPP3_1
-//    [Fact]
-//    public async Task WriteStartupDiagnostics()
-//    {
-//        var events = await Send(
-//            new StartHandler
-//            {
-//                Property = "TheProperty"
-//            });
-//        await Verify<StartupDiagnostics>(events);
-//    }
-//#endif
-
     [Test]
     public async Task Handler()
     {
-        var events = await Send(
+        await Send(
             new StartHandler
             {
                 Property = "TheProperty"
             });
-        await Verify<StartHandler>(events);
+        await Verify();
     }
 
     [Test]
     public async Task GenericHandler()
     {
-        var events = await Send(
+        await Send(
             new StartGenericHandler<string>
             {
                 Property = "TheProperty"
             });
-        await Verify<StartGenericHandler<string>>(events);
+        await Verify();
     }
 
     [Test]
     public async Task WithCustomHeader()
     {
-        var events = await Send(
+        await Send(
             new StartHandler
             {
                 Property = "TheProperty"
             },
             options => options.SetHeader("CustomHeader", "CustomValue"));
-        await Verify<StartHandler>(events);
+        await Verify();
     }
 
     [Test]
     public async Task WithConvertedCustomHeader()
     {
-        var events = await Send(
+        await Send(
             new StartHandler
             {
                 Property = "TheProperty"
             }, options => options.SetHeader("ConvertHeader", "CustomValue"));
-        await Verify<StartHandler>(events);
+        await Verify();
     }
-
-    //[Fact]
-    //public async Task SagaNotFound()
-    //{
-    //    var events = await Send(
-    //        new NotFoundSagaMessage(),
-    //        options =>
-    //        {
-    //            options.SetHeader(Headers.SagaId, Guid.NewGuid().ToString());
-    //            options.SetHeader(Headers.SagaType, typeof(NotFoundSaga).FullName);
-    //        });
-    //    await Verify<NotFoundSagaMessage>(events);
-    //}
 
     [Test]
     public async Task HandlerThatLogs()
     {
-        var events = await Send(new StartHandlerThatLogs());
-        await Verify<StartHandlerThatLogs>(events);
+        await Send(new StartHandlerThatLogs());
+        await Verify();
     }
 
     [Test]
     public async Task HandlerThatThrows()
     {
-        var events = await Send(
+        await Send(
             new StartHandlerThatThrows
             {
                 Property = "TheProperty"
             });
-        await Verify<StartHandlerThatThrows>(events);
+        await Verify();
     }
 
 #if Debug
@@ -120,7 +77,7 @@ public class IntegrationTests
                 Property = "TheProperty"
             });
         var logEvents = events.ToList();
-        await Verify<StartSaga>(logEvents)
+        await Verify()
             .ScrubMember("Serilog.SagaStateChange");
     }
 
@@ -129,41 +86,19 @@ public class IntegrationTests
     [Test]
     public async Task BehaviorThatThrows()
     {
-        var events = await Send(
+        await Send(
             new StartBehaviorThatThrows
             {
                 Property = "TheProperty"
             },
             extraConfiguration: _ => _.EnableFeature<BehaviorThatThrowsFeature>());
-        var logEvents = events.ToList();
-        await Verify<StartBehaviorThatThrows>(logEvents);
+        await Verify();
     }
 
-    static SettingsTask Verify<T>(IEnumerable<LogEventEx> logEvents)
-    {
-        var list = logEvents.ToList();
-        var logsForTarget = list
-            .LogsForType<T>()
-            .ToList();
-        return Verifier.Verify(
-            new
-            {
-                logsForTarget,
-                logsForNsbSerilog = list
-                    .LogsForNsbSerilog()
-                    .ToList(),
-                logsWithExceptions = list
-                    .LogsWithExceptions()
-                    .ToList()
-            });
-    }
-
-    static async Task<IEnumerable<LogEventEx>> Send(
-        object message,
+    static async Task Send(object message,
         Action<SendOptions>? optionsAction = null,
         Action<EndpointConfiguration>? extraConfiguration = null)
     {
-        logs.Clear();
         var suffix = TypeNameConverter
             .GetName(message.GetType())
             .MessageTypeName
@@ -216,16 +151,5 @@ public class IntegrationTests
         }
 
         await endpoint.Stop();
-
-        return logs
-            .Where(_ => !_.MessageTemplate.Text.StartsWith("Operation canceled"))
-            .Select(_ =>
-                new LogEventEx
-                (
-                    messageTemplate: _.MessageTemplate,
-                    level: _.Level,
-                    properties: _.Properties,
-                    exception: _.Exception
-                ));
     }
 }

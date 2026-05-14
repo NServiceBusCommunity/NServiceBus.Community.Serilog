@@ -1,35 +1,40 @@
 ﻿{
-  Message: {
-    MessageType: IncomingLogicalBehaviorTests.Message1,
-    Instance: {}
-  },
-  MessageHandled: false,
-  MessageHeaders: {
-    NServiceBus.ConversationId: Guid_1,
-    NServiceBus.CorrelationId: Guid_2
-  },
-  MessageId: Guid_3,
-  ReplyToAddress: reply address,
-  Extensions: {
-    Serilog.ILogger: {
-      Enrichers: [
-        {
-          IncomingMessageId: Guid_3
-        },
-        {
-          IncomingMessageType: IncomingLogicalBehaviorTests+Message1
-        },
-        {
-          IncomingMessageTypeLong: IncomingLogicalBehaviorTests+Message1, Tests, Version=0.0.0.0
-        },
-        {
-          CorrelationId: Guid_2
-        },
-        {
-          ConversationId: Guid_1
-        }
-      ],
-      ContextKey: IncomingLogicalBehaviorTests+Message1
+  target: {
+    Message: {
+      MessageType: IncomingLogicalBehaviorTests.Message1,
+      Instance: {}
+    },
+    MessageHandled: false,
+    MessageHeaders: {
+      NServiceBus.ConversationId: Guid_1,
+      NServiceBus.CorrelationId: Guid_2
+    },
+    MessageId: Guid_3,
+    ReplyToAddress: reply address,
+    Extensions: {
+      Serilog.ILogger: {
+        Enrichers: [
+          {
+            IncomingMessageId: Guid_3
+          },
+          {
+            IncomingMessageType: IncomingLogicalBehaviorTests+Message1
+          },
+          {
+            IncomingMessageTypeLong: IncomingLogicalBehaviorTests+Message1, Tests, Version=0.0.0.0
+          },
+          {
+            CorrelationId: Guid_2
+          },
+          {
+            ConversationId: Guid_1
+          }
+        ],
+        ContextKey: IncomingLogicalBehaviorTests+Message1
+      }
     }
+  },
+  log: {
+    Error: LogMessage
   }
 }

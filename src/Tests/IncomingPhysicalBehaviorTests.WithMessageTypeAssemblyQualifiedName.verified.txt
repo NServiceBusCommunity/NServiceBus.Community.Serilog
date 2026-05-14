@@ -1,44 +1,49 @@
 ﻿{
-  Extensions: {
-    ExceptionLogState: {
-      ProcessingEndpoint: {
-        ProcessingEndpoint: endpoint
-      },
-      CorrelationId: CorrelationId,
-      ConversationId: ConversationId,
-      IncomingHeaders: {
-        NServiceBus.ConversationId: ConversationId,
-        NServiceBus.CorrelationId: CorrelationId,
-        NServiceBus.EnclosedMessageTypes: IncomingPhysicalBehaviorTests+Message1, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
-        NServiceBus.MessageId: MessageId,
-        NServiceBus.OriginatingEndpoint: DefaultOriginatingEndpoint,
-        NServiceBus.ReplyToAddress: ReplyToAddress,
-        NServiceBus.TimeSent: DateTimeOffset_1
-      }
-    },
-    Serilog.ILogger: {
-      Enrichers: [
-        {
-          IncomingMessageId: MessageId
+  target: {
+    Extensions: {
+      ExceptionLogState: {
+        ProcessingEndpoint: {
+          ProcessingEndpoint: endpoint
         },
-        {
-          IncomingMessageTypes: [
-            IncomingPhysicalBehaviorTests+Message1
-          ]
-        },
-        {
-          IncomingMessageTypesLong: [
-            IncomingPhysicalBehaviorTests+Message1, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
-          ]
-        },
-        {
-          CorrelationId: CorrelationId
-        },
-        {
-          ConversationId: ConversationId
+        CorrelationId: CorrelationId,
+        ConversationId: ConversationId,
+        IncomingHeaders: {
+          NServiceBus.ConversationId: ConversationId,
+          NServiceBus.CorrelationId: CorrelationId,
+          NServiceBus.EnclosedMessageTypes: IncomingPhysicalBehaviorTests+Message1, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
+          NServiceBus.MessageId: MessageId,
+          NServiceBus.OriginatingEndpoint: DefaultOriginatingEndpoint,
+          NServiceBus.ReplyToAddress: ReplyToAddress,
+          NServiceBus.TimeSent: DateTimeOffset_1
         }
-      ],
-      ContextKey: IncomingPhysicalBehaviorTests+Message1
+      },
+      Serilog.ILogger: {
+        Enrichers: [
+          {
+            IncomingMessageId: MessageId
+          },
+          {
+            IncomingMessageTypes: [
+              IncomingPhysicalBehaviorTests+Message1
+            ]
+          },
+          {
+            IncomingMessageTypesLong: [
+              IncomingPhysicalBehaviorTests+Message1, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
+            ]
+          },
+          {
+            CorrelationId: CorrelationId
+          },
+          {
+            ConversationId: ConversationId
+          }
+        ],
+        ContextKey: IncomingPhysicalBehaviorTests+Message1
+      }
     }
+  },
+  log: {
+    Error: LogMessage
   }
 }

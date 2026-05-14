@@ -11,6 +11,7 @@
     <PackageReference Include="Serilog.Sinks.File" />
     <PackageReference Include="Verify.DiffPlex" />
     <PackageReference Include="Verify.NServiceBus" />
+    <PackageReference Include="Verify.Serilog" />
     <PackageReference Include="Verify.TUnit" />
     <PackageReference Include="Argon" />
     <PackageReference Include="DiffEngine" />

@@ -1,25 +1,30 @@
 ﻿{
-  Message: {
-    MessageType: IncomingLogicalBehaviorTests.Message1,
-    Instance: {}
-  },
-  MessageHandled: false,
-  MessageId: Guid_1,
-  ReplyToAddress: reply address,
-  Extensions: {
-    Serilog.ILogger: {
-      Enrichers: [
-        {
-          IncomingMessageId: Guid_1
-        },
-        {
-          IncomingMessageType: IncomingLogicalBehaviorTests+Message1
-        },
-        {
-          IncomingMessageTypeLong: IncomingLogicalBehaviorTests+Message1, Tests, Version=0.0.0.0
-        }
-      ],
-      ContextKey: IncomingLogicalBehaviorTests+Message1
+  target: {
+    Message: {
+      MessageType: IncomingLogicalBehaviorTests.Message1,
+      Instance: {}
+    },
+    MessageHandled: false,
+    MessageId: Guid_1,
+    ReplyToAddress: reply address,
+    Extensions: {
+      Serilog.ILogger: {
+        Enrichers: [
+          {
+            IncomingMessageId: Guid_1
+          },
+          {
+            IncomingMessageType: IncomingLogicalBehaviorTests+Message1
+          },
+          {
+            IncomingMessageTypeLong: IncomingLogicalBehaviorTests+Message1, Tests, Version=0.0.0.0
+          }
+        ],
+        ContextKey: IncomingLogicalBehaviorTests+Message1
+      }
     }
+  },
+  log: {
+    Error: LogMessage
   }
 }

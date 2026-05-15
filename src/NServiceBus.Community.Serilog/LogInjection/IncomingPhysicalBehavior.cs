@@ -62,19 +62,41 @@
         context.Extensions.Set(exceptionLogState);
         context.Extensions.Set(loggerForContext);
 
-        try
+        // Also push the correlation properties onto Serilog's ambient LogContext so that
+        // events emitted via the static Log.Logger during message processing — including
+        // from third-party callbacks that have no access to context.Logger() — carry the
+        // same IncomingMessageId/CorrelationId/ConversationId as this library's own
+        // tracing events. Requires Enrich.FromLogContext() on the consumer's logger; if
+        // absent the push is a no-op.
+        var logContextEnrichers = new List<ILogEventEnricher>
         {
-            await next();
+            new PropertyEnricher("IncomingMessageId", context.MessageId)
+        };
+        if (correlationId != null)
+        {
+            logContextEnrichers.Add(new PropertyEnricher("CorrelationId", correlationId));
         }
-        catch (Exception exception)
+        if (conversationId != null)
         {
-            var data = exception.Data;
-            if (!data.Contains("ExceptionLogState"))
-            {
-                data.Add("ExceptionLogState", exceptionLogState);
-            }
+            logContextEnrichers.Add(new PropertyEnricher("ConversationId", conversationId));
+        }
 
-            throw;
+        using (LogContext.Push(logContextEnrichers.ToArray()))
+        {
+            try
+            {
+                await next();
+            }
+            catch (Exception exception)
+            {
+                var data = exception.Data;
+                if (!data.Contains("ExceptionLogState"))
+                {
+                    data.Add("ExceptionLogState", exceptionLogState);
+                }
+
+                throw;
+            }
         }
     }
 }

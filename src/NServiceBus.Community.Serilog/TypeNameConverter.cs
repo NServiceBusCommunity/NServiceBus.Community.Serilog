@@ -136,9 +136,15 @@ public static class TypeNameConverter
         if (type.IsGenericType)
         {
             builder.Append('<');
-            foreach (var typeArgument in type.GenericTypeArguments)
+            var typeArguments = type.GenericTypeArguments;
+            for (var index = 0; index < typeArguments.Length; index++)
             {
-                FormatForDisplay(typeArgument, builder);
+                if (index > 0)
+                {
+                    builder.Append(", ");
+                }
+
+                FormatForDisplay(typeArguments[index], builder);
             }
 
             builder.Append('>');

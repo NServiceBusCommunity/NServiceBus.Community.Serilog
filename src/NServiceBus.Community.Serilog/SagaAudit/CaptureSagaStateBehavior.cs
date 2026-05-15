@@ -19,6 +19,7 @@
         }
 
         var logger = context.Logger();
+        // Must match the level used by SerilogExtensions.WriteInfo below.
         if (!logger.IsEnabled(LogEventLevel.Information))
         {
             await next();
@@ -28,10 +29,12 @@
         var sagaAudit = new SagaUpdatedMessage();
         context.Extensions.Set(sagaAudit);
         var startTime = DateTimeOffset.Now;
+        var startTimestamp = Stopwatch.GetTimestamp();
 
         await next();
 
-        var finishTime = DateTimeOffset.Now;
+        var elapsed = Stopwatch.GetElapsedTime(startTimestamp);
+        var finishTime = startTime + elapsed;
 
         if (!context.Extensions.TryGet(out ActiveSagaInstance? activeSagaInstance))
         {
@@ -65,7 +68,7 @@
             new("SagaId", new ScalarValue(sagaId)),
             new("StartTime", new ScalarValue(startTime)),
             new("FinishTime", new ScalarValue(finishTime)),
-            new("ElapsedTime", new ScalarValue((finishTime - startTime).TotalSeconds)),
+            new("ElapsedTime", new ScalarValue(elapsed.TotalSeconds)),
             new("IsCompleted", new ScalarValue(isCompleted)),
             new("IsNew", new ScalarValue(isNew))
         };
@@ -137,11 +140,6 @@
 
     static void AssignSagaStateChangeCausedByMessage(IInvokeHandlerContext context, bool isNew, bool isCompleted, Guid sagaId)
     {
-        if (!context.Headers.TryGetValue("NServiceBus.Serilog.SagaStateChange", out var sagaStateChange))
-        {
-            sagaStateChange = string.Empty;
-        }
-
         var stateChange = "Updated";
         if (isNew)
         {
@@ -153,14 +151,13 @@
             stateChange = "Completed";
         }
 
-        if (!string.IsNullOrEmpty(sagaStateChange))
+        if (!context.Extensions.TryGet<SagaStateChangeRecorder>(out var recorder))
         {
-            sagaStateChange += ';';
+            recorder = new();
+            context.Extensions.Set(recorder);
         }
 
-        sagaStateChange += $"{sagaId}:{stateChange}";
-
-        context.Headers["NServiceBus.Serilog.SagaStateChange"] = sagaStateChange;
+        recorder.Record(sagaId, stateChange);
     }
 
     public class Registration :

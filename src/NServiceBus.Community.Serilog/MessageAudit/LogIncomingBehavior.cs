@@ -4,7 +4,7 @@
     ConvertHeader convertHeader;
     static MessageTemplate messageTemplate;
 
-    LogIncomingBehavior(ConvertHeader convertHeader) =>
+    internal LogIncomingBehavior(ConvertHeader convertHeader) =>
         this.convertHeader = convertHeader;
 
     static LogIncomingBehavior()
@@ -32,24 +32,46 @@
 
     public override async Task Invoke(IIncomingLogicalMessageContext context, Func<Task> next)
     {
-        var message = context.Message;
         var logger = context.Logger();
-        var startTime = DateTimeOffset.Now;
-        await next();
-        var finishTime = DateTimeOffset.Now;
-        var properties = new List<LogEventProperty>
+        // Must match the level used by SerilogExtensions.WriteInfo below.
+        if (!logger.IsEnabled(LogEventLevel.Information))
         {
-            new("StartTime", new ScalarValue(startTime.ToLogString())),
-            new("FinishTime", new ScalarValue(finishTime.ToLogString())),
-            new("ElapsedTime", new ScalarValue((finishTime - startTime).TotalSeconds))
-        };
-
-        if (logger.BindProperty("IncomingMessage", message.Instance, out var property))
-        {
-            properties.Add(property);
+            await next();
+            return;
         }
 
-        properties.AddRange(HeaderAppender.BuildHeaders(context.Headers, convertHeader));
-        logger.WriteInfo(messageTemplate, properties);
+        var message = context.Message;
+        var sagaStateChanges = new SagaStateChangeRecorder();
+        context.Extensions.Set(sagaStateChanges);
+        var startTime = DateTimeOffset.Now;
+        var startTimestamp = Stopwatch.GetTimestamp();
+        try
+        {
+            await next();
+        }
+        finally
+        {
+            var elapsed = Stopwatch.GetElapsedTime(startTimestamp);
+            var finishTime = startTime + elapsed;
+            var properties = new List<LogEventProperty>
+            {
+                new("StartTime", new ScalarValue(startTime.ToLogString())),
+                new("FinishTime", new ScalarValue(finishTime.ToLogString())),
+                new("ElapsedTime", new ScalarValue(elapsed.TotalSeconds))
+            };
+
+            if (logger.BindProperty("IncomingMessage", message.Instance, out var property))
+            {
+                properties.Add(property);
+            }
+
+            if (sagaStateChanges.Value.Length > 0)
+            {
+                properties.Add(new("Serilog.SagaStateChange", new ScalarValue(sagaStateChanges.Value)));
+            }
+
+            properties.AddRange(HeaderAppender.BuildHeaders(context.Headers, convertHeader));
+            logger.WriteInfo(messageTemplate, properties);
+        }
     }
 }

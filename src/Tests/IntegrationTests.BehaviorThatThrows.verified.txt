@@ -33,6 +33,37 @@
       }
     },
     {
+      Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
+      Properties: {
+        ContentType: application/json,
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
+        ElapsedTime: {Scrubbed},
+        FinishTime: {Scrubbed},
+        IncomingMessage: {
+          TypeTag: StartBehaviorThatThrows,
+          Property: TheProperty
+        },
+        IncomingMessageId: Guid_1,
+        IncomingMessageType: StartBehaviorThatThrows,
+        IncomingMessageTypeLong: StartBehaviorThatThrows, Tests, Version=0.0.0.0,
+        MessageIntent: Send,
+        OpenTelemetry.StartNewTrace: False,
+        OriginatingEndpoint: SerilogTestsStartBehaviorThatThrows,
+        OriginatingHostId: Guid_3,
+        OriginatingMachine: TheMachineName,
+        OtherHeaders: {
+          baggage: {Scrubbed}
+        },
+        ProcessingEndpoint: SerilogTestsStartBehaviorThatThrows,
+        ReplyToAddress: SerilogTestsStartBehaviorThatThrows,
+        SourceContext: StartBehaviorThatThrows,
+        StartTime: {Scrubbed},
+        TimeSent: DateTimeOffset_1,
+        TraceParent: {Scrubbed}
+      }
+    },
+    {
       Information: Immediate Retry is going to retry message 'Guid_1' because of an exception:,
       Properties: {
         ContentType: application/json,
@@ -70,6 +101,37 @@
         ProcessingEndpoint: SerilogTestsStartBehaviorThatThrows,
         ReplyToAddress: SerilogTestsStartBehaviorThatThrows,
         SourceContext: NServiceBus.ImmediateRetry,
+        TimeSent: DateTimeOffset_1,
+        TraceParent: {Scrubbed}
+      }
+    },
+    {
+      Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
+      Properties: {
+        ContentType: application/json,
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
+        ElapsedTime: {Scrubbed},
+        FinishTime: {Scrubbed},
+        IncomingMessage: {
+          TypeTag: StartBehaviorThatThrows,
+          Property: TheProperty
+        },
+        IncomingMessageId: Guid_1,
+        IncomingMessageType: StartBehaviorThatThrows,
+        IncomingMessageTypeLong: StartBehaviorThatThrows, Tests, Version=0.0.0.0,
+        MessageIntent: Send,
+        OpenTelemetry.StartNewTrace: False,
+        OriginatingEndpoint: SerilogTestsStartBehaviorThatThrows,
+        OriginatingHostId: Guid_3,
+        OriginatingMachine: TheMachineName,
+        OtherHeaders: {
+          baggage: {Scrubbed}
+        },
+        ProcessingEndpoint: SerilogTestsStartBehaviorThatThrows,
+        ReplyToAddress: SerilogTestsStartBehaviorThatThrows,
+        SourceContext: StartBehaviorThatThrows,
+        StartTime: {Scrubbed},
         TimeSent: DateTimeOffset_1,
         TraceParent: {Scrubbed}
       }
@@ -117,6 +179,40 @@
       }
     },
     {
+      Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
+      Properties: {
+        ContentType: application/json,
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
+        DeliverAt: DateTimeOffset_2,
+        ElapsedTime: {Scrubbed},
+        FinishTime: {Scrubbed},
+        IncomingMessage: {
+          TypeTag: StartBehaviorThatThrows,
+          Property: TheProperty
+        },
+        IncomingMessageId: Guid_1,
+        IncomingMessageType: StartBehaviorThatThrows,
+        IncomingMessageTypeLong: StartBehaviorThatThrows, Tests, Version=0.0.0.0,
+        MessageIntent: Send,
+        OpenTelemetry.StartNewTrace: True,
+        OriginatingEndpoint: SerilogTestsStartBehaviorThatThrows,
+        OriginatingHostId: Guid_3,
+        OriginatingMachine: TheMachineName,
+        OtherHeaders: {
+          baggage: {Scrubbed}
+        },
+        ProcessingEndpoint: SerilogTestsStartBehaviorThatThrows,
+        ReplyToAddress: SerilogTestsStartBehaviorThatThrows,
+        Retries: 1,
+        Retries.Timestamp: DateTimeOffset_3,
+        SourceContext: StartBehaviorThatThrows,
+        StartTime: {Scrubbed},
+        TimeSent: DateTimeOffset_1,
+        TraceParent: {Scrubbed}
+      }
+    },
+    {
       Information: Immediate Retry is going to retry message 'Guid_1' because of an exception:,
       Properties: {
         ContentType: application/json,
@@ -157,6 +253,40 @@
         Retries: 1,
         Retries.Timestamp: DateTimeOffset_3,
         SourceContext: NServiceBus.ImmediateRetry,
+        TimeSent: DateTimeOffset_1,
+        TraceParent: {Scrubbed}
+      }
+    },
+    {
+      Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
+      Properties: {
+        ContentType: application/json,
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
+        DeliverAt: DateTimeOffset_2,
+        ElapsedTime: {Scrubbed},
+        FinishTime: {Scrubbed},
+        IncomingMessage: {
+          TypeTag: StartBehaviorThatThrows,
+          Property: TheProperty
+        },
+        IncomingMessageId: Guid_1,
+        IncomingMessageType: StartBehaviorThatThrows,
+        IncomingMessageTypeLong: StartBehaviorThatThrows, Tests, Version=0.0.0.0,
+        MessageIntent: Send,
+        OpenTelemetry.StartNewTrace: True,
+        OriginatingEndpoint: SerilogTestsStartBehaviorThatThrows,
+        OriginatingHostId: Guid_3,
+        OriginatingMachine: TheMachineName,
+        OtherHeaders: {
+          baggage: {Scrubbed}
+        },
+        ProcessingEndpoint: SerilogTestsStartBehaviorThatThrows,
+        ReplyToAddress: SerilogTestsStartBehaviorThatThrows,
+        Retries: 1,
+        Retries.Timestamp: DateTimeOffset_3,
+        SourceContext: StartBehaviorThatThrows,
+        StartTime: {Scrubbed},
         TimeSent: DateTimeOffset_1,
         TraceParent: {Scrubbed}
       }

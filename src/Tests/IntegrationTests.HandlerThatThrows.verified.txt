@@ -33,6 +33,37 @@
       }
     },
     {
+      Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
+      Properties: {
+        ContentType: application/json,
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
+        ElapsedTime: {Scrubbed},
+        FinishTime: {Scrubbed},
+        IncomingMessage: {
+          TypeTag: StartHandlerThatThrows,
+          Property: TheProperty
+        },
+        IncomingMessageId: Guid_1,
+        IncomingMessageType: StartHandlerThatThrows,
+        IncomingMessageTypeLong: StartHandlerThatThrows, Tests, Version=0.0.0.0,
+        MessageIntent: Send,
+        OpenTelemetry.StartNewTrace: False,
+        OriginatingEndpoint: SerilogTestsStartHandlerThatThrows,
+        OriginatingHostId: Guid_3,
+        OriginatingMachine: TheMachineName,
+        OtherHeaders: {
+          baggage: {Scrubbed}
+        },
+        ProcessingEndpoint: SerilogTestsStartHandlerThatThrows,
+        ReplyToAddress: SerilogTestsStartHandlerThatThrows,
+        SourceContext: StartHandlerThatThrows,
+        StartTime: {Scrubbed},
+        TimeSent: DateTimeOffset_1,
+        TraceParent: {Scrubbed}
+      }
+    },
+    {
       Information: Immediate Retry is going to retry message 'Guid_1' because of an exception:,
       Properties: {
         ContentType: application/json,
@@ -43,8 +74,8 @@
           Data: {
             Message type: StartHandlerThatThrows,
             Handler type: TheHandlerThatThrows,
-            Handler start time: DateTimeOffset_1,
-            Handler failure time: DateTimeOffset_2,
+            Handler start time: {Scrubbed},
+            Handler failure time: {Scrubbed},
             Handler canceled: false,
             ExceptionLogState: {
               TypeTag: ExceptionLogState
@@ -58,8 +89,8 @@
           Source: Tests,
           TargetSite: {Scrubbed}
         },
-        HandlerFailureTime: DateTimeOffset_3,
-        HandlerStartTime: DateTimeOffset_4,
+        HandlerFailureTime: {Scrubbed},
+        HandlerStartTime: {Scrubbed},
         HandlerType: TheHandlerThatThrows,
         IncomingMessage: {
           TypeTag: StartHandlerThatThrows,
@@ -79,7 +110,38 @@
         ProcessingEndpoint: SerilogTestsStartHandlerThatThrows,
         ReplyToAddress: SerilogTestsStartHandlerThatThrows,
         SourceContext: NServiceBus.ImmediateRetry,
-        TimeSent: DateTimeOffset_5,
+        TimeSent: DateTimeOffset_1,
+        TraceParent: {Scrubbed}
+      }
+    },
+    {
+      Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
+      Properties: {
+        ContentType: application/json,
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
+        ElapsedTime: {Scrubbed},
+        FinishTime: {Scrubbed},
+        IncomingMessage: {
+          TypeTag: StartHandlerThatThrows,
+          Property: TheProperty
+        },
+        IncomingMessageId: Guid_1,
+        IncomingMessageType: StartHandlerThatThrows,
+        IncomingMessageTypeLong: StartHandlerThatThrows, Tests, Version=0.0.0.0,
+        MessageIntent: Send,
+        OpenTelemetry.StartNewTrace: False,
+        OriginatingEndpoint: SerilogTestsStartHandlerThatThrows,
+        OriginatingHostId: Guid_3,
+        OriginatingMachine: TheMachineName,
+        OtherHeaders: {
+          baggage: {Scrubbed}
+        },
+        ProcessingEndpoint: SerilogTestsStartHandlerThatThrows,
+        ReplyToAddress: SerilogTestsStartHandlerThatThrows,
+        SourceContext: StartHandlerThatThrows,
+        StartTime: {Scrubbed},
+        TimeSent: DateTimeOffset_1,
         TraceParent: {Scrubbed}
       }
     },
@@ -94,8 +156,8 @@
           Data: {
             Message type: StartHandlerThatThrows,
             Handler type: TheHandlerThatThrows,
-            Handler start time: DateTimeOffset_6,
-            Handler failure time: DateTimeOffset_7,
+            Handler start time: {Scrubbed},
+            Handler failure time: {Scrubbed},
             Handler canceled: false,
             ExceptionLogState: {
               TypeTag: ExceptionLogState
@@ -109,8 +171,8 @@
           Source: Tests,
           TargetSite: {Scrubbed}
         },
-        HandlerFailureTime: DateTimeOffset_8,
-        HandlerStartTime: DateTimeOffset_9,
+        HandlerFailureTime: {Scrubbed},
+        HandlerStartTime: {Scrubbed},
         HandlerType: TheHandlerThatThrows,
         IncomingMessage: {
           TypeTag: StartHandlerThatThrows,
@@ -130,7 +192,41 @@
         ProcessingEndpoint: SerilogTestsStartHandlerThatThrows,
         ReplyToAddress: SerilogTestsStartHandlerThatThrows,
         SourceContext: NServiceBus.DelayedRetry,
-        TimeSent: DateTimeOffset_5,
+        TimeSent: DateTimeOffset_1,
+        TraceParent: {Scrubbed}
+      }
+    },
+    {
+      Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
+      Properties: {
+        ContentType: application/json,
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
+        DeliverAt: DateTimeOffset_2,
+        ElapsedTime: {Scrubbed},
+        FinishTime: {Scrubbed},
+        IncomingMessage: {
+          TypeTag: StartHandlerThatThrows,
+          Property: TheProperty
+        },
+        IncomingMessageId: Guid_1,
+        IncomingMessageType: StartHandlerThatThrows,
+        IncomingMessageTypeLong: StartHandlerThatThrows, Tests, Version=0.0.0.0,
+        MessageIntent: Send,
+        OpenTelemetry.StartNewTrace: True,
+        OriginatingEndpoint: SerilogTestsStartHandlerThatThrows,
+        OriginatingHostId: Guid_3,
+        OriginatingMachine: TheMachineName,
+        OtherHeaders: {
+          baggage: {Scrubbed}
+        },
+        ProcessingEndpoint: SerilogTestsStartHandlerThatThrows,
+        ReplyToAddress: SerilogTestsStartHandlerThatThrows,
+        Retries: 1,
+        Retries.Timestamp: DateTimeOffset_3,
+        SourceContext: StartHandlerThatThrows,
+        StartTime: {Scrubbed},
+        TimeSent: DateTimeOffset_1,
         TraceParent: {Scrubbed}
       }
     },
@@ -140,14 +236,14 @@
         ContentType: application/json,
         ConversationId: Guid_2,
         CorrelationId: Guid_1,
-        DeliverAt: DateTimeOffset_10,
+        DeliverAt: DateTimeOffset_2,
         ExceptionDetail: {
           Type: System.Exception,
           Data: {
             Message type: StartHandlerThatThrows,
             Handler type: TheHandlerThatThrows,
-            Handler start time: DateTimeOffset_11,
-            Handler failure time: DateTimeOffset_12,
+            Handler start time: {Scrubbed},
+            Handler failure time: {Scrubbed},
             Handler canceled: false,
             ExceptionLogState: {
               TypeTag: ExceptionLogState
@@ -161,8 +257,8 @@
           Source: Tests,
           TargetSite: {Scrubbed}
         },
-        HandlerFailureTime: DateTimeOffset_13,
-        HandlerStartTime: DateTimeOffset_14,
+        HandlerFailureTime: {Scrubbed},
+        HandlerStartTime: {Scrubbed},
         HandlerType: TheHandlerThatThrows,
         IncomingMessage: {
           TypeTag: StartHandlerThatThrows,
@@ -182,9 +278,43 @@
         ProcessingEndpoint: SerilogTestsStartHandlerThatThrows,
         ReplyToAddress: SerilogTestsStartHandlerThatThrows,
         Retries: 1,
-        Retries.Timestamp: DateTimeOffset_15,
+        Retries.Timestamp: DateTimeOffset_3,
         SourceContext: NServiceBus.ImmediateRetry,
-        TimeSent: DateTimeOffset_5,
+        TimeSent: DateTimeOffset_1,
+        TraceParent: {Scrubbed}
+      }
+    },
+    {
+      Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
+      Properties: {
+        ContentType: application/json,
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
+        DeliverAt: DateTimeOffset_2,
+        ElapsedTime: {Scrubbed},
+        FinishTime: {Scrubbed},
+        IncomingMessage: {
+          TypeTag: StartHandlerThatThrows,
+          Property: TheProperty
+        },
+        IncomingMessageId: Guid_1,
+        IncomingMessageType: StartHandlerThatThrows,
+        IncomingMessageTypeLong: StartHandlerThatThrows, Tests, Version=0.0.0.0,
+        MessageIntent: Send,
+        OpenTelemetry.StartNewTrace: True,
+        OriginatingEndpoint: SerilogTestsStartHandlerThatThrows,
+        OriginatingHostId: Guid_3,
+        OriginatingMachine: TheMachineName,
+        OtherHeaders: {
+          baggage: {Scrubbed}
+        },
+        ProcessingEndpoint: SerilogTestsStartHandlerThatThrows,
+        ReplyToAddress: SerilogTestsStartHandlerThatThrows,
+        Retries: 1,
+        Retries.Timestamp: DateTimeOffset_3,
+        SourceContext: StartHandlerThatThrows,
+        StartTime: {Scrubbed},
+        TimeSent: DateTimeOffset_1,
         TraceParent: {Scrubbed}
       }
     },
@@ -194,14 +324,14 @@
         ContentType: application/json,
         ConversationId: Guid_2,
         CorrelationId: Guid_1,
-        DeliverAt: DateTimeOffset_10,
+        DeliverAt: DateTimeOffset_2,
         ExceptionDetail: {
           Type: System.Exception,
           Data: {
             Message type: StartHandlerThatThrows,
             Handler type: TheHandlerThatThrows,
-            Handler start time: DateTimeOffset_16,
-            Handler failure time: DateTimeOffset_17,
+            Handler start time: {Scrubbed},
+            Handler failure time: {Scrubbed},
             Handler canceled: false,
             ExceptionLogState: {
               TypeTag: ExceptionLogState
@@ -215,8 +345,8 @@
           Source: Tests,
           TargetSite: {Scrubbed}
         },
-        HandlerFailureTime: DateTimeOffset_18,
-        HandlerStartTime: DateTimeOffset_19,
+        HandlerFailureTime: {Scrubbed},
+        HandlerStartTime: {Scrubbed},
         HandlerType: TheHandlerThatThrows,
         IncomingMessage: {
           TypeTag: StartHandlerThatThrows,
@@ -236,9 +366,9 @@
         ProcessingEndpoint: SerilogTestsStartHandlerThatThrows,
         ReplyToAddress: SerilogTestsStartHandlerThatThrows,
         Retries: 1,
-        Retries.Timestamp: DateTimeOffset_15,
+        Retries.Timestamp: DateTimeOffset_3,
         SourceContext: NServiceBus.MoveToError,
-        TimeSent: DateTimeOffset_5,
+        TimeSent: DateTimeOffset_1,
         TraceParent: {Scrubbed}
       }
     }

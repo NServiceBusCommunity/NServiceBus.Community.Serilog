@@ -1,0 +1,12 @@
+﻿{
+  Message: {
+    MessageType: LogIncomingBehaviorTests.Message1,
+    Instance: {}
+  },
+  MessageHandled: false,
+  MessageId: Guid_1,
+  ReplyToAddress: reply address,
+  Extensions: {
+    Serilog.ILogger: {}
+  }
+}

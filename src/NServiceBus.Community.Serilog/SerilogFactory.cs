@@ -9,6 +9,13 @@ public class SerilogFactory :
     ILogger? loggerToUse;
 
     /// <summary>
+    /// Creates a new <see cref="SerilogFactory"/>. Freezes <see cref="HeaderAppender"/>'s
+    /// exclude set — any subsequent call to <see cref="HeaderAppender.Exclude"/> will throw.
+    /// </summary>
+    public SerilogFactory() =>
+        HeaderAppender.Freeze();
+
+    /// <summary>
     /// <see cref="LoggingFactoryDefinition.GetLoggingFactory" />.
     /// </summary>
     protected override ILoggerFactory GetLoggingFactory() =>

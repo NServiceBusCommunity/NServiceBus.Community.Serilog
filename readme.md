@@ -233,6 +233,22 @@ When a pipeline exception is logged, it will be enriched with the following prop
  * `HandlerFailureTime` the UTC timestamp for when the handler threw the exception.
 
 
+### Excluding headers
+
+`HeaderAppender.BuildHeaders` (used by message audit, saga audit, and exception enrichment) promotes message headers to log event properties. By default a small set of NServiceBus infrastructure headers (`EnclosedMessageTypes`, `ProcessingEndpoint`, `CorrelationId`, `ConversationId`, `NServiceBusVersion`, `MessageId`) is excluded. Additional header names can be added to that exclude set via `HeaderAppender.Exclude`:
+
+<!-- snippet: ExcludeHeaders -->
+<a id='snippet-ExcludeHeaders'></a>
+```cs
+HeaderAppender.Exclude("MyCustomHeader");
+HeaderAppender.Exclude("HeaderA", "HeaderB", "HeaderC");
+```
+<sup><a href='/src/Tests/HeaderAppenderTests.cs#L12-L15' title='Snippet source file'>snippet source</a> | <a href='#snippet-ExcludeHeaders' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
+
+`Exclude` must be called during application startup, **before** `LogManager.Use<SerilogFactory>()`. Once `SerilogFactory` has been constructed the exclude set is frozen and any subsequent call to `Exclude` throws `InvalidOperationException`. This makes the set effectively immutable for the lifetime of the endpoint and eliminates any race between configuration and the running pipeline.
+
+
 ### Saga tracing
 
 <!-- snippet: EnableSagaTracing -->

@@ -1,17 +1,83 @@
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 namespace NServiceBus.Serilog;
 
 public static class HeaderAppender
 {
+    static bool frozen;
+
+    /// <summary>
+    /// Add a header name to the set of headers that should not be promoted to log event
+    /// properties.
+    /// </summary>
+    /// <remarks>
+    /// Must be called during application startup, before <c>LogManager.Use&lt;SerilogFactory&gt;()</c>.
+    /// Once <see cref="SerilogFactory"/> has been instantiated the exclude set is frozen and
+    /// subsequent calls to <see cref="Exclude"/> will throw <see cref="InvalidOperationException"/>.
+    /// This makes the exclude set effectively immutable for the lifetime of the endpoint and
+    /// avoids races between configuration and the running pipeline.
+    /// </remarks>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if called after <see cref="SerilogFactory"/> has been created.
+    /// </exception>
     public static void Exclude(string name)
     {
-        var tempSet = new HashSet<string>(excludeHeaders)
+        ThrowIfFrozen();
+        excludeHeaders = new HashSet<string>(excludeHeaders)
         {
             name
-        };
-        excludeHeaders = tempSet.ToFrozenSet();
+        }.ToFrozenSet();
     }
 
+    /// <summary>
+    /// Add multiple header names to the set of headers that should not be promoted to
+    /// log event properties.
+    /// </summary>
+    /// <remarks>
+    /// Same lifecycle as <see cref="Exclude(string)"/>: must be called during application
+    /// startup, before <c>LogManager.Use&lt;SerilogFactory&gt;()</c>. Throws once
+    /// <see cref="SerilogFactory"/> has been created.
+    /// </remarks>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if called after <see cref="SerilogFactory"/> has been created.
+    /// </exception>
+    public static void Exclude(params string[] names)
+    {
+        ThrowIfFrozen();
+        var updated = new HashSet<string>(excludeHeaders);
+        foreach (var name in names)
+        {
+            updated.Add(name);
+        }
+
+        excludeHeaders = updated.ToFrozenSet();
+    }
+
+    static void ThrowIfFrozen()
+    {
+        if (frozen)
+        {
+            throw new InvalidOperationException(
+                $"{nameof(HeaderAppender)}.{nameof(Exclude)} must be called before {nameof(LogManager)}.Use<{nameof(SerilogFactory)}>(). " +
+                "The exclude set is frozen once the SerilogFactory has been created.");
+        }
+    }
+
+    internal static void Freeze() => frozen = true;
+
+    internal static void ResetForTests()
+    {
+        frozen = false;
+        excludeHeaders = FrozenSet.ToFrozenSet(
+        [
+            Headers.EnclosedMessageTypes,
+            Headers.ProcessingEndpoint,
+            Headers.CorrelationId,
+            Headers.ConversationId,
+            Headers.NServiceBusVersion,
+            Headers.MessageId
+        ]);
+    }
+
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     static FrozenSet<string> excludeHeaders = FrozenSet.ToFrozenSet(
     [
         Headers.EnclosedMessageTypes,

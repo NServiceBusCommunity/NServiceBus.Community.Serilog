@@ -1,4 +1,12 @@
-﻿#pragma warning disable CA2254
+// NSB's ILog.*Format methods are contractually string.Format-style ("{0}", "{1:N3}").
+// The templates are forwarded to Serilog as-is. Serilog parses "{0}" / "{1}" as valid
+// (numeric-named) property tokens, so LogEvent.Properties ends up with keys named "0",
+// "1", ... — semantically meaningless but harmless: rendered output is still correct,
+// and the template string stays stable for Serilog's template-parser cache. Cleaning
+// up the property names would require pre-rendering each call (per-call cache entry)
+// or rewriting templates to named placeholders (impossible — NSB owns the call sites).
+// This is a deliberate trade in favour of cache stability.
+#pragma warning disable CA2254
 class Logger(ILogger logger) :
     ILog
 {

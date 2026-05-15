@@ -151,6 +151,21 @@ When a handler is invoked, a new logger is forked from the above enriched physic
 When a message is sent, the same properties as described in "Incoming message enrichment" will be added to the outgoing pipeline. Note that if a handler sends a message, the logger injected into the outgoing pipeline will be forked from the logger instance as described in "Handler enrichment". As such it will contain a property `Handler` for the handler that sent the message.
 
 
+#### Ambient LogContext enrichment
+
+While the incoming message is being processed, `IncomingMessageId`, `CorrelationId`, and `ConversationId` are also pushed onto Serilog's ambient [`LogContext`](https://github.com/serilog/serilog/wiki/Enrichment#the-logcontext). This lets log events written via the static `Log.Logger` — including events emitted from code that has no access to `context.Logger()`, such as third-party library callbacks — carry the same correlation properties as this library's own tracing events.
+
+To opt in, the consumer's logger must be configured with `Enrich.FromLogContext()`. Without it, the values are still pushed but no enricher consumes them, so the properties will not appear on log events.
+
+```cs
+var configuration = new LoggerConfiguration();
+configuration.Enrich.FromLogContext();
+configuration.Enrich.WithNsbExceptionDetails();
+configuration.WriteTo.File("log.txt");
+Log.Logger = configuration.CreateLogger();
+```
+
+
 #### Accessing the logger
 
 The contextual logger instance can be accessed from anywhere in the pipeline via `SerilogTracingExtensions.Logger(this IPipelineContext context)`.

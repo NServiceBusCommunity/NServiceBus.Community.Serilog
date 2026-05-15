@@ -90,9 +90,16 @@
             catch (Exception exception)
             {
                 var data = exception.Data;
-                if (!data.Contains("ExceptionLogState"))
+                if (!data.IsReadOnly && !data.Contains("ExceptionLogState"))
                 {
-                    data.Add("ExceptionLogState", exceptionLogState);
+                    try
+                    {
+                        data.Add("ExceptionLogState", exceptionLogState);
+                    }
+                    catch
+                    {
+                        // never let the enrichment hijack the original throw
+                    }
                 }
 
                 throw;

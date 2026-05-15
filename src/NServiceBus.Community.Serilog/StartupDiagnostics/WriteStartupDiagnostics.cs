@@ -1,11 +1,13 @@
-﻿#region WriteStartupDiagnostics
+#region WriteStartupDiagnostics
 
 class StartupDiagnostics(IReadOnlySettings settings, ILogger logger) :
     FeatureStartupTask
 {
+    readonly ILogger startupLogger = logger.ForContext<StartupDiagnostics>();
+
     protected override Task OnStart(IMessageSession session, Cancel cancel = default)
     {
-        var properties = BuildProperties(settings, logger);
+        var properties = BuildProperties(settings, startupLogger);
 
         var templateParser = new MessageTemplateParser();
         var messageTemplate = templateParser.Parse("DiagnosticEntries");
@@ -15,7 +17,7 @@ class StartupDiagnostics(IReadOnlySettings settings, ILogger logger) :
             exception: null,
             messageTemplate: messageTemplate,
             properties: properties);
-        logger.Write(logEvent);
+        startupLogger.Write(logEvent);
         return Task.CompletedTask;
     }
 
@@ -51,8 +53,6 @@ class StartupDiagnostics(IReadOnlySettings settings, ILogger logger) :
 
     protected override Task OnStop(IMessageSession session, Cancel cancel = default) =>
         Task.CompletedTask;
-
-    ILogger logger = logger.ForContext<StartupDiagnostics>();
 }
 
 #endregion

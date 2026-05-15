@@ -40,7 +40,7 @@
         var exception = Assert.Throws<InvalidOperationException>(
             () => behavior.Invoke(context, () => Task.CompletedTask).GetAwaiter().GetResult());
 
-        await Assert.That(exception!.Message).Contains(nameof(IncomingPhysicalBehavior));
+        await Assert.That(exception.Message).Contains(nameof(IncomingPhysicalBehavior));
     }
 
     class Message1;

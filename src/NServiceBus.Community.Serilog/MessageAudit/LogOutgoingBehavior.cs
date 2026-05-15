@@ -15,14 +15,19 @@
 
     public override Task Invoke(IOutgoingPhysicalMessageContext context, Func<Task> next)
     {
-        var message = context.Extensions
-            .Get<OutgoingLogicalMessage>()
-            .Instance;
-        LogMessage(context, context.Logger(), message);
+        var logger = context.Logger();
+        if (logger.IsEnabled(LogEventLevel.Information))
+        {
+            var message = context.Extensions
+                .Get<OutgoingLogicalMessage>()
+                .Instance;
+            LogInfoMessage(context, logger, message);
+        }
+
         return next();
     }
 
-    void LogMessage(IOutgoingPhysicalMessageContext context, ILogger logger, object message)
+    void LogInfoMessage(IOutgoingPhysicalMessageContext context, ILogger logger, object message)
     {
         var properties = new List<LogEventProperty>();
 

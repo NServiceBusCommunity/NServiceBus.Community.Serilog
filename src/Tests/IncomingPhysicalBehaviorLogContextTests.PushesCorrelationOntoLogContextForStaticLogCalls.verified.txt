@@ -1,0 +1,10 @@
+﻿{
+  log: {
+    Information: inside handler,
+    Properties: {
+      ConversationId: the-conversation-id,
+      CorrelationId: the-correlation-id,
+      IncomingMessageId: MessageId
+    }
+  }
+}

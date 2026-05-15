@@ -46,6 +46,11 @@
     }
   },
   log: {
-    Error: LogMessage
+    Error: LogMessage,
+    Properties: {
+      ConversationId: ConversationId,
+      CorrelationId: CorrelationId,
+      IncomingMessageId: MessageId
+    }
   }
 }

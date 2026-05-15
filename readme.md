@@ -293,6 +293,9 @@ serilogTracing.EnableSagaTracing();
         0: BackIntoSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
         1: Guid_4,
         2: BackIntoSaga,
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
+        IncomingMessageId: Guid_1,
         SourceContext: NServiceBus.SerializeMessageConnector
       }
     },
@@ -432,7 +435,7 @@ serilogTracing.EnableSagaTracing();
   ]
 }
 ```
-<sup><a href='/src/Tests/IntegrationTests.Saga.verified.txt#L1-L196' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Saga.verified.txt' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/IntegrationTests.Saga.verified.txt#L1-L199' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Saga.verified.txt' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

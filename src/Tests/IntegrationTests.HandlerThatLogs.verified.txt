@@ -34,12 +34,15 @@
     {
       Error: The message,
       Properties: {
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
         ExceptionDetail: {
           Type: System.Exception,
           HResult: -2146233088,
           Message: Exception of type 'System.Exception' was thrown.,
           Source: null
         },
+        IncomingMessageId: Guid_1,
         SourceContext: TheHandlerThatThrows
       }
     }

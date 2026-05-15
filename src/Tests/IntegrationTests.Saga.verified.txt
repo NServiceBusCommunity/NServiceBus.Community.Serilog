@@ -56,6 +56,9 @@
         0: BackIntoSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
         1: Guid_4,
         2: BackIntoSaga,
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
+        IncomingMessageId: Guid_1,
         SourceContext: NServiceBus.SerializeMessageConnector
       }
     },

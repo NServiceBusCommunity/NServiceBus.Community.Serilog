@@ -1,0 +1,5 @@
+﻿{
+  log: {
+    Information: outside handler
+  }
+}

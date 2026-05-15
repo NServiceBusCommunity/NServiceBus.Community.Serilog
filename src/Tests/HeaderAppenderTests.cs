@@ -34,14 +34,12 @@ public class HeaderAppenderTests
     }
 
     [Test]
-    public async Task ExcludeParamsThrowsAfterFreeze()
+    public void ExcludeParamsThrowsAfterFreeze()
     {
         HeaderAppender.ResetForTests();
         HeaderAppender.Freeze();
 
         Assert.Throws<InvalidOperationException>(() => HeaderAppender.Exclude("A", "B"));
-
-        await Task.CompletedTask;
     }
 
     [Test]
@@ -52,6 +50,6 @@ public class HeaderAppenderTests
 
         var exception = Assert.Throws<InvalidOperationException>(() => HeaderAppender.Exclude("TooLate"));
 
-        await Assert.That(exception!.Message).Contains("frozen");
+        await Assert.That(exception.Message).Contains("frozen");
     }
 }

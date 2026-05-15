@@ -63,10 +63,11 @@
 
             if (logState.IncomingMessage is not null)
             {
-                if (Log.BindProperty("IncomingMessage", logState.IncomingMessage, true, out var messageProperty))
-                {
-                    logEvent.AddPropertyIfAbsent(messageProperty);
-                }
+                var messageProperty = propertyFactory.CreateProperty(
+                    "IncomingMessage",
+                    logState.IncomingMessage,
+                    destructureObjects: true);
+                logEvent.AddPropertyIfAbsent(messageProperty);
             }
 
             foreach (var property in HeaderAppender.BuildHeaders(logState.IncomingHeaders, header))

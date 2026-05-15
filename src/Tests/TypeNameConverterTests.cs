@@ -24,6 +24,18 @@ public class TypeNameConverterTests
     [Test]
     public async Task AssemblyQualifiedWithNoVersion() =>
         await Assert.That(TypeNameConverter.GetName("Namespace.TheClass, Tests")).IsEqualTo("TheClass");
+
+    [Test]
+    public async Task SingleArgGeneric() =>
+        await Assert.That(TypeNameConverter.GetName(typeof(List<int>)).MessageTypeName).IsEqualTo("List<Int32>");
+
+    [Test]
+    public async Task MultiArgGeneric() =>
+        await Assert.That(TypeNameConverter.GetName(typeof(Dictionary<string, int>)).MessageTypeName).IsEqualTo("Dictionary<String, Int32>");
+
+    [Test]
+    public async Task NestedGeneric() =>
+        await Assert.That(TypeNameConverter.GetName(typeof(Dictionary<string, List<int>>)).MessageTypeName).IsEqualTo("Dictionary<String, List<Int32>>");
 }
 
 namespace Namespace

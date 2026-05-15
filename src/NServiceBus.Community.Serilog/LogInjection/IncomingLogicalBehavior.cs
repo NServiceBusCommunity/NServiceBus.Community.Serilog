@@ -12,7 +12,12 @@
 
     public override async Task Invoke(IIncomingLogicalMessageContext context, Func<Task> next)
     {
-        var previous = context.Extensions.Get<ILogger>();
+        if (!context.Extensions.TryGet<ILogger>(out var previous))
+        {
+            throw new InvalidOperationException(
+                $"Expected an {nameof(ILogger)} in the pipeline context. Ensure {nameof(IncomingPhysicalBehavior)} is registered before {nameof(IncomingLogicalBehavior)}.");
+        }
+
         try
         {
             await Inner(context, next);

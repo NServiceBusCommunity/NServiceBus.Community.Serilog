@@ -28,7 +28,13 @@
                 "TraceParent",
                 "Task",
                 "TargetSite",
-                "baggage");
+                "baggage",
+                "StartTime",
+                "FinishTime",
+                "HandlerStartTime",
+                "HandlerFailureTime",
+                "Handler start time",
+                "Handler failure time");
 
         LogManager.Use<SerilogFactory>();
     }

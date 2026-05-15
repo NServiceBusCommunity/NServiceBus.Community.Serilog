@@ -243,7 +243,7 @@ When a pipeline exception is logged, it will be enriched with the following prop
 HeaderAppender.Exclude("MyCustomHeader");
 HeaderAppender.Exclude("HeaderA", "HeaderB", "HeaderC");
 ```
-<sup><a href='/src/Tests/HeaderAppenderTests.cs#L12-L15' title='Snippet source file'>snippet source</a> | <a href='#snippet-ExcludeHeaders' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/HeaderAppenderTests.cs#L10-L13' title='Snippet source file'>snippet source</a> | <a href='#snippet-ExcludeHeaders' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 `Exclude` must be called during application startup, **before** `LogManager.Use<SerilogFactory>()`. Once `SerilogFactory` has been constructed the exclude set is frozen and any subsequent call to `Exclude` throws `InvalidOperationException`. This makes the set effectively immutable for the lifetime of the endpoint and eliminates any race between configuration and the running pipeline.
@@ -372,7 +372,7 @@ serilogTracing.EnableSagaTracing();
           Originator: SerilogTestsStartSaga,
           OriginalMessageId: Guid_1
         },
-        FinishTime: DateTimeOffset_1,
+        FinishTime: {Scrubbed},
         IncomingMessageId: Guid_1,
         IncomingMessageType: StartSaga,
         IncomingMessageTypeLong: StartSaga, Tests, Version=0.0.0.0,
@@ -382,7 +382,7 @@ serilogTracing.EnableSagaTracing();
           OriginatingMachine: TheMachineName,
           OriginatingEndpoint: SerilogTestsStartSaga,
           MessageType: StartSaga,
-          TimeSent: DateTimeOffset_2,
+          TimeSent: DateTimeOffset_1,
           Intent: Send
         },
         IsCompleted: false,
@@ -401,7 +401,7 @@ serilogTracing.EnableSagaTracing();
         SagaId: Guid_5,
         SagaType: TheSaga,
         SourceContext: StartSaga,
-        StartTime: DateTimeOffset_3
+        StartTime: {Scrubbed}
       }
     },
     {
@@ -411,7 +411,7 @@ serilogTracing.EnableSagaTracing();
         ConversationId: Guid_2,
         CorrelationId: Guid_1,
         ElapsedTime: {Scrubbed},
-        FinishTime: DateTimeOffset_4,
+        FinishTime: {Scrubbed},
         IncomingMessage: {
           TypeTag: StartSaga,
           Property: TheProperty
@@ -431,8 +431,8 @@ serilogTracing.EnableSagaTracing();
         ReplyToAddress: SerilogTestsStartSaga,
         Serilog.SagaStateChange: {Scrubbed},
         SourceContext: StartSaga,
-        StartTime: DateTimeOffset_5,
-        TimeSent: DateTimeOffset_2,
+        StartTime: {Scrubbed},
+        TimeSent: DateTimeOffset_1,
         TraceParent: {Scrubbed}
       }
     },
@@ -553,9 +553,11 @@ serilogTracing.EnableMessageTracing();
 class StartupDiagnostics(IReadOnlySettings settings, ILogger logger) :
     FeatureStartupTask
 {
+    readonly ILogger startupLogger = logger.ForContext<StartupDiagnostics>();
+
     protected override Task OnStart(IMessageSession session, Cancel cancel = default)
     {
-        var properties = BuildProperties(settings, logger);
+        var properties = BuildProperties(settings, startupLogger);
 
         var templateParser = new MessageTemplateParser();
         var messageTemplate = templateParser.Parse("DiagnosticEntries");
@@ -565,7 +567,7 @@ class StartupDiagnostics(IReadOnlySettings settings, ILogger logger) :
             exception: null,
             messageTemplate: messageTemplate,
             properties: properties);
-        logger.Write(logEvent);
+        startupLogger.Write(logEvent);
         return Task.CompletedTask;
     }
 
@@ -601,8 +603,6 @@ class StartupDiagnostics(IReadOnlySettings settings, ILogger logger) :
 
     protected override Task OnStop(IMessageSession session, Cancel cancel = default) =>
         Task.CompletedTask;
-
-    ILogger logger = logger.ForContext<StartupDiagnostics>();
 }
 ```
 <sup><a href='/src/NServiceBus.Community.Serilog/StartupDiagnostics/WriteStartupDiagnostics.cs#L1-L58' title='Snippet source file'>snippet source</a> | <a href='#snippet-WriteStartupDiagnostics' title='Start of snippet'>anchor</a></sup>

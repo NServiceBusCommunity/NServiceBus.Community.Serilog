@@ -104,7 +104,7 @@
           Originator: SerilogTestsStartSaga,
           OriginalMessageId: Guid_1
         },
-        FinishTime: DateTimeOffset_1,
+        FinishTime: {Scrubbed},
         IncomingMessageId: Guid_1,
         IncomingMessageType: StartSaga,
         IncomingMessageTypeLong: StartSaga, Tests, Version=0.0.0.0,
@@ -114,7 +114,7 @@
           OriginatingMachine: TheMachineName,
           OriginatingEndpoint: SerilogTestsStartSaga,
           MessageType: StartSaga,
-          TimeSent: DateTimeOffset_2,
+          TimeSent: DateTimeOffset_1,
           Intent: Send
         },
         IsCompleted: false,
@@ -133,7 +133,7 @@
         SagaId: Guid_5,
         SagaType: TheSaga,
         SourceContext: StartSaga,
-        StartTime: DateTimeOffset_3
+        StartTime: {Scrubbed}
       }
     },
     {
@@ -143,7 +143,7 @@
         ConversationId: Guid_2,
         CorrelationId: Guid_1,
         ElapsedTime: {Scrubbed},
-        FinishTime: DateTimeOffset_4,
+        FinishTime: {Scrubbed},
         IncomingMessage: {
           TypeTag: StartSaga,
           Property: TheProperty
@@ -163,8 +163,8 @@
         ReplyToAddress: SerilogTestsStartSaga,
         Serilog.SagaStateChange: {Scrubbed},
         SourceContext: StartSaga,
-        StartTime: DateTimeOffset_5,
-        TimeSent: DateTimeOffset_2,
+        StartTime: {Scrubbed},
+        TimeSent: DateTimeOffset_1,
         TraceParent: {Scrubbed}
       }
     },

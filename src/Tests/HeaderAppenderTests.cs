@@ -1,5 +1,3 @@
-using NServiceBus.Serilog;
-
 [NotInParallel("HeaderAppender.frozen")]
 public class HeaderAppenderTests
 {

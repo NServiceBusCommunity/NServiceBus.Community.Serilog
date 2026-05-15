@@ -10,7 +10,7 @@ public class SerilogFactory :
 
     /// <summary>
     /// Creates a new <see cref="SerilogFactory"/>. Freezes <see cref="HeaderAppender"/>'s
-    /// exclude set — any subsequent call to <see cref="HeaderAppender.Exclude"/> will throw.
+    /// exclude set — any subsequent call to <see cref="HeaderAppender.Exclude(string)"/> will throw.
     /// </summary>
     public SerilogFactory() =>
         HeaderAppender.Freeze();

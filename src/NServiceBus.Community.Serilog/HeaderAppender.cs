@@ -1,5 +1,9 @@
 namespace NServiceBus.Serilog;
 
+/// <summary>
+/// Configures which message headers are excluded from being promoted to Serilog log event
+/// properties by the message-audit, saga-audit, and exception-enrichment paths.
+/// </summary>
 public static class HeaderAppender
 {
     static bool frozen;
@@ -11,7 +15,7 @@ public static class HeaderAppender
     /// <remarks>
     /// Must be called during application startup, before <c>LogManager.Use&lt;SerilogFactory&gt;()</c>.
     /// Once <see cref="SerilogFactory"/> has been instantiated the exclude set is frozen and
-    /// subsequent calls to <see cref="Exclude"/> will throw <see cref="InvalidOperationException"/>.
+    /// subsequent calls to <see cref="Exclude(string)"/> will throw <see cref="InvalidOperationException"/>.
     /// This makes the exclude set effectively immutable for the lifetime of the endpoint and
     /// avoids races between configuration and the running pipeline.
     /// </remarks>

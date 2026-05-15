@@ -45,6 +45,6 @@ public class SerilogTracingExtensionsTests
 
         var exception = Assert.Throws<InvalidOperationException>(() => context.Logger());
 
-        await Assert.That(exception!.Message).Contains(nameof(SerilogTracingExtensions.EnableSerilogTracing));
+        await Assert.That(exception.Message).Contains(nameof(SerilogTracingExtensions.EnableSerilogTracing));
     }
 }

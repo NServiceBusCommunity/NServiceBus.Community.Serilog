@@ -1,6 +1,5 @@
 ﻿#pragma warning disable 1591
 
-[Serializable]
 class ExceptionLogState(LogEventProperty processingEndpoint, IReadOnlyDictionary<string, string> incomingHeaders, string? correlationId, string? conversationId)
 {
     public readonly LogEventProperty ProcessingEndpoint = processingEndpoint;

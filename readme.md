@@ -236,24 +236,51 @@ serilogTracing.EnableSagaTracing();
 <a id='snippet-IntegrationTests.Saga.verified.txt'></a>
 ```txt
 {
-  logsForTarget: [
+  log: [
     {
-      MessageTemplate: Hello from {@Saga}. Message: {@Message},
-      Level: Information,
+      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
       Properties: {
-        ConversationId: Guid_1,
-        CorrelationId: Guid_2,
+        0: StartSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
+        1: Guid_1,
+        2: StartSaga,
+        SourceContext: NServiceBus.SerializeMessageConnector
+      }
+    },
+    {
+      Information: Sent message {OutgoingMessageType} {OutgoingMessageId}.,
+      Properties: {
+        ContentType: application/json,
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
+        MessageIntent: Send,
+        OpenTelemetry.StartNewTrace: False,
+        OriginatingEndpoint: SerilogTestsStartSaga,
+        OriginatingHostId: Guid_3,
+        OriginatingMachine: TheMachineName,
+        OutgoingMessage: {
+          TypeTag: StartSaga,
+          Property: TheProperty
+        },
+        OutgoingMessageId: Guid_1,
+        OutgoingMessageType: StartSaga,
+        ProcessingEndpoint: SerilogTestsStartSaga,
+        ReplyToAddress: SerilogTestsStartSaga,
+        Route: SerilogTestsStartSaga,
+        SourceContext: StartSaga
+      }
+    },
+    {
+      Information: Hello from {@Saga}. Message: {@Message},
+      Properties: {
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
         Handler: TheSaga,
-        IncomingMessageId: Guid_2,
+        IncomingMessageId: Guid_1,
         IncomingMessageType: StartSaga,
         IncomingMessageTypeLong: StartSaga, Tests, Version=0.0.0.0,
         Message: {
           TypeTag: StartSaga,
-          Properties: [
-            {
-              Property: TheProperty
-            }
-          ]
+          Property: TheProperty
         },
         ProcessingEndpoint: SerilogTestsStartSaga,
         Saga: TheSaga,
@@ -261,75 +288,68 @@ serilogTracing.EnableSagaTracing();
       }
     },
     {
-      MessageTemplate: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
-      Level: Information,
+      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
       Properties: {
-        ContentType: text/xml,
-        ConversationId: Guid_1,
-        CorrelationId: Guid_2,
-        ElapsedTime: {Scrubbed},
-        FinishTime: DateTimeOffset_1,
-        IncomingMessage: {
-          TypeTag: StartSaga,
-          Properties: [
-            {
-              Property: TheProperty
-            }
-          ]
-        },
-        IncomingMessageId: Guid_2,
-        IncomingMessageType: StartSaga,
-        IncomingMessageTypeLong: StartSaga, Tests, Version=0.0.0.0,
-        MessageIntent: Send,
-        OriginatingEndpoint: SerilogTestsStartSaga,
-        OriginatingHostId: Guid_3,
-        OriginatingMachine: TheMachineName,
-        ProcessingEndpoint: SerilogTestsStartSaga,
-        ReplyToAddress: SerilogTestsStartSaga,
-        Serilog.SagaStateChange: {Scrubbed},
-        SourceContext: StartSaga,
-        StartTime: DateTimeOffset_2,
-        TimeSent: DateTimeOffset_3
+        0: BackIntoSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
+        1: Guid_4,
+        2: BackIntoSaga,
+        SourceContext: NServiceBus.SerializeMessageConnector
       }
     },
     {
-      MessageTemplate: Saga execution {SagaType} {SagaId} ({ElapsedTime:N3}s).,
-      Level: Information,
+      Information: Sent message {OutgoingMessageType} {OutgoingMessageId}.,
       Properties: {
-        ConversationId: Guid_1,
-        CorrelationId: Guid_2,
+        ContentType: application/json,
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
+        IncomingMessageId: Guid_1,
+        IncomingMessageType: StartSaga,
+        IncomingMessageTypeLong: StartSaga, Tests, Version=0.0.0.0,
+        MessageIntent: Send,
+        OpenTelemetry.StartNewTrace: False,
+        OriginatingEndpoint: SerilogTestsStartSaga,
+        OriginatingHostId: Guid_3,
+        OriginatingMachine: TheMachineName,
+        OriginatingSagaId: Guid_5,
+        OriginatingSagaType: TheSaga,
+        OutgoingMessage: {
+          TypeTag: BackIntoSaga,
+          Property: TheProperty
+        },
+        OutgoingMessageId: Guid_4,
+        OutgoingMessageType: BackIntoSaga,
+        ProcessingEndpoint: SerilogTestsStartSaga,
+        RelatedTo: Guid_1,
+        ReplyToAddress: SerilogTestsStartSaga,
+        Route: SerilogTestsStartSaga,
+        SourceContext: StartSaga
+      }
+    },
+    {
+      Information: Saga execution {SagaType} {SagaId} ({ElapsedTime:N3}s).,
+      Properties: {
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
         ElapsedTime: {Scrubbed},
         Entity: {
           TypeTag: TheSagaData,
-          Properties: [
-            {
-              Property: TheProperty
-            },
-            {
-              Id: Guid_4
-            },
-            {
-              Originator: SerilogTestsStartSaga
-            },
-            {
-              OriginalMessageId: Guid_2
-            }
-          ]
+          Property: TheProperty,
+          Id: Guid_5,
+          Originator: SerilogTestsStartSaga,
+          OriginalMessageId: Guid_1
         },
-        FinishTime: DateTimeOffset_4,
-        IncomingMessageId: Guid_2,
+        FinishTime: DateTimeOffset_1,
+        IncomingMessageId: Guid_1,
         IncomingMessageType: StartSaga,
         IncomingMessageTypeLong: StartSaga, Tests, Version=0.0.0.0,
         Initiator: {
-          Elements: {
-            "IsSagaTimeout": false,
-            "MessageId": Guid_2,
-            "OriginatingMachine": TheMachineName,
-            "OriginatingEndpoint": SerilogTestsStartSaga,
-            "MessageType": StartSaga,
-            "TimeSent": DateTimeOffset_5,
-            "Intent": Send
-          }
+          IsSagaTimeout: false,
+          MessageId: Guid_1,
+          OriginatingMachine: TheMachineName,
+          OriginatingEndpoint: SerilogTestsStartSaga,
+          MessageType: StartSaga,
+          TimeSent: DateTimeOffset_2,
+          Intent: Send
         },
         IsCompleted: false,
         IsNew: true,
@@ -337,93 +357,82 @@ serilogTracing.EnableSagaTracing();
         ResultingMessages: {
           Elements: [
             {
-              Elements: {
-                "Id": Guid_5,
-                "Type": BackIntoSaga,
-                "Intent": Send,
-                "Destination": SerilogTestsStartSaga
-              }
+              Id: Guid_4,
+              Type: BackIntoSaga,
+              Intent: Send,
+              Destination: SerilogTestsStartSaga
             }
           ]
         },
-        SagaId: Guid_4,
+        SagaId: Guid_5,
         SagaType: TheSaga,
         SourceContext: StartSaga,
-        StartTime: DateTimeOffset_6
+        StartTime: DateTimeOffset_3
       }
     },
     {
-      MessageTemplate: Sent message {OutgoingMessageType} {OutgoingMessageId}.,
-      Level: Information,
+      Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
       Properties: {
-        ContentType: text/xml,
-        ConversationId: Guid_1,
-        CorrelationId: Guid_2,
-        MessageIntent: Send,
-        OriginatingEndpoint: SerilogTestsStartSaga,
-        OriginatingHostId: Guid_3,
-        OriginatingMachine: TheMachineName,
-        OutgoingMessage: {
+        ContentType: application/json,
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
+        ElapsedTime: {Scrubbed},
+        FinishTime: DateTimeOffset_4,
+        IncomingMessage: {
           TypeTag: StartSaga,
-          Properties: [
-            {
-              Property: TheProperty
-            }
-          ]
+          Property: TheProperty
         },
-        OutgoingMessageId: Guid_2,
-        OutgoingMessageType: StartSaga,
-        ProcessingEndpoint: SerilogTestsStartSaga,
-        ReplyToAddress: SerilogTestsStartSaga,
-        SourceContext: StartSaga,
-        UnicastRoutes: {
-          Elements: [
-            SerilogTestsStartSaga
-          ]
-        }
-      }
-    },
-    {
-      MessageTemplate: Sent message {OutgoingMessageType} {OutgoingMessageId}.,
-      Level: Information,
-      Properties: {
-        ContentType: text/xml,
-        ConversationId: Guid_1,
-        CorrelationId: Guid_2,
-        IncomingMessageId: Guid_2,
+        IncomingMessageId: Guid_1,
         IncomingMessageType: StartSaga,
         IncomingMessageTypeLong: StartSaga, Tests, Version=0.0.0.0,
         MessageIntent: Send,
+        OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartSaga,
         OriginatingHostId: Guid_3,
         OriginatingMachine: TheMachineName,
-        OriginatingSagaId: Guid_4,
-        OriginatingSagaType: TheSaga,
-        OutgoingMessage: {
-          TypeTag: BackIntoSaga,
-          Properties: [
-            {
-              Property: TheProperty
-            }
-          ]
+        OtherHeaders: {
+          baggage: {Scrubbed}
         },
-        OutgoingMessageId: Guid_5,
-        OutgoingMessageType: BackIntoSaga,
         ProcessingEndpoint: SerilogTestsStartSaga,
-        RelatedTo: Guid_2,
         ReplyToAddress: SerilogTestsStartSaga,
+        Serilog.SagaStateChange: {Scrubbed},
         SourceContext: StartSaga,
-        UnicastRoutes: {
-          Elements: [
-            SerilogTestsStartSaga
-          ]
-        }
+        StartTime: DateTimeOffset_5,
+        TimeSent: DateTimeOffset_2,
+        TraceParent: {Scrubbed}
+      }
+    },
+    {
+      Debug:
+(IBatchDispatchContext context0) => BatchToDispatchConnector.Invoke(context0, 
+    (IDispatchContext context1) => ImmediateDispatchTerminator.Invoke(context1))
+,
+      Properties: {
+        SourceContext: NServiceBus.Pipeline`1[[NServiceBus.Pipeline.IBatchDispatchContext, NServiceBus.Core, Version=10.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c]]
+      }
+    },
+    {
+      Information: Hello from {@Saga}. Message: {@Message},
+      Properties: {
+        ConversationId: Guid_2,
+        CorrelationId: Guid_1,
+        Handler: TheSaga,
+        IncomingMessageId: Guid_4,
+        IncomingMessageType: BackIntoSaga,
+        IncomingMessageTypeLong: BackIntoSaga, Tests, Version=0.0.0.0,
+        Message: {
+          TypeTag: BackIntoSaga,
+          Property: TheProperty
+        },
+        ProcessingEndpoint: SerilogTestsStartSaga,
+        Saga: TheSaga,
+        SourceContext: BackIntoSaga
       }
     }
   ]
 }
 ```
-<sup><a href='/src/Tests/IntegrationTests.Saga.verified.txt#L1-L187' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Saga.verified.txt' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/IntegrationTests.Saga.verified.txt#L1-L196' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Saga.verified.txt' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -448,12 +457,6 @@ serilogTracing.EnableMessageTracing();
 ```txt
 {
   log: [
-    {
-      Debug: Started polling for new messages in {SolutionDirectory}.learningtransport\SerilogTestsStartHandler,
-      Properties: {
-        SourceContext: NServiceBus.LearningTransportMessagePump
-      }
-    },
     {
       Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
       Properties: {
@@ -487,54 +490,6 @@ serilogTracing.EnableMessageTracing();
       }
     },
     {
-      Debug:
-Destination: SerilogTestsStartHandler
-Message headers:
-NServiceBus.MessageId : 00000000-0000-0000-0000-000000000001
-NServiceBus.OpenTelemetry.StartNewTrace : False
-NServiceBus.MessageIntent : Send
-NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
-NServiceBus.ReplyToAddress : SerilogTestsStartHandler
-NServiceBus.OriginatingMachine : TheMachineName
-NServiceBus.OriginatingEndpoint : SerilogTestsStartHandler
-$.diagnostics.originating.hostid : 00930595711f151052bf6577017ed870
-NServiceBus.ContentType : application/json
-NServiceBus.EnclosedMessageTypes : StartHandler, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
-NServiceBus.Version : NsbVersion
-,
-      Properties: {
-        SourceContext: NServiceBus.RoutingToDispatchConnector
-      }
-    },
-    {
-      Debug: No envelope handler found for the current message (NativeID: {0}, assuming the default NServiceBus format,
-      Properties: {
-        0: Guid_4,
-        SourceContext: NServiceBus.EnvelopeUnwrapper
-      }
-    },
-    {
-      Debug:
-Processing message type: StartHandler
-Message headers:
-NServiceBus.MessageId : 00000000-0000-0000-0000-000000000001
-NServiceBus.OpenTelemetry.StartNewTrace : False
-NServiceBus.MessageIntent : Send
-NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
-NServiceBus.ReplyToAddress : SerilogTestsStartHandler
-NServiceBus.OriginatingMachine : TheMachineName
-NServiceBus.OriginatingEndpoint : SerilogTestsStartHandler
-$.diagnostics.originating.hostid : 00930595711f151052bf6577017ed870
-NServiceBus.ContentType : application/json
-NServiceBus.EnclosedMessageTypes : StartHandler, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
-NServiceBus.Version : NsbVersion
-Handlers to invoke:
-TheHandler,
-      Properties: {
-        SourceContext: NServiceBus.LoadHandlersConnector
-      }
-    },
-    {
       Information: Hello from {@Handler}.,
       Properties: {
         ConversationId: Guid_2,
@@ -546,74 +501,11 @@ TheHandler,
         ProcessingEndpoint: SerilogTestsStartHandler,
         SourceContext: StartHandler
       }
-    },
-    {
-      Information: Initiating shutdown.,
-      Properties: {
-        SourceContext: NServiceBus.RunningEndpointInstance
-      }
-    },
-    {
-      Debug: Stopping {0} receiver,
-      Properties: {
-        0: Main,
-        SourceContext: NServiceBus.ReceiveComponent
-      }
-    },
-    {
-      Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
-      Properties: {
-        ContentType: application/json,
-        ConversationId: Guid_2,
-        CorrelationId: Guid_1,
-        ElapsedTime: {Scrubbed},
-        FinishTime: DateTimeOffset_1,
-        IncomingMessage: {
-          TypeTag: StartHandler,
-          Property: TheProperty
-        },
-        IncomingMessageId: Guid_1,
-        IncomingMessageType: StartHandler,
-        IncomingMessageTypeLong: StartHandler, Tests, Version=0.0.0.0,
-        MessageIntent: Send,
-        OpenTelemetry.StartNewTrace: False,
-        OriginatingEndpoint: SerilogTestsStartHandler,
-        OriginatingHostId: Guid_3,
-        OriginatingMachine: TheMachineName,
-        OtherHeaders: {
-          baggage: 
-        },
-        ProcessingEndpoint: SerilogTestsStartHandler,
-        ReplyToAddress: SerilogTestsStartHandler,
-        SourceContext: StartHandler,
-        StartTime: DateTimeOffset_2,
-        TimeSent: DateTimeOffset_3,
-        TraceParent: {Scrubbed}
-      }
-    },
-    {
-      Debug: ,
-      Properties: {
-        SourceContext: NServiceBus.LearningTransportMessagePump
-      }
-    },
-    {
-      Debug: Stopped {0} receiver,
-      Properties: {
-        0: Main,
-        SourceContext: NServiceBus.ReceiveComponent
-      }
-    },
-    {
-      Information: Shutdown complete.,
-      Properties: {
-        SourceContext: NServiceBus.RunningEndpointInstance
-      }
     }
   ]
 }
 ```
-<sup><a href='/src/Tests/IntegrationTests.Handler.verified.txt#L1-L166' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Handler.verified.txt' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/IntegrationTests.Handler.verified.txt#L1-L49' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Handler.verified.txt' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

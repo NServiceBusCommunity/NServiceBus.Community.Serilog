@@ -32,52 +32,6 @@
       }
     },
     {
-      Debug:
-Destination: SerilogTestsStartHandlerThatLogs
-Message headers:
-NServiceBus.MessageId : 00000000-0000-0000-0000-000000000001
-NServiceBus.OpenTelemetry.StartNewTrace : False
-NServiceBus.MessageIntent : Send
-NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
-NServiceBus.ReplyToAddress : SerilogTestsStartHandlerThatLogs
-NServiceBus.OriginatingMachine : TheMachineName
-NServiceBus.OriginatingEndpoint : SerilogTestsStartHandlerThatLogs
-NServiceBus.ContentType : application/json
-NServiceBus.EnclosedMessageTypes : StartHandlerThatLogs, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
-NServiceBus.Version : NsbVersion
-,
-      Properties: {
-        SourceContext: NServiceBus.RoutingToDispatchConnector
-      }
-    },
-    {
-      Debug: No envelope handler found for the current message (NativeID: {0}, assuming the default NServiceBus format,
-      Properties: {
-        0: Guid_4,
-        SourceContext: NServiceBus.EnvelopeUnwrapper
-      }
-    },
-    {
-      Debug:
-Processing message type: StartHandlerThatLogs
-Message headers:
-NServiceBus.MessageId : 00000000-0000-0000-0000-000000000001
-NServiceBus.OpenTelemetry.StartNewTrace : False
-NServiceBus.MessageIntent : Send
-NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
-NServiceBus.ReplyToAddress : SerilogTestsStartHandlerThatLogs
-NServiceBus.OriginatingMachine : TheMachineName
-NServiceBus.OriginatingEndpoint : SerilogTestsStartHandlerThatLogs
-NServiceBus.ContentType : application/json
-NServiceBus.EnclosedMessageTypes : StartHandlerThatLogs, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
-NServiceBus.Version : NsbVersion
-Handlers to invoke:
-TheHandlerThatLogs,
-      Properties: {
-        SourceContext: NServiceBus.LoadHandlersConnector
-      }
-    },
-    {
       Error: The message,
       Properties: {
         ExceptionDetail: {
@@ -87,68 +41,6 @@ TheHandlerThatLogs,
           Source: null
         },
         SourceContext: TheHandlerThatThrows
-      }
-    },
-    {
-      Information: Initiating shutdown.,
-      Properties: {
-        SourceContext: NServiceBus.RunningEndpointInstance
-      }
-    },
-    {
-      Debug: Stopping {0} receiver,
-      Properties: {
-        0: Main,
-        SourceContext: NServiceBus.ReceiveComponent
-      }
-    },
-    {
-      Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
-      Properties: {
-        ContentType: application/json,
-        ConversationId: Guid_2,
-        CorrelationId: Guid_1,
-        ElapsedTime: {Scrubbed},
-        FinishTime: DateTimeOffset_1,
-        IncomingMessage: {
-          TypeTag: StartHandlerThatLogs
-        },
-        IncomingMessageId: Guid_1,
-        IncomingMessageType: StartHandlerThatLogs,
-        IncomingMessageTypeLong: StartHandlerThatLogs, Tests, Version=0.0.0.0,
-        MessageIntent: Send,
-        OpenTelemetry.StartNewTrace: False,
-        OriginatingEndpoint: SerilogTestsStartHandlerThatLogs,
-        OriginatingHostId: Guid_3,
-        OriginatingMachine: TheMachineName,
-        OtherHeaders: {
-          baggage: 
-        },
-        ProcessingEndpoint: SerilogTestsStartHandlerThatLogs,
-        ReplyToAddress: SerilogTestsStartHandlerThatLogs,
-        SourceContext: StartHandlerThatLogs,
-        StartTime: DateTimeOffset_2,
-        TimeSent: DateTimeOffset_3,
-        TraceParent: {Scrubbed}
-      }
-    },
-    {
-      Debug: ,
-      Properties: {
-        SourceContext: NServiceBus.LearningTransportMessagePump
-      }
-    },
-    {
-      Debug: Stopped {0} receiver,
-      Properties: {
-        0: Main,
-        SourceContext: NServiceBus.ReceiveComponent
-      }
-    },
-    {
-      Information: Shutdown complete.,
-      Properties: {
-        SourceContext: NServiceBus.RunningEndpointInstance
       }
     }
   ]

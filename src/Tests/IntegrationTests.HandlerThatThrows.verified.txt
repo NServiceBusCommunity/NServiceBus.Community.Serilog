@@ -33,53 +33,7 @@
       }
     },
     {
-      Debug:
-Destination: SerilogTestsStartHandlerThatThrows
-Message headers:
-NServiceBus.MessageId : 00000000-0000-0000-0000-000000000001
-NServiceBus.OpenTelemetry.StartNewTrace : False
-NServiceBus.MessageIntent : Send
-NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
-NServiceBus.ReplyToAddress : SerilogTestsStartHandlerThatThrows
-NServiceBus.OriginatingMachine : TheMachineName
-NServiceBus.OriginatingEndpoint : SerilogTestsStartHandlerThatThrows
-NServiceBus.ContentType : application/json
-NServiceBus.EnclosedMessageTypes : StartHandlerThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
-NServiceBus.Version : NsbVersion
-,
-      Properties: {
-        SourceContext: NServiceBus.RoutingToDispatchConnector
-      }
-    },
-    {
-      Debug: No envelope handler found for the current message (NativeID: {0}, assuming the default NServiceBus format,
-      Properties: {
-        0: Guid_4,
-        SourceContext: NServiceBus.EnvelopeUnwrapper
-      }
-    },
-    {
-      Debug:
-Processing message type: StartHandlerThatThrows
-Message headers:
-NServiceBus.MessageId : 00000000-0000-0000-0000-000000000001
-NServiceBus.OpenTelemetry.StartNewTrace : False
-NServiceBus.MessageIntent : Send
-NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
-NServiceBus.ReplyToAddress : SerilogTestsStartHandlerThatThrows
-NServiceBus.OriginatingMachine : TheMachineName
-NServiceBus.OriginatingEndpoint : SerilogTestsStartHandlerThatThrows
-NServiceBus.ContentType : application/json
-NServiceBus.EnclosedMessageTypes : StartHandlerThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
-NServiceBus.Version : NsbVersion
-Handlers to invoke:
-TheHandlerThatThrows,
-      Properties: {
-        SourceContext: NServiceBus.LoadHandlersConnector
-      }
-    },
-    {
-      Information: Immediate Retry is going to retry message '00000000-0000-0000-0000-000000000001' because of an exception:,
+      Information: Immediate Retry is going to retry message 'Guid_1' because of an exception:,
       Properties: {
         ContentType: application/json,
         ConversationId: Guid_2,
@@ -120,7 +74,7 @@ TheHandlerThatThrows,
         OriginatingHostId: Guid_3,
         OriginatingMachine: TheMachineName,
         OtherHeaders: {
-          baggage: 
+          baggage: {Scrubbed}
         },
         ProcessingEndpoint: SerilogTestsStartHandlerThatThrows,
         ReplyToAddress: SerilogTestsStartHandlerThatThrows,
@@ -130,40 +84,7 @@ TheHandlerThatThrows,
       }
     },
     {
-      Debug: ,
-      Properties: {
-        SourceContext: NServiceBus.LearningTransportMessagePump
-      }
-    },
-    {
-      Debug: No envelope handler found for the current message (NativeID: {0}, assuming the default NServiceBus format,
-      Properties: {
-        0: Guid_4,
-        SourceContext: NServiceBus.EnvelopeUnwrapper
-      }
-    },
-    {
-      Debug:
-Processing message type: StartHandlerThatThrows
-Message headers:
-NServiceBus.MessageId : 00000000-0000-0000-0000-000000000001
-NServiceBus.OpenTelemetry.StartNewTrace : False
-NServiceBus.MessageIntent : Send
-NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
-NServiceBus.ReplyToAddress : SerilogTestsStartHandlerThatThrows
-NServiceBus.OriginatingMachine : TheMachineName
-NServiceBus.OriginatingEndpoint : SerilogTestsStartHandlerThatThrows
-NServiceBus.ContentType : application/json
-NServiceBus.EnclosedMessageTypes : StartHandlerThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
-NServiceBus.Version : NsbVersion
-Handlers to invoke:
-TheHandlerThatThrows,
-      Properties: {
-        SourceContext: NServiceBus.LoadHandlersConnector
-      }
-    },
-    {
-      Warning: Delayed Retry will reschedule message '00000000-0000-0000-0000-000000000001' after a delay of 00:00:00.0010000 because of an exception:,
+      Warning: Delayed Retry will reschedule message 'Guid_1' after a delay of 00:00:00.0010000 because of an exception:,
       Properties: {
         ContentType: application/json,
         ConversationId: Guid_2,
@@ -204,7 +125,7 @@ TheHandlerThatThrows,
         OriginatingHostId: Guid_3,
         OriginatingMachine: TheMachineName,
         OtherHeaders: {
-          baggage: 
+          baggage: {Scrubbed}
         },
         ProcessingEndpoint: SerilogTestsStartHandlerThatThrows,
         ReplyToAddress: SerilogTestsStartHandlerThatThrows,
@@ -214,61 +135,7 @@ TheHandlerThatThrows,
       }
     },
     {
-      Debug:
-Destination: SerilogTestsStartHandlerThatThrows
-Message headers:
-NServiceBus.MessageId : 00000000-0000-0000-0000-000000000001
-NServiceBus.OpenTelemetry.StartNewTrace : True
-NServiceBus.MessageIntent : Send
-NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
-NServiceBus.ReplyToAddress : SerilogTestsStartHandlerThatThrows
-NServiceBus.OriginatingMachine : TheMachineName
-NServiceBus.OriginatingEndpoint : SerilogTestsStartHandlerThatThrows
-NServiceBus.ContentType : application/json
-NServiceBus.EnclosedMessageTypes : StartHandlerThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
-NServiceBus.Version : NsbVersion
-NServiceBus.Retries : 1
-,
-      Properties: {
-        SourceContext: NServiceBus.RoutingToDispatchConnector
-      }
-    },
-    {
-      Debug: ,
-      Properties: {
-        SourceContext: NServiceBus.LearningTransportMessagePump
-      }
-    },
-    {
-      Debug: No envelope handler found for the current message (NativeID: {0}, assuming the default NServiceBus format,
-      Properties: {
-        0: Guid_5,
-        SourceContext: NServiceBus.EnvelopeUnwrapper
-      }
-    },
-    {
-      Debug:
-Processing message type: StartHandlerThatThrows
-Message headers:
-NServiceBus.MessageId : 00000000-0000-0000-0000-000000000001
-NServiceBus.OpenTelemetry.StartNewTrace : True
-NServiceBus.MessageIntent : Send
-NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
-NServiceBus.ReplyToAddress : SerilogTestsStartHandlerThatThrows
-NServiceBus.OriginatingMachine : TheMachineName
-NServiceBus.OriginatingEndpoint : SerilogTestsStartHandlerThatThrows
-NServiceBus.ContentType : application/json
-NServiceBus.EnclosedMessageTypes : StartHandlerThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
-NServiceBus.Version : NsbVersion
-NServiceBus.Retries : 1
-Handlers to invoke:
-TheHandlerThatThrows,
-      Properties: {
-        SourceContext: NServiceBus.LoadHandlersConnector
-      }
-    },
-    {
-      Information: Immediate Retry is going to retry message '00000000-0000-0000-0000-000000000001' because of an exception:,
+      Information: Immediate Retry is going to retry message 'Guid_1' because of an exception:,
       Properties: {
         ContentType: application/json,
         ConversationId: Guid_2,
@@ -310,7 +177,7 @@ TheHandlerThatThrows,
         OriginatingHostId: Guid_3,
         OriginatingMachine: TheMachineName,
         OtherHeaders: {
-          baggage: 
+          baggage: {Scrubbed}
         },
         ProcessingEndpoint: SerilogTestsStartHandlerThatThrows,
         ReplyToAddress: SerilogTestsStartHandlerThatThrows,
@@ -322,41 +189,7 @@ TheHandlerThatThrows,
       }
     },
     {
-      Debug: ,
-      Properties: {
-        SourceContext: NServiceBus.LearningTransportMessagePump
-      }
-    },
-    {
-      Debug: No envelope handler found for the current message (NativeID: {0}, assuming the default NServiceBus format,
-      Properties: {
-        0: Guid_5,
-        SourceContext: NServiceBus.EnvelopeUnwrapper
-      }
-    },
-    {
-      Debug:
-Processing message type: StartHandlerThatThrows
-Message headers:
-NServiceBus.MessageId : 00000000-0000-0000-0000-000000000001
-NServiceBus.OpenTelemetry.StartNewTrace : True
-NServiceBus.MessageIntent : Send
-NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
-NServiceBus.ReplyToAddress : SerilogTestsStartHandlerThatThrows
-NServiceBus.OriginatingMachine : TheMachineName
-NServiceBus.OriginatingEndpoint : SerilogTestsStartHandlerThatThrows
-NServiceBus.ContentType : application/json
-NServiceBus.EnclosedMessageTypes : StartHandlerThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
-NServiceBus.Version : NsbVersion
-NServiceBus.Retries : 1
-Handlers to invoke:
-TheHandlerThatThrows,
-      Properties: {
-        SourceContext: NServiceBus.LoadHandlersConnector
-      }
-    },
-    {
-      Error: Moving message '00000000-0000-0000-0000-000000000001' to the error queue 'error' because processing failed due to an exception:,
+      Error: Moving message 'Guid_1' to the error queue 'error' because processing failed due to an exception:,
       Properties: {
         ContentType: application/json,
         ConversationId: Guid_2,
@@ -398,7 +231,7 @@ TheHandlerThatThrows,
         OriginatingHostId: Guid_3,
         OriginatingMachine: TheMachineName,
         OtherHeaders: {
-          baggage: 
+          baggage: {Scrubbed}
         },
         ProcessingEndpoint: SerilogTestsStartHandlerThatThrows,
         ReplyToAddress: SerilogTestsStartHandlerThatThrows,
@@ -407,84 +240,6 @@ TheHandlerThatThrows,
         SourceContext: NServiceBus.MoveToError,
         TimeSent: DateTimeOffset_5,
         TraceParent: {Scrubbed}
-      }
-    },
-    {
-      Debug:
-Destination: error
-Message headers:
-NServiceBus.MessageId : 00000000-0000-0000-0000-000000000001
-NServiceBus.OpenTelemetry.StartNewTrace : True
-NServiceBus.MessageIntent : Send
-NServiceBus.CorrelationId : 00000000-0000-0000-0000-000000000001
-NServiceBus.ReplyToAddress : SerilogTestsStartHandlerThatThrows
-NServiceBus.OriginatingMachine : TheMachineName
-NServiceBus.OriginatingEndpoint : SerilogTestsStartHandlerThatThrows
-NServiceBus.ContentType : application/json
-NServiceBus.EnclosedMessageTypes : StartHandlerThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6
-NServiceBus.Version : NsbVersion
-NServiceBus.ProcessingMachine : TheMachineName
-NServiceBus.ProcessingEndpoint : SerilogTestsStartHandlerThatThrows
-$.diagnostics.hostdisplayname : TheMachineName
-NServiceBus.FailedQ : SerilogTestsStartHandlerThatThrows
-NServiceBus.ExceptionInfo.ExceptionType : System.Exception
-NServiceBus.ExceptionInfo.Message : Exception of type 'System.Exception' was thrown.
-NServiceBus.ExceptionInfo.Source : Tests
-NServiceBus.ExceptionInfo.StackTrace : System.Exception: Exception of type 'System.Exception' was thrown.
-   at NServiceBus.InvokeHandlerTerminator.Terminate(IInvokeHandlerContext context) in /_/src/NServiceBus.Core/Pipeline/Incoming/InvokeHandlerTerminator.cs:line 31
-   at NServiceBus.SagaPersistenceBehavior.Invoke(IInvokeHandlerContext context, Func`2 next) in /_/src/NServiceBus.Core/Sagas/SagaPersistenceBehavior.cs:line 34
-   at NServiceBus.LoadHandlersConnector.Invoke(IIncomingLogicalMessageContext context, Func`2 stage) in /_/src/NServiceBus.Core/Pipeline/Incoming/LoadHandlersConnector.cs:line 59
-   at NServiceBus.LoadHandlersConnector.Invoke(IIncomingLogicalMessageContext context, Func`2 stage) in /_/src/NServiceBus.Core/Pipeline/Incoming/LoadHandlersConnector.cs:line 80
-   at NServiceBus.DeserializeMessageConnector.Invoke(IIncomingPhysicalMessageContext context, Func`2 stage) in /_/src/NServiceBus.Core/Pipeline/Incoming/DeserializeMessageConnector.cs:line 38
-   at NServiceBus.ProcessingStatisticsBehavior.Invoke(IIncomingPhysicalMessageContext context, Func`2 next) in /_/src/NServiceBus.Core/Performance/Statistics/ProcessingStatisticsBehavior.cs:line 27
-   at NServiceBus.TransportReceiveToPhysicalMessageConnector.Invoke(ITransportReceiveContext context, Func`2 next) in /_/src/NServiceBus.Core/Pipeline/Incoming/TransportReceiveToPhysicalMessageConnector.cs:line 38
-   at NServiceBus.TransportReceiveToPhysicalMessageConnector.Invoke(ITransportReceiveContext context, Func`2 next) in /_/src/NServiceBus.Core/Pipeline/Incoming/TransportReceiveToPhysicalMessageConnector.cs:line 44
-   at NServiceBus.RetryAcknowledgementBehavior.Invoke(ITransportReceiveContext context, Func`2 next) in /_/src/NServiceBus.Core/ServicePlatform/Retries/RetryAcknowledgementBehavior.cs:line 25
-   at NServiceBus.TracingExtensions.<Invoke>g__TracePipelineStatus|0_0[TContext](IPipeline`1 pipeline, TContext context, Activity activity) in /_/src/NServiceBus.Core/OpenTelemetry/Tracing/TracingExtensions.cs:line 21
-   at NServiceBus.MainPipelineExecutor.Invoke(MessageContext messageContext, CancellationToken cancellationToken) in /_/src/NServiceBus.Core/Pipeline/MainPipelineExecutor.cs:line 54
-   at NServiceBus.MainPipelineExecutor.Invoke(MessageContext messageContext, CancellationToken cancellationToken) in /_/src/NServiceBus.Core/Pipeline/MainPipelineExecutor.cs:line 82
-   at NServiceBus.LearningTransportMessagePump.ProcessFile(ILearningTransportTransaction transaction, String messageId, CancellationToken messageProcessingCancellationToken) in /_/src/NServiceBus.Core/Transports/Learning/LearningTransportMessagePump.cs:line 345
-NServiceBus.ExceptionInfo.Data.Message type : StartHandlerThatThrows
-NServiceBus.ExceptionInfo.Data.Handler type : TheHandlerThatThrows
-NServiceBus.ExceptionInfo.Data.Handler canceled : False
-NServiceBus.ExceptionInfo.Data.ExceptionLogState : ExceptionLogState
-NServiceBus.ExceptionInfo.Data.Message ID : 00000000-0000-0000-0000-000000000001
-NServiceBus.ExceptionInfo.Data.Pipeline canceled : False
-,
-      Properties: {
-        SourceContext: NServiceBus.RoutingToDispatchConnector
-      }
-    },
-    {
-      Information: Initiating shutdown.,
-      Properties: {
-        SourceContext: NServiceBus.RunningEndpointInstance
-      }
-    },
-    {
-      Debug: Stopping {0} receiver,
-      Properties: {
-        0: Main,
-        SourceContext: NServiceBus.ReceiveComponent
-      }
-    },
-    {
-      Debug: ,
-      Properties: {
-        SourceContext: NServiceBus.LearningTransportMessagePump
-      }
-    },
-    {
-      Debug: Stopped {0} receiver,
-      Properties: {
-        0: Main,
-        SourceContext: NServiceBus.ReceiveComponent
-      }
-    },
-    {
-      Information: Shutdown complete.,
-      Properties: {
-        SourceContext: NServiceBus.RunningEndpointInstance
       }
     }
   ]

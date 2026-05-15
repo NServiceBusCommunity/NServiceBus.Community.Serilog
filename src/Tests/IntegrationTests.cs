@@ -1,12 +1,16 @@
-using TypeNameConverter = NServiceBus.Serilog.TypeNameConverter;
+﻿using TypeNameConverter = NServiceBus.Serilog.TypeNameConverter;
 
 [NotInParallel]
 public class IntegrationTests
 {
+    static IntegrationTests() =>
+        LogManager.Use<SerilogFactory>();
+
     [Test]
     public async Task Handler()
     {
         Recording.Start();
+        Recording.Pause();
         await Send(
             new StartHandler
             {
@@ -19,6 +23,7 @@ public class IntegrationTests
     public async Task GenericHandler()
     {
         Recording.Start();
+        Recording.Pause();
         await Send(
             new StartGenericHandler<string>
             {
@@ -31,6 +36,7 @@ public class IntegrationTests
     public async Task WithCustomHeader()
     {
         Recording.Start();
+        Recording.Pause();
         await Send(
             new StartHandler
             {
@@ -44,18 +50,34 @@ public class IntegrationTests
     public async Task WithConvertedCustomHeader()
     {
         Recording.Start();
+        Recording.Pause();
         await Send(
             new StartHandler
             {
                 Property = "TheProperty"
-            }, options => options.SetHeader("ConvertHeader", "CustomValue"));
+            },
+            options => options.SetHeader("ConvertHeader", "CustomValue"));
         await Verify();
     }
+
+    //[Fact]
+    //public async Task SagaNotFound()
+    //{
+    //    var events = await Send(
+    //        new NotFoundSagaMessage(),
+    //        options =>
+    //        {
+    //            options.SetHeader(Headers.SagaId, Guid.NewGuid().ToString());
+    //            options.SetHeader(Headers.SagaType, typeof(NotFoundSaga).FullName);
+    //        });
+    //    await Verify<NotFoundSagaMessage>(events);
+    //}
 
     [Test]
     public async Task HandlerThatLogs()
     {
         Recording.Start();
+        Recording.Pause();
         await Send(new StartHandlerThatLogs());
         await Verify();
     }
@@ -64,6 +86,7 @@ public class IntegrationTests
     public async Task HandlerThatThrows()
     {
         Recording.Start();
+        Recording.Pause();
         await Send(
             new StartHandlerThatThrows
             {
@@ -72,12 +95,13 @@ public class IntegrationTests
         await Verify();
     }
 
-#if Debug
+#if DEBUG
 
     [Test]
     public async Task Saga()
     {
         Recording.Start();
+        Recording.Pause();
         await Send(
             new StartSaga
             {
@@ -93,6 +117,7 @@ public class IntegrationTests
     public async Task BehaviorThatThrows()
     {
         Recording.Start();
+        Recording.Pause();
         await Send(
             new StartBehaviorThatThrows
             {
@@ -102,11 +127,11 @@ public class IntegrationTests
         await Verify();
     }
 
-    static async Task Send(object message,
+    static async Task Send(
+        object message,
         Action<SendOptions>? optionsAction = null,
         Action<EndpointConfiguration>? extraConfiguration = null)
     {
-        Recording.Pause();
         var suffix = TypeNameConverter
             .GetName(message.GetType())
             .MessageTypeName
@@ -158,6 +183,7 @@ public class IntegrationTests
             throw new("No Set received.");
         }
 
+        Recording.Pause();
         await endpoint.Stop();
     }
 }

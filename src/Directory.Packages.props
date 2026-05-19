@@ -27,6 +27,6 @@
     <PackageVersion Include="EmptyFiles" Version="8.18.1" />
     <PackageVersion Include="SimpleInfoName" Version="3.2.0" />
     <PackageVersion Include="Verify" Version="31.16.3" />
-    <PackageVersion Include="TUnit" Version="1.44.39" />
+    <PackageVersion Include="TUnit" Version="1.45.8" />
   </ItemGroup>
 </Project>

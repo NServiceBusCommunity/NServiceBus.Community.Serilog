@@ -1,24 +1,26 @@
 ﻿{
   log: [
     {
-      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
+      Debug: {State:l},
       Properties: {
-        0: StartHandlerThatLogs, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
-        1: Guid_1,
-        2: StartHandlerThatLogs,
-        SourceContext: NServiceBus.SerializeMessageConnector
+        Endpoint: SerilogTestsStartHandlerThatLogs,
+        ParentId: {Scrubbed},
+        SourceContext: NServiceBus.SerializeMessageConnector,
+        SpanId: {Scrubbed},
+        State: Serializing message 'StartHandlerThatLogs, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6' with id 'Guid_1', ToString() of the message yields: StartHandlerThatLogs,
+        TraceId: Guid_2
       }
     },
     {
       Information: Sent message {OutgoingMessageType} {OutgoingMessageId}.,
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartHandlerThatLogs,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OutgoingMessage: {
           TypeTag: StartHandlerThatLogs
@@ -32,10 +34,11 @@
       }
     },
     {
-      Error: The message,
+      Error: {State:l},
       Properties: {
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
+        Endpoint: SerilogTestsStartHandlerThatLogs,
         ExceptionDetail: {
           Type: System.Exception,
           HResult: -2146233088,
@@ -43,7 +46,11 @@
           Source: null
         },
         IncomingMessageId: Guid_1,
-        SourceContext: TheHandlerThatThrows
+        ParentId: {Scrubbed},
+        SourceContext: TheHandlerThatThrows,
+        SpanId: {Scrubbed},
+        State: The message,
+        TraceId: Guid_2
       }
     }
   ]

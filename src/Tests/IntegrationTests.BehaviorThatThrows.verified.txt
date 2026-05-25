@@ -1,24 +1,26 @@
 ﻿{
   log: [
     {
-      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
+      Debug: {State:l},
       Properties: {
-        0: StartBehaviorThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
-        1: Guid_1,
-        2: StartBehaviorThatThrows,
-        SourceContext: NServiceBus.SerializeMessageConnector
+        Endpoint: SerilogTestsStartBehaviorThatThrows,
+        ParentId: {Scrubbed},
+        SourceContext: NServiceBus.SerializeMessageConnector,
+        SpanId: {Scrubbed},
+        State: Serializing message 'StartBehaviorThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6' with id 'Guid_1', ToString() of the message yields: StartBehaviorThatThrows,
+        TraceId: Guid_2
       }
     },
     {
       Information: Sent message {OutgoingMessageType} {OutgoingMessageId}.,
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartBehaviorThatThrows,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OutgoingMessage: {
           TypeTag: StartBehaviorThatThrows,
@@ -36,7 +38,7 @@
       Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         ElapsedTime: {Scrubbed},
         FinishTime: {Scrubbed},
@@ -50,7 +52,7 @@
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartBehaviorThatThrows,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OtherHeaders: {
           baggage: {Scrubbed}
@@ -64,11 +66,12 @@
       }
     },
     {
-      Information: Immediate Retry is going to retry message 'Guid_1' because of an exception:,
+      Information: {State:l},
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
+        Endpoint: SerilogTestsStartBehaviorThatThrows,
         ExceptionDetail: {
           Type: System.Exception,
           Data: {
@@ -76,7 +79,7 @@
               TypeTag: ExceptionLogState
             },
             Message ID: Guid_1,
-            Transport message ID: Guid_4,
+            Transport message ID: Guid_5,
             Pipeline canceled: false
           },
           HResult: -2146233088,
@@ -89,19 +92,23 @@
           Property: TheProperty
         },
         IncomingMessageId: Guid_1,
-        IncomingTransportMessageId: Guid_4,
+        IncomingTransportMessageId: Guid_5,
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartBehaviorThatThrows,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OtherHeaders: {
           baggage: {Scrubbed}
         },
+        ParentId: {Scrubbed},
         ProcessingEndpoint: SerilogTestsStartBehaviorThatThrows,
         ReplyToAddress: SerilogTestsStartBehaviorThatThrows,
         SourceContext: NServiceBus.ImmediateRetry,
+        SpanId: {Scrubbed},
+        State: Immediate Retry is going to retry message 'Guid_1' because of an exception:,
         TimeSent: DateTimeOffset_1,
+        TraceId: Guid_2,
         TraceParent: {Scrubbed}
       }
     },
@@ -109,7 +116,7 @@
       Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         ElapsedTime: {Scrubbed},
         FinishTime: {Scrubbed},
@@ -123,7 +130,7 @@
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartBehaviorThatThrows,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OtherHeaders: {
           baggage: {Scrubbed}
@@ -137,11 +144,12 @@
       }
     },
     {
-      Warning: Delayed Retry will reschedule message 'Guid_1' after a delay of 00:00:00.0010000 because of an exception:,
+      Warning: {State:l},
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
+        Endpoint: SerilogTestsStartBehaviorThatThrows,
         ExceptionDetail: {
           Type: System.Exception,
           Data: {
@@ -149,7 +157,7 @@
               TypeTag: ExceptionLogState
             },
             Message ID: Guid_1,
-            Transport message ID: Guid_4,
+            Transport message ID: Guid_5,
             Pipeline canceled: false
           },
           HResult: -2146233088,
@@ -162,19 +170,23 @@
           Property: TheProperty
         },
         IncomingMessageId: Guid_1,
-        IncomingTransportMessageId: Guid_4,
+        IncomingTransportMessageId: Guid_5,
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartBehaviorThatThrows,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OtherHeaders: {
           baggage: {Scrubbed}
         },
+        ParentId: {Scrubbed},
         ProcessingEndpoint: SerilogTestsStartBehaviorThatThrows,
         ReplyToAddress: SerilogTestsStartBehaviorThatThrows,
         SourceContext: NServiceBus.DelayedRetry,
+        SpanId: {Scrubbed},
+        State: Delayed Retry will reschedule message 'Guid_1' after a delay of 00:00:00.0010000 because of an exception:,
         TimeSent: DateTimeOffset_1,
+        TraceId: Guid_2,
         TraceParent: {Scrubbed}
       }
     },
@@ -182,7 +194,7 @@
       Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         DeliverAt: DateTimeOffset_2,
         ElapsedTime: {Scrubbed},
@@ -197,7 +209,7 @@
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: True,
         OriginatingEndpoint: SerilogTestsStartBehaviorThatThrows,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OtherHeaders: {
           baggage: {Scrubbed}
@@ -213,12 +225,13 @@
       }
     },
     {
-      Information: Immediate Retry is going to retry message 'Guid_1' because of an exception:,
+      Information: {State:l},
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         DeliverAt: DateTimeOffset_2,
+        Endpoint: SerilogTestsStartBehaviorThatThrows,
         ExceptionDetail: {
           Type: System.Exception,
           Data: {
@@ -226,7 +239,7 @@
               TypeTag: ExceptionLogState
             },
             Message ID: Guid_1,
-            Transport message ID: Guid_5,
+            Transport message ID: Guid_6,
             Pipeline canceled: false
           },
           HResult: -2146233088,
@@ -239,21 +252,25 @@
           Property: TheProperty
         },
         IncomingMessageId: Guid_1,
-        IncomingTransportMessageId: Guid_5,
+        IncomingTransportMessageId: Guid_6,
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: True,
         OriginatingEndpoint: SerilogTestsStartBehaviorThatThrows,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OtherHeaders: {
           baggage: {Scrubbed}
         },
+        ParentId: {Scrubbed},
         ProcessingEndpoint: SerilogTestsStartBehaviorThatThrows,
         ReplyToAddress: SerilogTestsStartBehaviorThatThrows,
         Retries: 1,
         Retries.Timestamp: DateTimeOffset_3,
         SourceContext: NServiceBus.ImmediateRetry,
+        SpanId: {Scrubbed},
+        State: Immediate Retry is going to retry message 'Guid_1' because of an exception:,
         TimeSent: DateTimeOffset_1,
+        TraceId: Guid_2,
         TraceParent: {Scrubbed}
       }
     },
@@ -261,7 +278,7 @@
       Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         DeliverAt: DateTimeOffset_2,
         ElapsedTime: {Scrubbed},
@@ -276,7 +293,7 @@
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: True,
         OriginatingEndpoint: SerilogTestsStartBehaviorThatThrows,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OtherHeaders: {
           baggage: {Scrubbed}
@@ -292,12 +309,13 @@
       }
     },
     {
-      Error: Moving message 'Guid_1' to the error queue 'error' because processing failed due to an exception:,
+      Error: {State:l},
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         DeliverAt: DateTimeOffset_2,
+        Endpoint: SerilogTestsStartBehaviorThatThrows,
         ExceptionDetail: {
           Type: System.Exception,
           Data: {
@@ -305,7 +323,7 @@
               TypeTag: ExceptionLogState
             },
             Message ID: Guid_1,
-            Transport message ID: Guid_5,
+            Transport message ID: Guid_6,
             Pipeline canceled: false
           },
           HResult: -2146233088,
@@ -318,21 +336,25 @@
           Property: TheProperty
         },
         IncomingMessageId: Guid_1,
-        IncomingTransportMessageId: Guid_5,
+        IncomingTransportMessageId: Guid_6,
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: True,
         OriginatingEndpoint: SerilogTestsStartBehaviorThatThrows,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OtherHeaders: {
           baggage: {Scrubbed}
         },
+        ParentId: {Scrubbed},
         ProcessingEndpoint: SerilogTestsStartBehaviorThatThrows,
         ReplyToAddress: SerilogTestsStartBehaviorThatThrows,
         Retries: 1,
         Retries.Timestamp: DateTimeOffset_3,
         SourceContext: NServiceBus.MoveToError,
+        SpanId: {Scrubbed},
+        State: Moving message 'Guid_1' to the error queue 'error' because processing failed due to an exception:,
         TimeSent: DateTimeOffset_1,
+        TraceId: Guid_2,
         TraceParent: {Scrubbed}
       }
     }

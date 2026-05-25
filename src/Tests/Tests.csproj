@@ -24,6 +24,7 @@
     <PackageReference Include="NServiceBus" />
     <PackageReference Include="Serilog.Sinks.Seq" />
     <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.Extensions.Logging" />
     <ProjectReference Include="..\NServiceBus.Community.Serilog\NServiceBus.Community.Serilog.csproj" />
     <PackageReference Include="ProjectDefaults" PrivateAssets="all" />
     <PackageReference Include="TUnit" />

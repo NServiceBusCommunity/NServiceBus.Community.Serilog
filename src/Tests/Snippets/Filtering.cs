@@ -16,7 +16,8 @@
                 inclusionPredicate: Matching.FromSource("MyNamespace"));
         Log.Logger = configuration.CreateLogger();
 
-        LogManager.Use<SerilogFactory>();
+        var builder = Host.CreateApplicationBuilder();
+        builder.Logging.AddSerilog();
 
         #endregion
     }

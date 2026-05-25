@@ -1,4 +1,4 @@
-﻿class Usage
+class Usage
 {
     Usage()
     {
@@ -9,7 +9,8 @@
         configuration.WriteTo.File("log.txt");
         Log.Logger = configuration.CreateLogger();
 
-        LogManager.Use<SerilogFactory>();
+        var builder = Host.CreateApplicationBuilder();
+        builder.Logging.AddSerilog();
 
         #endregion
     }
@@ -24,7 +25,8 @@
         configuration.MinimumLevel.Information();
         Log.Logger = configuration.CreateLogger();
 
-        LogManager.Use<SerilogFactory>();
+        var builder = Host.CreateApplicationBuilder();
+        builder.Logging.AddSerilog();
 
         #endregion
     }

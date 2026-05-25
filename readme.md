@@ -40,6 +40,8 @@ https://nuget.org/packages/NServiceBus.Community.Serilog/
 
 ## Usage
 
+NServiceBus reads its logging configuration from [Microsoft.Extensions.Logging](https://learn.microsoft.com/dotnet/core/extensions/logging). To send NServiceBus log output to Serilog, configure a Serilog logger and route it into the host's logging builder via `AddSerilog()` (from the [Serilog.Extensions.Logging](https://www.nuget.org/packages/Serilog.Extensions.Logging) package).
+
 <!-- snippet: SerilogInCode -->
 <a id='snippet-SerilogInCode'></a>
 ```cs
@@ -48,9 +50,10 @@ configuration.Enrich.WithNsbExceptionDetails();
 configuration.WriteTo.File("log.txt");
 Log.Logger = configuration.CreateLogger();
 
-LogManager.Use<SerilogFactory>();
+var builder = Host.CreateApplicationBuilder();
+builder.Logging.AddSerilog();
 ```
-<sup><a href='/src/Tests/Snippets/Usage.cs#L5-L14' title='Snippet source file'>snippet source</a> | <a href='#snippet-SerilogInCode' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/Snippets/Usage.cs#L5-L15' title='Snippet source file'>snippet source</a> | <a href='#snippet-SerilogInCode' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -77,9 +80,10 @@ configuration
         inclusionPredicate: Matching.FromSource("MyNamespace"));
 Log.Logger = configuration.CreateLogger();
 
-LogManager.Use<SerilogFactory>();
+var builder = Host.CreateApplicationBuilder();
+builder.Logging.AddSerilog();
 ```
-<sup><a href='/src/Tests/Snippets/Filtering.cs#L5-L21' title='Snippet source file'>snippet source</a> | <a href='#snippet-SerilogFiltering' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/Snippets/Filtering.cs#L5-L22' title='Snippet source file'>snippet source</a> | <a href='#snippet-SerilogFiltering' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -87,7 +91,7 @@ LogManager.Use<SerilogFactory>();
 
 Writing diagnostic log entries to [Serilog](https://serilog.net/). Plugs into the low level [pipeline](https://docs.particular.net/nservicebus/pipeline) to give more detailed diagnostics.
 
-When using Serilog for tracing, it is optional to use Serilog as the main NServiceBus logger. i.e. there is no need to include `LogManager.Use<SerilogFactory>();`.
+When using Serilog for tracing, it is optional to use Serilog as the main NServiceBus logger. i.e. there is no need to call `builder.Logging.AddSerilog()`.
 
 
 ### Create an instance of a Serilog logger
@@ -246,7 +250,7 @@ HeaderAppender.Exclude("HeaderA", "HeaderB", "HeaderC");
 <sup><a href='/src/Tests/HeaderAppenderTests.cs#L10-L13' title='Snippet source file'>snippet source</a> | <a href='#snippet-ExcludeHeaders' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
-`Exclude` must be called during application startup, **before** `LogManager.Use<SerilogFactory>()`. Once `SerilogFactory` has been constructed the exclude set is frozen and any subsequent call to `Exclude` throws `InvalidOperationException`. This makes the set effectively immutable for the lifetime of the endpoint and eliminates any race between configuration and the running pipeline.
+`Exclude` must be called during application startup, **before** the endpoint is started. Once the endpoint has started the exclude set is frozen and any subsequent call to `Exclude` throws `InvalidOperationException`. This makes the set effectively immutable for the lifetime of the endpoint and eliminates any race between configuration and the running pipeline.
 
 
 ### Saga tracing
@@ -269,24 +273,26 @@ serilogTracing.EnableSagaTracing();
 {
   log: [
     {
-      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
+      Debug: {State:l},
       Properties: {
-        0: StartSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
-        1: Guid_1,
-        2: StartSaga,
-        SourceContext: NServiceBus.SerializeMessageConnector
+        Endpoint: SerilogTestsStartSaga,
+        ParentId: {Scrubbed},
+        SourceContext: NServiceBus.SerializeMessageConnector,
+        SpanId: {Scrubbed},
+        State: Serializing message 'StartSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6' with id 'Guid_1', ToString() of the message yields: StartSaga,
+        TraceId: Guid_2
       }
     },
     {
       Information: Sent message {OutgoingMessageType} {OutgoingMessageId}.,
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartSaga,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OutgoingMessage: {
           TypeTag: StartSaga,
@@ -303,7 +309,7 @@ serilogTracing.EnableSagaTracing();
     {
       Information: Hello from {@Saga}. Message: {@Message},
       Properties: {
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         Handler: TheSaga,
         IncomingMessageId: Guid_1,
@@ -319,22 +325,24 @@ serilogTracing.EnableSagaTracing();
       }
     },
     {
-      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
+      Debug: {State:l},
       Properties: {
-        0: BackIntoSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
-        1: Guid_4,
-        2: BackIntoSaga,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
+        Endpoint: SerilogTestsStartSaga,
         IncomingMessageId: Guid_1,
-        SourceContext: NServiceBus.SerializeMessageConnector
+        ParentId: {Scrubbed},
+        SourceContext: NServiceBus.SerializeMessageConnector,
+        SpanId: {Scrubbed},
+        State: Serializing message 'BackIntoSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6' with id 'Guid_5', ToString() of the message yields: BackIntoSaga,
+        TraceId: Guid_2
       }
     },
     {
       Information: Sent message {OutgoingMessageType} {OutgoingMessageId}.,
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         IncomingMessageId: Guid_1,
         IncomingMessageType: StartSaga,
@@ -342,15 +350,15 @@ serilogTracing.EnableSagaTracing();
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartSaga,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
-        OriginatingSagaId: Guid_5,
+        OriginatingSagaId: Guid_6,
         OriginatingSagaType: TheSaga,
         OutgoingMessage: {
           TypeTag: BackIntoSaga,
           Property: TheProperty
         },
-        OutgoingMessageId: Guid_4,
+        OutgoingMessageId: Guid_5,
         OutgoingMessageType: BackIntoSaga,
         ProcessingEndpoint: SerilogTestsStartSaga,
         RelatedTo: Guid_1,
@@ -362,13 +370,13 @@ serilogTracing.EnableSagaTracing();
     {
       Information: Saga execution {SagaType} {SagaId} ({ElapsedTime:N3}s).,
       Properties: {
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         ElapsedTime: {Scrubbed},
         Entity: {
           TypeTag: TheSagaData,
           Property: TheProperty,
-          Id: Guid_5,
+          Id: Guid_6,
           Originator: SerilogTestsStartSaga,
           OriginalMessageId: Guid_1
         },
@@ -391,14 +399,14 @@ serilogTracing.EnableSagaTracing();
         ResultingMessages: {
           Elements: [
             {
-              Id: Guid_4,
+              Id: Guid_5,
               Type: BackIntoSaga,
               Intent: Send,
               Destination: SerilogTestsStartSaga
             }
           ]
         },
-        SagaId: Guid_5,
+        SagaId: Guid_6,
         SagaType: TheSaga,
         SourceContext: StartSaga,
         StartTime: {Scrubbed}
@@ -408,7 +416,7 @@ serilogTracing.EnableSagaTracing();
       Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         ElapsedTime: {Scrubbed},
         FinishTime: {Scrubbed},
@@ -422,7 +430,7 @@ serilogTracing.EnableSagaTracing();
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartSaga,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OtherHeaders: {
           baggage: {Scrubbed}
@@ -437,21 +445,25 @@ serilogTracing.EnableSagaTracing();
       }
     },
     {
-      Debug:
-(IBatchDispatchContext context0) => BatchToDispatchConnector.Invoke(context0, 
-    (IDispatchContext context1) => ImmediateDispatchTerminator.Invoke(context1))
-,
+      Debug: {State:l},
       Properties: {
-        SourceContext: NServiceBus.Pipeline`1[[NServiceBus.Pipeline.IBatchDispatchContext, NServiceBus.Core, Version=10.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c]]
+        Endpoint: SerilogTestsStartSaga,
+        ParentId: {Scrubbed},
+        SourceContext: NServiceBus.Pipeline`1[[NServiceBus.Pipeline.IBatchDispatchContext, NServiceBus.Core, Version=10.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c]],
+        SpanId: {Scrubbed},
+        State:
+(IBatchDispatchContext context0) => BatchToDispatchConnector.Invoke(context0,
+    (IDispatchContext context1) => ImmediateDispatchTerminator.Invoke(context1)),
+        TraceId: Guid_2
       }
     },
     {
       Information: Hello from {@Saga}. Message: {@Message},
       Properties: {
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         Handler: TheSaga,
-        IncomingMessageId: Guid_4,
+        IncomingMessageId: Guid_5,
         IncomingMessageType: BackIntoSaga,
         IncomingMessageTypeLong: BackIntoSaga, Tests, Version=0.0.0.0,
         Message: {
@@ -466,7 +478,7 @@ serilogTracing.EnableSagaTracing();
   ]
 }
 ```
-<sup><a href='/src/Tests/IntegrationTests.Saga.verified.txt#L1-L199' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Saga.verified.txt' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/IntegrationTests.Saga.verified.txt#L1-L207' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Saga.verified.txt' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -492,24 +504,26 @@ serilogTracing.EnableMessageTracing();
 {
   log: [
     {
-      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
+      Debug: {State:l},
       Properties: {
-        0: StartHandler, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
-        1: Guid_1,
-        2: StartHandler,
-        SourceContext: NServiceBus.SerializeMessageConnector
+        Endpoint: SerilogTestsStartHandler,
+        ParentId: {Scrubbed},
+        SourceContext: NServiceBus.SerializeMessageConnector,
+        SpanId: {Scrubbed},
+        State: Serializing message 'StartHandler, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6' with id 'Guid_1', ToString() of the message yields: StartHandler,
+        TraceId: Guid_2
       }
     },
     {
       Information: Sent message {OutgoingMessageType} {OutgoingMessageId}.,
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartHandler,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OutgoingMessage: {
           TypeTag: StartHandler,
@@ -526,7 +540,7 @@ serilogTracing.EnableMessageTracing();
     {
       Information: Hello from {@Handler}.,
       Properties: {
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         Handler: TheHandler,
         IncomingMessageId: Guid_1,
@@ -539,7 +553,7 @@ serilogTracing.EnableMessageTracing();
   ]
 }
 ```
-<sup><a href='/src/Tests/IntegrationTests.Handler.verified.txt#L1-L49' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Handler.verified.txt' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/IntegrationTests.Handler.verified.txt#L1-L51' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Handler.verified.txt' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -641,7 +655,7 @@ configuration.Enrich.WithNsbExceptionDetails();
 configuration.WriteTo.Console();
 Log.Logger = configuration.CreateLogger();
 ```
-<sup><a href='/src/Sample/Program.cs#L3-L10' title='Snippet source file'>snippet source</a> | <a href='#snippet-ConfigureSerilog' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Sample/Program.cs#L7-L14' title='Snippet source file'>snippet source</a> | <a href='#snippet-ConfigureSerilog' title='Start of snippet'>anchor</a></sup>
 <a id='snippet-ConfigureSerilog-1'></a>
 ```cs
 var configuration = new LoggerConfiguration();
@@ -649,10 +663,8 @@ configuration.Enrich.WithNsbExceptionDetails();
 configuration.WriteTo.Seq("http://localhost:5341");
 configuration.MinimumLevel.Information();
 var logger = configuration.CreateLogger();
-var serilogFactory = LogManager.Use<SerilogFactory>();
-serilogFactory.WithLogger(logger);
 ```
-<sup><a href='/src/SeqSample/Program.cs#L3-L13' title='Snippet source file'>snippet source</a> | <a href='#snippet-ConfigureSerilog-1' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqSample/Program.cs#L7-L15' title='Snippet source file'>snippet source</a> | <a href='#snippet-ConfigureSerilog-1' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -661,11 +673,11 @@ serilogFactory.WithLogger(logger);
 <!-- snippet: UseConfig -->
 <a id='snippet-UseConfig'></a>
 ```cs
-LogManager.Use<SerilogFactory>();
-
-var configuration = new EndpointConfiguration("SerilogSample");
+var builder = Host.CreateApplicationBuilder();
+builder.Logging.AddSerilog();
+builder.Services.AddNServiceBusEndpoint(configuration);
 ```
-<sup><a href='/src/Sample/Program.cs#L16-L22' title='Snippet source file'>snippet source</a> | <a href='#snippet-UseConfig' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Sample/Program.cs#L29-L35' title='Snippet source file'>snippet source</a> | <a href='#snippet-UseConfig' title='Start of snippet'>anchor</a></sup>
 <a id='snippet-UseConfig-1'></a>
 ```cs
 var configuration = new EndpointConfiguration("SeqSample");
@@ -673,7 +685,7 @@ var serilogTracing = configuration.EnableSerilogTracing(tracingLog);
 serilogTracing.EnableSagaTracing();
 serilogTracing.EnableMessageTracing();
 ```
-<sup><a href='/src/SeqSample/Program.cs#L21-L28' title='Snippet source file'>snippet source</a> | <a href='#snippet-UseConfig-1' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqSample/Program.cs#L23-L30' title='Snippet source file'>snippet source</a> | <a href='#snippet-UseConfig-1' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -682,16 +694,16 @@ serilogTracing.EnableMessageTracing();
 <!-- snippet: Cleanup -->
 <a id='snippet-Cleanup'></a>
 ```cs
-await endpoint.Stop();
+await host.StopAsync();
 Log.CloseAndFlush();
 ```
-<sup><a href='/src/Sample/Program.cs#L37-L42' title='Snippet source file'>snippet source</a> | <a href='#snippet-Cleanup' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Sample/Program.cs#L45-L50' title='Snippet source file'>snippet source</a> | <a href='#snippet-Cleanup' title='Start of snippet'>anchor</a></sup>
 <a id='snippet-Cleanup-1'></a>
 ```cs
-await endpoint.Stop();
+await host.StopAsync();
 Log.CloseAndFlush();
 ```
-<sup><a href='/src/SeqSample/Program.cs#L49-L54' title='Snippet source file'>snippet source</a> | <a href='#snippet-Cleanup-1' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqSample/Program.cs#L57-L62' title='Snippet source file'>snippet source</a> | <a href='#snippet-Cleanup-1' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -715,7 +727,7 @@ configuration.Enrich.WithNsbExceptionDetails();
 configuration.WriteTo.Console();
 Log.Logger = configuration.CreateLogger();
 ```
-<sup><a href='/src/Sample/Program.cs#L3-L10' title='Snippet source file'>snippet source</a> | <a href='#snippet-ConfigureSerilog' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Sample/Program.cs#L7-L14' title='Snippet source file'>snippet source</a> | <a href='#snippet-ConfigureSerilog' title='Start of snippet'>anchor</a></sup>
 <a id='snippet-ConfigureSerilog-1'></a>
 ```cs
 var configuration = new LoggerConfiguration();
@@ -723,10 +735,8 @@ configuration.Enrich.WithNsbExceptionDetails();
 configuration.WriteTo.Seq("http://localhost:5341");
 configuration.MinimumLevel.Information();
 var logger = configuration.CreateLogger();
-var serilogFactory = LogManager.Use<SerilogFactory>();
-serilogFactory.WithLogger(logger);
 ```
-<sup><a href='/src/SeqSample/Program.cs#L3-L13' title='Snippet source file'>snippet source</a> | <a href='#snippet-ConfigureSerilog-1' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqSample/Program.cs#L7-L15' title='Snippet source file'>snippet source</a> | <a href='#snippet-ConfigureSerilog-1' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -735,11 +745,11 @@ serilogFactory.WithLogger(logger);
 <!-- snippet: UseConfig -->
 <a id='snippet-UseConfig'></a>
 ```cs
-LogManager.Use<SerilogFactory>();
-
-var configuration = new EndpointConfiguration("SerilogSample");
+var builder = Host.CreateApplicationBuilder();
+builder.Logging.AddSerilog();
+builder.Services.AddNServiceBusEndpoint(configuration);
 ```
-<sup><a href='/src/Sample/Program.cs#L16-L22' title='Snippet source file'>snippet source</a> | <a href='#snippet-UseConfig' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Sample/Program.cs#L29-L35' title='Snippet source file'>snippet source</a> | <a href='#snippet-UseConfig' title='Start of snippet'>anchor</a></sup>
 <a id='snippet-UseConfig-1'></a>
 ```cs
 var configuration = new EndpointConfiguration("SeqSample");
@@ -747,7 +757,7 @@ var serilogTracing = configuration.EnableSerilogTracing(tracingLog);
 serilogTracing.EnableSagaTracing();
 serilogTracing.EnableMessageTracing();
 ```
-<sup><a href='/src/SeqSample/Program.cs#L21-L28' title='Snippet source file'>snippet source</a> | <a href='#snippet-UseConfig-1' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqSample/Program.cs#L23-L30' title='Snippet source file'>snippet source</a> | <a href='#snippet-UseConfig-1' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -756,16 +766,16 @@ serilogTracing.EnableMessageTracing();
 <!-- snippet: Cleanup -->
 <a id='snippet-Cleanup'></a>
 ```cs
-await endpoint.Stop();
+await host.StopAsync();
 Log.CloseAndFlush();
 ```
-<sup><a href='/src/Sample/Program.cs#L37-L42' title='Snippet source file'>snippet source</a> | <a href='#snippet-Cleanup' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Sample/Program.cs#L45-L50' title='Snippet source file'>snippet source</a> | <a href='#snippet-Cleanup' title='Start of snippet'>anchor</a></sup>
 <a id='snippet-Cleanup-1'></a>
 ```cs
-await endpoint.Stop();
+await host.StopAsync();
 Log.CloseAndFlush();
 ```
-<sup><a href='/src/SeqSample/Program.cs#L49-L54' title='Snippet source file'>snippet source</a> | <a href='#snippet-Cleanup-1' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/SeqSample/Program.cs#L57-L62' title='Snippet source file'>snippet source</a> | <a href='#snippet-Cleanup-1' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

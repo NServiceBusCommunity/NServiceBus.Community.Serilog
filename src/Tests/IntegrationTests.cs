@@ -3,9 +3,6 @@
 [NotInParallel]
 public class IntegrationTests
 {
-    static IntegrationTests() =>
-        LogManager.Use<SerilogFactory>();
-
     [Test]
     public async Task Handler()
     {
@@ -154,7 +151,6 @@ public class IntegrationTests
         });
         serilogTracing.EnableMessageTracing();
         var resetEvent = new ManualResetEvent(false);
-        configuration.RegisterComponents(_ => _.AddSingleton(resetEvent));
 
         var recoverability = configuration.Recoverability();
         recoverability.Delayed(settings =>
@@ -171,19 +167,20 @@ public class IntegrationTests
                 return Task.CompletedTask;
             }));
 
-        var endpoint = await Endpoint.Start(configuration);
+        using var host = await EndpointHost.Start(configuration, _ => _.AddSingleton(resetEvent));
+        var session = host.Services.GetRequiredService<IMessageSession>();
         var sendOptions = new SendOptions();
         optionsAction?.Invoke(sendOptions);
         sendOptions.SetMessageId("00000000-0000-0000-0000-000000000001");
         sendOptions.RouteToThisEndpoint();
         Recording.Resume();
-        await endpoint.Send(message, sendOptions);
+        await session.Send(message, sendOptions);
         if (!resetEvent.WaitOne(TimeSpan.FromSeconds(10)))
         {
             throw new("No Set received.");
         }
 
         Recording.Pause();
-        await endpoint.Stop();
+        await host.StopAsync();
     }
 }

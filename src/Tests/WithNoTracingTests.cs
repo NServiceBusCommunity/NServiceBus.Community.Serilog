@@ -7,7 +7,6 @@
         var resetEvent = new ManualResetEvent(false);
         var configuration = ConfigBuilder.BuildDefaultConfig("WithNoTracingTests");
         configuration.DisableRetries();
-        configuration.RegisterComponents(_ => _.AddSingleton(resetEvent));
         var recoverability = configuration.Recoverability();
         recoverability.Failed(_ => _
             .OnMessageSentToErrorQueue((message, _) =>
@@ -17,14 +16,15 @@
                 return Task.CompletedTask;
             }));
 
-        var endpoint = await Endpoint.Start(configuration);
-        await endpoint.SendLocal(new StartHandler());
+        using var host = await EndpointHost.Start(configuration, _ => _.AddSingleton(resetEvent));
+        var session = host.Services.GetRequiredService<IMessageSession>();
+        await session.SendLocal(new StartHandler());
         if (!resetEvent.WaitOne(TimeSpan.FromSeconds(2)))
         {
             throw new("No Set received.");
         }
 
-        await endpoint.Stop();
+        await host.StopAsync();
         await Verify(exception!.Message);
     }
 }

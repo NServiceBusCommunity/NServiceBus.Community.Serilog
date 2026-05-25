@@ -1,4 +1,8 @@
-﻿static void ConfigureSerilog()
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+
+static void ConfigureSerilog()
 {
     #region ConfigureSerilog
 
@@ -13,13 +17,7 @@
 Console.Title = "SerilogSample";
 ConfigureSerilog();
 
-#region UseConfig
-
-LogManager.Use<SerilogFactory>();
-
 var configuration = new EndpointConfiguration("SerilogSample");
-
-#endregion
 
 configuration.UseSerialization<SystemJsonSerializer>();
 configuration.UsePersistence<LearningPersistence>();
@@ -28,15 +26,25 @@ configuration.UseTransport<LearningTransport>();
 var settings = configuration.GetSettings();
 settings.Set("NServiceBus.Features.LicenseReminder", FeatureState.Deactivated);
 
-var endpoint = await Endpoint.Start(configuration);
+#region UseConfig
+
+var builder = Host.CreateApplicationBuilder();
+builder.Logging.AddSerilog();
+builder.Services.AddNServiceBusEndpoint(configuration);
+
+#endregion
+
+using var host = builder.Build();
+await host.StartAsync();
+var session = host.Services.GetRequiredService<IMessageSession>();
 var message = new MyMessage();
-await endpoint.SendLocal(message);
+await session.SendLocal(message);
 Console.WriteLine("Press any key to exit");
 Console.ReadKey();
 
 #region Cleanup
 
-await endpoint.Stop();
+await host.StopAsync();
 Log.CloseAndFlush();
 
 #endregion

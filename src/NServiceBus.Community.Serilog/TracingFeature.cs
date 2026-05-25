@@ -3,6 +3,8 @@
 {
     protected override void Setup(FeatureConfigurationContext context)
     {
+        HeaderAppender.Freeze();
+
         var settings = context.Settings.TracingSettings();
 
         var endpoint = context.Settings.EndpointName();

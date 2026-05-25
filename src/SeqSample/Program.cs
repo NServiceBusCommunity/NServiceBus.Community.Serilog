@@ -1,4 +1,8 @@
-﻿static Logger ConfigureSerilog()
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+
+static Logger ConfigureSerilog()
 {
     #region ConfigureSerilog
 
@@ -7,8 +11,6 @@
     configuration.WriteTo.Seq("http://localhost:5341");
     configuration.MinimumLevel.Information();
     var logger = configuration.CreateLogger();
-    var serilogFactory = LogManager.Use<SerilogFactory>();
-    serilogFactory.WithLogger(logger);
 
     #endregion
 
@@ -34,21 +36,27 @@ configuration.UseTransport<LearningTransport>();
 var settings = configuration.GetSettings();
 settings.Set("NServiceBus.Features.LicenseReminder", FeatureState.Deactivated);
 
-var endpoint = await Endpoint.Start(configuration);
+var builder = Host.CreateApplicationBuilder();
+// Route NServiceBus log output to the same Serilog logger
+builder.Logging.AddSerilog(tracingLog);
+builder.Services.AddNServiceBusEndpoint(configuration);
+using var host = builder.Build();
+await host.StartAsync();
+var session = host.Services.GetRequiredService<IMessageSession>();
 var createUser = new CreateUser
 {
     UserName = "jsmith",
     FamilyName = "Smith",
     GivenNames = "John"
 };
-await endpoint.SendLocal(createUser);
+await session.SendLocal(createUser);
 Console.WriteLine("Message sent");
 Console.WriteLine("Press any key to exit");
 Console.ReadKey();
 
 #region Cleanup
 
-await endpoint.Stop();
+await host.StopAsync();
 Log.CloseAndFlush();
 
 #endregion

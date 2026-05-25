@@ -1,25 +1,27 @@
 ﻿{
   log: [
     {
-      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
+      Debug: {State:l},
       Properties: {
-        0: StartHandler, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
-        1: Guid_1,
-        2: StartHandler,
-        SourceContext: NServiceBus.SerializeMessageConnector
+        Endpoint: SerilogTestsStartHandler,
+        ParentId: {Scrubbed},
+        SourceContext: NServiceBus.SerializeMessageConnector,
+        SpanId: {Scrubbed},
+        State: Serializing message 'StartHandler, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6' with id 'Guid_1', ToString() of the message yields: StartHandler,
+        TraceId: Guid_2
       }
     },
     {
       Information: Sent message {OutgoingMessageType} {OutgoingMessageId}.,
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         MessageIntent: Send,
         NewKey: newValue,
         OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartHandler,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OutgoingMessage: {
           TypeTag: StartHandler,
@@ -36,7 +38,7 @@
     {
       Information: Hello from {@Handler}.,
       Properties: {
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         Handler: TheHandler,
         IncomingMessageId: Guid_1,

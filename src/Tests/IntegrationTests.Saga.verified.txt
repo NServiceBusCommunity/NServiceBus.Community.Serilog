@@ -1,24 +1,26 @@
 ﻿{
   log: [
     {
-      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
+      Debug: {State:l},
       Properties: {
-        0: StartSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
-        1: Guid_1,
-        2: StartSaga,
-        SourceContext: NServiceBus.SerializeMessageConnector
+        Endpoint: SerilogTestsStartSaga,
+        ParentId: {Scrubbed},
+        SourceContext: NServiceBus.SerializeMessageConnector,
+        SpanId: {Scrubbed},
+        State: Serializing message 'StartSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6' with id 'Guid_1', ToString() of the message yields: StartSaga,
+        TraceId: Guid_2
       }
     },
     {
       Information: Sent message {OutgoingMessageType} {OutgoingMessageId}.,
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartSaga,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OutgoingMessage: {
           TypeTag: StartSaga,
@@ -35,7 +37,7 @@
     {
       Information: Hello from {@Saga}. Message: {@Message},
       Properties: {
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         Handler: TheSaga,
         IncomingMessageId: Guid_1,
@@ -51,22 +53,24 @@
       }
     },
     {
-      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
+      Debug: {State:l},
       Properties: {
-        0: BackIntoSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
-        1: Guid_4,
-        2: BackIntoSaga,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
+        Endpoint: SerilogTestsStartSaga,
         IncomingMessageId: Guid_1,
-        SourceContext: NServiceBus.SerializeMessageConnector
+        ParentId: {Scrubbed},
+        SourceContext: NServiceBus.SerializeMessageConnector,
+        SpanId: {Scrubbed},
+        State: Serializing message 'BackIntoSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6' with id 'Guid_5', ToString() of the message yields: BackIntoSaga,
+        TraceId: Guid_2
       }
     },
     {
       Information: Sent message {OutgoingMessageType} {OutgoingMessageId}.,
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         IncomingMessageId: Guid_1,
         IncomingMessageType: StartSaga,
@@ -74,15 +78,15 @@
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartSaga,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
-        OriginatingSagaId: Guid_5,
+        OriginatingSagaId: Guid_6,
         OriginatingSagaType: TheSaga,
         OutgoingMessage: {
           TypeTag: BackIntoSaga,
           Property: TheProperty
         },
-        OutgoingMessageId: Guid_4,
+        OutgoingMessageId: Guid_5,
         OutgoingMessageType: BackIntoSaga,
         ProcessingEndpoint: SerilogTestsStartSaga,
         RelatedTo: Guid_1,
@@ -94,13 +98,13 @@
     {
       Information: Saga execution {SagaType} {SagaId} ({ElapsedTime:N3}s).,
       Properties: {
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         ElapsedTime: {Scrubbed},
         Entity: {
           TypeTag: TheSagaData,
           Property: TheProperty,
-          Id: Guid_5,
+          Id: Guid_6,
           Originator: SerilogTestsStartSaga,
           OriginalMessageId: Guid_1
         },
@@ -123,14 +127,14 @@
         ResultingMessages: {
           Elements: [
             {
-              Id: Guid_4,
+              Id: Guid_5,
               Type: BackIntoSaga,
               Intent: Send,
               Destination: SerilogTestsStartSaga
             }
           ]
         },
-        SagaId: Guid_5,
+        SagaId: Guid_6,
         SagaType: TheSaga,
         SourceContext: StartSaga,
         StartTime: {Scrubbed}
@@ -140,7 +144,7 @@
       Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
       Properties: {
         ContentType: application/json,
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         ElapsedTime: {Scrubbed},
         FinishTime: {Scrubbed},
@@ -154,7 +158,7 @@
         MessageIntent: Send,
         OpenTelemetry.StartNewTrace: False,
         OriginatingEndpoint: SerilogTestsStartSaga,
-        OriginatingHostId: Guid_3,
+        OriginatingHostId: Guid_4,
         OriginatingMachine: TheMachineName,
         OtherHeaders: {
           baggage: {Scrubbed}
@@ -169,21 +173,25 @@
       }
     },
     {
-      Debug:
-(IBatchDispatchContext context0) => BatchToDispatchConnector.Invoke(context0, 
-    (IDispatchContext context1) => ImmediateDispatchTerminator.Invoke(context1))
-,
+      Debug: {State:l},
       Properties: {
-        SourceContext: NServiceBus.Pipeline`1[[NServiceBus.Pipeline.IBatchDispatchContext, NServiceBus.Core, Version=10.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c]]
+        Endpoint: SerilogTestsStartSaga,
+        ParentId: {Scrubbed},
+        SourceContext: NServiceBus.Pipeline`1[[NServiceBus.Pipeline.IBatchDispatchContext, NServiceBus.Core, Version=10.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c]],
+        SpanId: {Scrubbed},
+        State:
+(IBatchDispatchContext context0) => BatchToDispatchConnector.Invoke(context0,
+    (IDispatchContext context1) => ImmediateDispatchTerminator.Invoke(context1)),
+        TraceId: Guid_2
       }
     },
     {
       Information: Hello from {@Saga}. Message: {@Message},
       Properties: {
-        ConversationId: Guid_2,
+        ConversationId: Guid_3,
         CorrelationId: Guid_1,
         Handler: TheSaga,
-        IncomingMessageId: Guid_4,
+        IncomingMessageId: Guid_5,
         IncomingMessageType: BackIntoSaga,
         IncomingMessageTypeLong: BackIntoSaga, Tests, Version=0.0.0.0,
         Message: {

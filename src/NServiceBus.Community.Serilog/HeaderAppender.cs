@@ -13,14 +13,14 @@ public static class HeaderAppender
     /// properties.
     /// </summary>
     /// <remarks>
-    /// Must be called during application startup, before <c>LogManager.Use&lt;SerilogFactory&gt;()</c>.
-    /// Once <see cref="SerilogFactory"/> has been instantiated the exclude set is frozen and
+    /// Must be called during application startup, before the endpoint is started.
+    /// Once the endpoint starts the exclude set is frozen and
     /// subsequent calls to <see cref="Exclude(string)"/> will throw <see cref="InvalidOperationException"/>.
     /// This makes the exclude set effectively immutable for the lifetime of the endpoint and
     /// avoids races between configuration and the running pipeline.
     /// </remarks>
     /// <exception cref="InvalidOperationException">
-    /// Thrown if called after <see cref="SerilogFactory"/> has been created.
+    /// Thrown if called after the endpoint has been started.
     /// </exception>
     public static void Exclude(string name)
     {
@@ -37,11 +37,10 @@ public static class HeaderAppender
     /// </summary>
     /// <remarks>
     /// Same lifecycle as <see cref="Exclude(string)"/>: must be called during application
-    /// startup, before <c>LogManager.Use&lt;SerilogFactory&gt;()</c>. Throws once
-    /// <see cref="SerilogFactory"/> has been created.
+    /// startup, before the endpoint is started. Throws once the endpoint has been started.
     /// </remarks>
     /// <exception cref="InvalidOperationException">
-    /// Thrown if called after <see cref="SerilogFactory"/> has been created.
+    /// Thrown if called after the endpoint has been started.
     /// </exception>
     public static void Exclude(params string[] names)
     {
@@ -60,8 +59,8 @@ public static class HeaderAppender
         if (frozen)
         {
             throw new InvalidOperationException(
-                $"{nameof(HeaderAppender)}.{nameof(Exclude)} must be called before {nameof(LogManager)}.Use<{nameof(SerilogFactory)}>(). " +
-                "The exclude set is frozen once the SerilogFactory has been created.");
+                $"{nameof(HeaderAppender)}.{nameof(Exclude)} must be called before the endpoint is started. " +
+                "The exclude set is frozen once the endpoint has been started.");
         }
     }
 

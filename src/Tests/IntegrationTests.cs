@@ -167,7 +167,7 @@ public class IntegrationTests
                 return Task.CompletedTask;
             }));
 
-        using var host = await EndpointHost.Start(configuration, _ => _.AddSingleton(resetEvent));
+        await using var host = await EndpointHost.Start(configuration, _ => _.AddSingleton(resetEvent));
         var session = host.Services.GetRequiredService<IMessageSession>();
         var sendOptions = new SendOptions();
         optionsAction?.Invoke(sendOptions);
@@ -181,6 +181,5 @@ public class IntegrationTests
         }
 
         Recording.Pause();
-        await host.StopAsync();
     }
 }

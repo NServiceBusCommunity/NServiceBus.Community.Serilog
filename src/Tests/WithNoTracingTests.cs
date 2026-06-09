@@ -16,7 +16,7 @@
                 return Task.CompletedTask;
             }));
 
-        using var host = await EndpointHost.Start(configuration, _ => _.AddSingleton(resetEvent));
+        await using var host = await EndpointHost.Start(configuration, _ => _.AddSingleton(resetEvent));
         var session = host.Services.GetRequiredService<IMessageSession>();
         await session.SendLocal(new StartHandler());
         if (!resetEvent.WaitOne(TimeSpan.FromSeconds(2)))
@@ -24,7 +24,6 @@
             throw new("No Set received.");
         }
 
-        await host.StopAsync();
         await Verify(exception!.Message);
     }
 }

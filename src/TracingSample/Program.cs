@@ -1,7 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
 var loggerConfiguration = new LoggerConfiguration();
 loggerConfiguration.WriteTo.Seq("http://localhost:5341");
 loggerConfiguration.WriteTo.File("logFile.txt");

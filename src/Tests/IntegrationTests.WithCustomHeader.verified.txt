@@ -51,38 +51,6 @@
         ProcessingEndpoint: SerilogTestsStartHandler,
         SourceContext: StartHandler
       }
-    },
-    {
-      Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
-      Properties: {
-        ContentType: application/json,
-        ConversationId: Guid_3,
-        CorrelationId: Guid_1,
-        ElapsedTime: {Scrubbed},
-        FinishTime: {Scrubbed},
-        IncomingMessage: {
-          TypeTag: StartHandler,
-          Property: TheProperty
-        },
-        IncomingMessageId: Guid_1,
-        IncomingMessageType: StartHandler,
-        IncomingMessageTypeLong: StartHandler, Tests, Version=0.0.0.0,
-        MessageIntent: Send,
-        OpenTelemetry.StartNewTrace: False,
-        OriginatingEndpoint: SerilogTestsStartHandler,
-        OriginatingHostId: Guid_4,
-        OriginatingMachine: TheMachineName,
-        OtherHeaders: {
-          baggage: {Scrubbed},
-          CustomHeader: CustomValue
-        },
-        ProcessingEndpoint: SerilogTestsStartHandler,
-        ReplyToAddress: SerilogTestsStartHandler,
-        SourceContext: StartHandler,
-        StartTime: {Scrubbed},
-        TimeSent: DateTimeOffset_1,
-        TraceParent: {Scrubbed}
-      }
     }
   ]
 }

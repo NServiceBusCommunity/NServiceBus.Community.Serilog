@@ -1,13 +1,15 @@
 ﻿{
   log: [
     {
-      Debug: {State:l},
+      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
       Properties: {
+        0: StartHandlerThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
+        1: Guid_1,
+        2: StartHandlerThatThrows,
         Endpoint: SerilogTestsStartHandlerThatThrows,
         ParentId: {Scrubbed},
         SourceContext: NServiceBus.SerializeMessageConnector,
         SpanId: {Scrubbed},
-        State: Serializing message 'StartHandlerThatThrows, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6' with id 'Guid_1', ToString() of the message yields: StartHandlerThatThrows,
         TraceId: Guid_2
       }
     },
@@ -66,7 +68,7 @@
       }
     },
     {
-      Information: {State:l},
+      Information: Immediate Retry is going to retry message 'Guid_1' because of an exception:,
       Properties: {
         ContentType: application/json,
         ConversationId: Guid_3,
@@ -115,7 +117,6 @@
         ReplyToAddress: SerilogTestsStartHandlerThatThrows,
         SourceContext: NServiceBus.ImmediateRetry,
         SpanId: {Scrubbed},
-        State: Immediate Retry is going to retry message 'Guid_1' because of an exception:,
         TimeSent: DateTimeOffset_1,
         TraceId: Guid_2,
         TraceParent: {Scrubbed}
@@ -153,7 +154,7 @@
       }
     },
     {
-      Warning: {State:l},
+      Warning: Delayed Retry will reschedule message 'Guid_1' after a delay of 00:00:00.0010000 because of an exception:,
       Properties: {
         ContentType: application/json,
         ConversationId: Guid_3,
@@ -202,7 +203,6 @@
         ReplyToAddress: SerilogTestsStartHandlerThatThrows,
         SourceContext: NServiceBus.DelayedRetry,
         SpanId: {Scrubbed},
-        State: Delayed Retry will reschedule message 'Guid_1' after a delay of 00:00:00.0010000 because of an exception:,
         TimeSent: DateTimeOffset_1,
         TraceId: Guid_2,
         TraceParent: {Scrubbed}
@@ -243,7 +243,7 @@
       }
     },
     {
-      Information: {State:l},
+      Information: Immediate Retry is going to retry message 'Guid_1' because of an exception:,
       Properties: {
         ContentType: application/json,
         ConversationId: Guid_3,
@@ -295,7 +295,6 @@
         Retries.Timestamp: DateTimeOffset_3,
         SourceContext: NServiceBus.ImmediateRetry,
         SpanId: {Scrubbed},
-        State: Immediate Retry is going to retry message 'Guid_1' because of an exception:,
         TimeSent: DateTimeOffset_1,
         TraceId: Guid_2,
         TraceParent: {Scrubbed}
@@ -336,7 +335,7 @@
       }
     },
     {
-      Error: {State:l},
+      Error: Moving message 'Guid_1' to the error queue 'error' because processing failed due to an exception:,
       Properties: {
         ContentType: application/json,
         ConversationId: Guid_3,
@@ -388,7 +387,6 @@
         Retries.Timestamp: DateTimeOffset_3,
         SourceContext: NServiceBus.MoveToError,
         SpanId: {Scrubbed},
-        State: Moving message 'Guid_1' to the error queue 'error' because processing failed due to an exception:,
         TimeSent: DateTimeOffset_1,
         TraceId: Guid_2,
         TraceParent: {Scrubbed}

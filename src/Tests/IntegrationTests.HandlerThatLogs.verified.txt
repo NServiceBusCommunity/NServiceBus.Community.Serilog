@@ -1,13 +1,15 @@
 ﻿{
   log: [
     {
-      Debug: {State:l},
+      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
       Properties: {
+        0: StartHandlerThatLogs, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
+        1: Guid_1,
+        2: StartHandlerThatLogs,
         Endpoint: SerilogTestsStartHandlerThatLogs,
         ParentId: {Scrubbed},
         SourceContext: NServiceBus.SerializeMessageConnector,
         SpanId: {Scrubbed},
-        State: Serializing message 'StartHandlerThatLogs, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6' with id 'Guid_1', ToString() of the message yields: StartHandlerThatLogs,
         TraceId: Guid_2
       }
     },
@@ -34,7 +36,7 @@
       }
     },
     {
-      Error: {State:l},
+      Error: The message,
       Properties: {
         ConversationId: Guid_3,
         CorrelationId: Guid_1,
@@ -49,7 +51,6 @@
         ParentId: {Scrubbed},
         SourceContext: TheHandlerThatThrows,
         SpanId: {Scrubbed},
-        State: The message,
         TraceId: Guid_2
       }
     }

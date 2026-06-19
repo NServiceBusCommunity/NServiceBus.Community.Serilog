@@ -1,13 +1,15 @@
 ﻿{
   log: [
     {
-      Debug: {State:l},
+      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
       Properties: {
+        0: StartHandler, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
+        1: Guid_1,
+        2: StartHandler,
         Endpoint: SerilogTestsStartHandler,
         ParentId: {Scrubbed},
         SourceContext: NServiceBus.SerializeMessageConnector,
         SpanId: {Scrubbed},
-        State: Serializing message 'StartHandler, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6' with id 'Guid_1', ToString() of the message yields: StartHandler,
         TraceId: Guid_2
       }
     },
@@ -48,6 +50,38 @@
         IncomingMessageTypeLong: StartHandler, Tests, Version=0.0.0.0,
         ProcessingEndpoint: SerilogTestsStartHandler,
         SourceContext: StartHandler
+      }
+    },
+    {
+      Information: Receive message {IncomingMessageType} {IncomingMessageId} ({ElapsedTime:N3}s).,
+      Properties: {
+        ContentType: application/json,
+        ConversationId: Guid_3,
+        CorrelationId: Guid_1,
+        ElapsedTime: {Scrubbed},
+        FinishTime: {Scrubbed},
+        IncomingMessage: {
+          TypeTag: StartHandler,
+          Property: TheProperty
+        },
+        IncomingMessageId: Guid_1,
+        IncomingMessageType: StartHandler,
+        IncomingMessageTypeLong: StartHandler, Tests, Version=0.0.0.0,
+        MessageIntent: Send,
+        OpenTelemetry.StartNewTrace: False,
+        OriginatingEndpoint: SerilogTestsStartHandler,
+        OriginatingHostId: Guid_4,
+        OriginatingMachine: TheMachineName,
+        OtherHeaders: {
+          baggage: {Scrubbed},
+          CustomHeader: CustomValue
+        },
+        ProcessingEndpoint: SerilogTestsStartHandler,
+        ReplyToAddress: SerilogTestsStartHandler,
+        SourceContext: StartHandler,
+        StartTime: {Scrubbed},
+        TimeSent: DateTimeOffset_1,
+        TraceParent: {Scrubbed}
       }
     }
   ]

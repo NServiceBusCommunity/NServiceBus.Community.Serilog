@@ -504,13 +504,15 @@ serilogTracing.EnableMessageTracing();
 {
   log: [
     {
-      Debug: {State:l},
+      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
       Properties: {
+        0: StartHandler, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
+        1: Guid_1,
+        2: StartHandler,
         Endpoint: SerilogTestsStartHandler,
         ParentId: {Scrubbed},
         SourceContext: NServiceBus.SerializeMessageConnector,
         SpanId: {Scrubbed},
-        State: Serializing message 'StartHandler, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6' with id 'Guid_1', ToString() of the message yields: StartHandler,
         TraceId: Guid_2
       }
     },
@@ -553,7 +555,7 @@ serilogTracing.EnableMessageTracing();
   ]
 }
 ```
-<sup><a href='/src/Tests/IntegrationTests.Handler.verified.txt#L1-L51' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Handler.verified.txt' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/IntegrationTests.Handler.verified.txt#L1-L53' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Handler.verified.txt' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

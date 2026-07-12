@@ -10,7 +10,7 @@
     <PackageVersion Include="NServiceBus.Testing" Version="10.1.0" />
     <PackageVersion Include="ProjectDefaults" Version="1.0.174" />
     <PackageVersion Include="Polyfill" Version="10.11.2" />
-    <PackageVersion Include="Serilog" Version="4.3.1" />
+    <PackageVersion Include="Serilog" Version="4.4.0" />
     <PackageVersion Include="Serilog.Extensions.Logging" Version="10.0.0" />
     <PackageVersion Include="Serilog.Exceptions" Version="8.4.0" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.1.1" />
@@ -21,13 +21,13 @@
     <PackageVersion Include="Verify.DiffPlex" Version="3.3.0" />
     <PackageVersion Include="Verify.NServiceBus" Version="12.0.0" />
     <PackageVersion Include="Verify.Serilog" Version="3.4.0" />
-    <PackageVersion Include="Verify.TUnit" Version="31.22.0" />
+    <PackageVersion Include="Verify.TUnit" Version="31.24.0" />
     <PackageVersion Include="Microsoft.Sbom.Targets" Version="4.1.5" />
     <PackageVersion Include="Argon" Version="0.35.0" />
-    <PackageVersion Include="DiffEngine" Version="19.3.1" />
+    <PackageVersion Include="DiffEngine" Version="19.3.2" />
     <PackageVersion Include="EmptyFiles" Version="8.18.2" />
     <PackageVersion Include="SimpleInfoName" Version="3.2.0" />
-    <PackageVersion Include="Verify" Version="31.22.0" />
+    <PackageVersion Include="Verify" Version="31.24.0" />
     <PackageVersion Include="TUnit" Version="1.58.0" />
   </ItemGroup>
 </Project>

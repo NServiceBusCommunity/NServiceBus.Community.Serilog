@@ -17,7 +17,7 @@
         var nsbVersion = FileVersionInfo.GetVersionInfo(typeof(EndpointConfiguration).Assembly.Location);
         var nsbVersionString = $"{nsbVersion.FileMajorPart}.{nsbVersion.FileMinorPart}.{nsbVersion.FileBuildPart}";
         VerifierSettings.IgnoreStackTrace();
-        VerifierSettings.AddScrubber(_ => _.Replace(nsbVersionString, "NsbVersion"));
+        VerifierSettings.ScrubReplace(nsbVersionString, "NsbVersion");
         VerifierSettings.ScrubMachineName();
         VerifierSettings.ScrubInlineGuids();
         VerifierSettings.AddExtraDateTimeOffsetFormat("yyyy-MM-dd HH:mm:ss:ffffff Z");

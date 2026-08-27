@@ -33,7 +33,7 @@ public class LogIncomingBehaviorTests
             .MinimumLevel.Warning()
             .CreateLogger();
         var context = BuildContext();
-        context.Extensions.Set((ILogger) disabledLogger);
+        context.Extensions.Set<ILogger>(disabledLogger);
         Recording.Start();
 
         var nextCalled = false;

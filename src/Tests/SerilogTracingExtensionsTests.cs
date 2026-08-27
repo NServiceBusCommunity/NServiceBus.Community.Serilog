@@ -5,7 +5,7 @@ public class SerilogTracingExtensionsTests
     {
         var outgoing = new FakeLogger();
         var context = new TestablePipelineContext();
-        context.Extensions.Set("SerilogOutgoingLogger", (ILogger) outgoing);
+        context.Extensions.Set<ILogger>("SerilogOutgoingLogger", outgoing);
 
         await Assert.That(context.Logger()).IsSameReferenceAs(outgoing);
     }
@@ -15,7 +15,7 @@ public class SerilogTracingExtensionsTests
     {
         var handler = new FakeLogger();
         var context = new TestablePipelineContext();
-        context.Extensions.Set("SerilogHandlerLogger", (ILogger) handler);
+        context.Extensions.Set<ILogger>("SerilogHandlerLogger", handler);
 
         await Assert.That(context.Logger()).IsSameReferenceAs(handler);
     }

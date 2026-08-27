@@ -47,6 +47,68 @@ public class LogIncomingBehaviorTests
         await Verify(context);
     }
 
+    [Test]
+    public async Task ClipsOversizedMessageAndFlagsTheEvent()
+    {
+        var captured = new List<LogEvent>();
+        var logger = new LoggerConfiguration()
+            .WriteTo.Sink(new DelegatingSink(captured.Add))
+            .CreateLogger();
+
+        var context = new TestableIncomingLogicalMessageContext
+        {
+            Message = new(
+                new(typeof(BigMessage)),
+                new BigMessage
+                {
+                    Items = Enumerable.Range(0, 500).ToArray()
+                })
+        };
+        context.Extensions.Set((ILogger) logger);
+
+        var behavior = new LogIncomingBehavior(
+            convertHeader: (_, _) => null,
+            limits: new(maxCollectionCount: 10));
+        await behavior.Invoke(context, () => Task.CompletedTask);
+
+        var logEvent = captured.Single();
+
+        await Assert.That(logEvent.Properties.ContainsKey(SerilogExtensions.TruncatedPropertyName)).IsTrue();
+
+        var message = (StructureValue) logEvent.Properties["IncomingMessage"];
+        var items = (SequenceValue) message.Properties.Single(_ => _.Name == nameof(BigMessage.Items)).Value;
+
+        // 10 kept, plus the marker reporting the 490 dropped.
+        await Assert.That(items.Elements.Count).IsEqualTo(11);
+        await Assert.That((string) ((ScalarValue) items.Elements[10]).Value!)
+            .IsEqualTo($"{CaptureTruncator.Marker} 490 more items");
+
+        // The rest of the audit record survives, which is the whole point.
+        await Assert.That(logEvent.Properties.ContainsKey("StartTime")).IsTrue();
+        await Assert.That(logEvent.Properties.ContainsKey("ElapsedTime")).IsTrue();
+    }
+
+    [Test]
+    public async Task DoesNotFlagEventWhenNothingIsClipped()
+    {
+        var captured = new List<LogEvent>();
+        var logger = new LoggerConfiguration()
+            .WriteTo.Sink(new DelegatingSink(captured.Add))
+            .CreateLogger();
+
+        var context = BuildContext();
+        context.Extensions.Set((ILogger) logger);
+
+        await BuildBehavior().Invoke(context, () => Task.CompletedTask);
+
+        await Assert.That(captured.Single().Properties.ContainsKey(SerilogExtensions.TruncatedPropertyName)).IsFalse();
+    }
+
+    class BigMessage
+    {
+        public int[] Items { get; init; } = [];
+    }
+
     static TestableIncomingLogicalMessageContext BuildContext() =>
         new()
         {
@@ -54,7 +116,7 @@ public class LogIncomingBehaviorTests
         };
 
     static LogIncomingBehavior BuildBehavior() =>
-        new(convertHeader: (_, _) => null);
+        new(convertHeader: (_, _) => null, limits: CaptureLimits.Default);
 
     class Message1;
 }

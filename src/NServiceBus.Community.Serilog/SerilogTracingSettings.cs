@@ -8,6 +8,7 @@ public class SerilogTracingSettings
     internal ILogger Logger;
     EndpointConfiguration configuration;
     internal ConvertHeader convertHeader = (_, _) => null;
+    internal CaptureLimits captureLimits = CaptureLimits.Default;
 
     internal SerilogTracingSettings(ILogger logger, EndpointConfiguration configuration)
     {
@@ -32,4 +33,14 @@ public class SerilogTracingSettings
     /// </summary>
     public void EnableMessageTracing() =>
         configuration.EnableFeature<MessageTracingFeature>();
+
+    /// <summary>
+    /// Bound the size of message bodies and saga entities captured as log event properties.
+    /// </summary>
+    /// <remarks>
+    /// Defaults to <see cref="CaptureLimits.Default"/>. Pass <see cref="CaptureLimits.None"/> to capture
+    /// payloads in full. See <see cref="CaptureLimits"/> for why the limits exist.
+    /// </remarks>
+    public void LimitCapture(CaptureLimits limits) =>
+        captureLimits = limits;
 }

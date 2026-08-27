@@ -1,4 +1,4 @@
-﻿class ExceptionEnricher(ConvertHeader? header) :
+﻿class ExceptionEnricher(ConvertHeader? header, CaptureLimits limits) :
     ILogEventEnricher
 {
     public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
@@ -46,6 +46,36 @@
             logEvent.AddPropertyIfAbsent(new("HandlerType", new ScalarValue(handlerType)));
         }
 
+        AddLogState(exception, logEvent, propertyFactory);
+    }
+
+    void AddIncomingMessage(LogEvent logEvent, ILogEventPropertyFactory propertyFactory, object incomingMessage)
+    {
+        var property = propertyFactory.CreateProperty(
+            "IncomingMessage",
+            incomingMessage,
+            destructureObjects: true);
+
+        if (limits.IsUnlimited)
+        {
+            logEvent.AddPropertyIfAbsent(property);
+            return;
+        }
+
+        var truncator = new CaptureTruncator(limits);
+        var clipped = truncator.Truncate(property.Value);
+        if (!truncator.Truncated)
+        {
+            logEvent.AddPropertyIfAbsent(property);
+            return;
+        }
+
+        logEvent.AddPropertyIfAbsent(new("IncomingMessage", clipped));
+        logEvent.AddPropertyIfAbsent(SerilogExtensions.TruncatedProperty());
+    }
+
+    void AddLogState(Exception exception, LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
+    {
         if (exception.TryReadData("ExceptionLogState", out ExceptionLogState logState))
         {
             logEvent.AddPropertyIfAbsent(logState.ProcessingEndpoint);
@@ -63,11 +93,7 @@
 
             if (logState.IncomingMessage is not null)
             {
-                var messageProperty = propertyFactory.CreateProperty(
-                    "IncomingMessage",
-                    logState.IncomingMessage,
-                    destructureObjects: true);
-                logEvent.AddPropertyIfAbsent(messageProperty);
+                AddIncomingMessage(logEvent, propertyFactory, logState.IncomingMessage);
             }
 
             foreach (var property in HeaderAppender.BuildHeaders(logState.IncomingHeaders, header))

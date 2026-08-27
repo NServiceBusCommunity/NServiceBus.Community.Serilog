@@ -1,4 +1,4 @@
-﻿class CaptureSagaStateBehavior :
+﻿class CaptureSagaStateBehavior(CaptureLimits limits) :
     Behavior<IInvokeHandlerContext>
 {
     static MessageTemplate messageTemplate;
@@ -75,21 +75,27 @@
 
         AddInitiator(context, messageId, properties);
 
-        AddResultingMessages(sagaAudit, logger, properties);
+        var truncated = AddResultingMessages(sagaAudit, logger, properties);
 
-        AddEntity(logger, saga, properties);
+        truncated |= AddEntity(logger, saga, properties);
+
+        if (truncated)
+        {
+            properties.Add(SerilogExtensions.TruncatedProperty());
+        }
 
         logger.WriteInfo(messageTemplate, properties);
     }
 
-    static void AddEntity(ILogger logger, Saga saga, List<LogEventProperty> properties)
+    bool AddEntity(ILogger logger, Saga saga, List<LogEventProperty> properties)
     {
-        if (!logger.BindProperty("Entity", saga.Entity, out var sagaEntityProperty))
+        if (!logger.BindProperty("Entity", saga.Entity, limits, out var sagaEntityProperty, out var truncated))
         {
-            return;
+            return false;
         }
 
         properties.Add(sagaEntityProperty);
+        return truncated;
     }
 
     static void AddInitiator(IInvokeHandlerContext context, string messageId, List<LogEventProperty> properties)
@@ -122,20 +128,21 @@
         properties.Add(new("Initiator", new DictionaryValue(initiator)));
     }
 
-    static void AddResultingMessages(SagaUpdatedMessage sagaAudit, ILogger logger, List<LogEventProperty> properties)
+    bool AddResultingMessages(SagaUpdatedMessage sagaAudit, ILogger logger, List<LogEventProperty> properties)
     {
         var resultingMessages = sagaAudit.ResultingMessages;
         if (resultingMessages.Count == 0)
         {
-            return;
+            return false;
         }
 
-        if (!logger.BindProperty("ResultingMessages", resultingMessages, out var resultingMessagesProperty))
+        if (!logger.BindProperty("ResultingMessages", resultingMessages, limits, out var resultingMessagesProperty, out var truncated))
         {
-            return;
+            return false;
         }
 
         properties.Add(resultingMessagesProperty);
+        return truncated;
     }
 
     static void AssignSagaStateChangeCausedByMessage(IInvokeHandlerContext context, bool isNew, bool isCompleted, Guid sagaId)
@@ -163,12 +170,12 @@
     public class Registration :
         RegisterStep
     {
-        public Registration() :
+        public Registration(CaptureLimits limits) :
             base(
                 stepId: $"Serilog{nameof(CaptureSagaStateBehavior)}",
                 behavior: typeof(CaptureSagaStateBehavior),
                 description: "Records saga state changes",
-                factoryMethod: _ => new CaptureSagaStateBehavior()) =>
+                factoryMethod: _ => new CaptureSagaStateBehavior(limits)) =>
             InsertBefore("InvokeSaga");
     }
 }

@@ -14,9 +14,12 @@ public static partial class SerilogTracingExtensions
     /// <summary>
     /// Take NSB specific info from <see cref="Exception.Data" /> and promotes it to Serilog properties.
     /// </summary>
-    public static LoggerEnrichmentConfiguration WithNsbExceptionDetails(this LoggerEnrichmentConfiguration configuration, ConvertHeader? convertHeader = null)
+    public static LoggerEnrichmentConfiguration WithNsbExceptionDetails(
+        this LoggerEnrichmentConfiguration configuration,
+        ConvertHeader? convertHeader = null,
+        CaptureLimits? captureLimits = null)
     {
-        configuration.With(new ExceptionEnricher(convertHeader));
+        configuration.With(new ExceptionEnricher(convertHeader, captureLimits ?? CaptureLimits.Default));
         return configuration;
     }
 

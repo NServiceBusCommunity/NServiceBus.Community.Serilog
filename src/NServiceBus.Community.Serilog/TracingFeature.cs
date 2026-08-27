@@ -16,6 +16,6 @@
         pipeline.Register(new HandlerContextBehavior.Registration());
         pipeline.Register(new MessageContextBehavior.Registration());
         pipeline.Register(new OutgoingBehavior.Registration(logBuilder));
-        context.RegisterStartupTask(new StartupDiagnostics(context.Settings, logBuilder.Logger));
+        context.RegisterStartupTask(new StartupDiagnostics(context.Settings, logBuilder.Logger, settings.captureLimits));
     }
 }

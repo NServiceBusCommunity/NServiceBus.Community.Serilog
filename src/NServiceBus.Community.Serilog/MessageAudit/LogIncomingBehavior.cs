@@ -2,10 +2,14 @@
     Behavior<IIncomingLogicalMessageContext>
 {
     ConvertHeader convertHeader;
+    CaptureLimits limits;
     static MessageTemplate messageTemplate;
 
-    internal LogIncomingBehavior(ConvertHeader convertHeader) =>
+    internal LogIncomingBehavior(ConvertHeader convertHeader, CaptureLimits limits)
+    {
         this.convertHeader = convertHeader;
+        this.limits = limits;
+    }
 
     static LogIncomingBehavior()
     {
@@ -18,12 +22,12 @@
     public class Registration :
         RegisterStep
     {
-        public Registration(ConvertHeader convertHeader) :
+        public Registration(ConvertHeader convertHeader, CaptureLimits limits) :
             base(
                 stepId: Name,
                 behavior: typeof(LogIncomingBehavior),
                 description: "Logs incoming messages",
-                factoryMethod: _ => new LogIncomingBehavior(convertHeader))
+                factoryMethod: _ => new LogIncomingBehavior(convertHeader, limits))
         {
             InsertBefore("MutateIncomingMessages");
             InsertAfter(IncomingLogicalBehavior.Name);
@@ -60,9 +64,13 @@
                 new("ElapsedTime", new ScalarValue(elapsed.TotalSeconds))
             };
 
-            if (logger.BindProperty("IncomingMessage", message.Instance, out var property))
+            if (logger.BindProperty("IncomingMessage", message.Instance, limits, out var property, out var truncated))
             {
                 properties.Add(property);
+                if (truncated)
+                {
+                    properties.Add(SerilogExtensions.TruncatedProperty());
+                }
             }
 
             if (sagaStateChanges.Value.Length > 0)

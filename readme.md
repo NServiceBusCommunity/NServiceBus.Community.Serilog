@@ -324,13 +324,15 @@ serilogTracing.EnableSagaTracing();
 {
   log: [
     {
-      Debug: {State:l},
+      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
       Properties: {
+        0: StartSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
+        1: Guid_1,
+        2: StartSaga,
         Endpoint: SerilogTestsStartSaga,
         ParentId: {Scrubbed},
         SourceContext: NServiceBus.SerializeMessageConnector,
         SpanId: {Scrubbed},
-        State: Serializing message 'StartSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6' with id 'Guid_1', ToString() of the message yields: StartSaga,
         TraceId: Guid_2
       }
     },
@@ -376,8 +378,11 @@ serilogTracing.EnableSagaTracing();
       }
     },
     {
-      Debug: {State:l},
+      Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
       Properties: {
+        0: BackIntoSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
+        1: Guid_5,
+        2: BackIntoSaga,
         ConversationId: Guid_3,
         CorrelationId: Guid_1,
         Endpoint: SerilogTestsStartSaga,
@@ -385,7 +390,6 @@ serilogTracing.EnableSagaTracing();
         ParentId: {Scrubbed},
         SourceContext: NServiceBus.SerializeMessageConnector,
         SpanId: {Scrubbed},
-        State: Serializing message 'BackIntoSaga, Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6' with id 'Guid_5', ToString() of the message yields: BackIntoSaga,
         TraceId: Guid_2
       }
     },
@@ -496,15 +500,14 @@ serilogTracing.EnableSagaTracing();
       }
     },
     {
-      Debug: {State:l},
+      Debug:
+(IBatchDispatchContext context0) => BatchToDispatchConnector.Invoke(context0,
+    (IDispatchContext context1) => ImmediateDispatchTerminator.Invoke(context1)),
       Properties: {
         Endpoint: SerilogTestsStartSaga,
         ParentId: {Scrubbed},
         SourceContext: NServiceBus.Pipeline`1[[NServiceBus.Pipeline.IBatchDispatchContext, NServiceBus.Core, Version=10.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c]],
         SpanId: {Scrubbed},
-        State:
-(IBatchDispatchContext context0) => BatchToDispatchConnector.Invoke(context0,
-    (IDispatchContext context1) => ImmediateDispatchTerminator.Invoke(context1)),
         TraceId: Guid_2
       }
     },
@@ -529,7 +532,7 @@ serilogTracing.EnableSagaTracing();
   ]
 }
 ```
-<sup><a href='/src/Tests/IntegrationTests.Saga.verified.txt#L1-L207' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Saga.verified.txt' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/IntegrationTests.Saga.verified.txt#L1-L210' title='Snippet source file'>snippet source</a> | <a href='#snippet-IntegrationTests.Saga.verified.txt' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

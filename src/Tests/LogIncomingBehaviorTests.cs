@@ -64,7 +64,7 @@ public class LogIncomingBehaviorTests
                     Items = Enumerable.Range(0, 500).ToArray()
                 })
         };
-        context.Extensions.Set((ILogger) logger);
+        context.Extensions.Set<ILogger>(logger);
 
         var behavior = new LogIncomingBehavior(
             convertHeader: (_, _) => null,
@@ -97,7 +97,7 @@ public class LogIncomingBehaviorTests
             .CreateLogger();
 
         var context = BuildContext();
-        context.Extensions.Set((ILogger) logger);
+        context.Extensions.Set<ILogger>(logger);
 
         await BuildBehavior().Invoke(context, () => Task.CompletedTask);
 

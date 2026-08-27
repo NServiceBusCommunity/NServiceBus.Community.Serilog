@@ -9,7 +9,7 @@ public class CaptureTruncatorTests
                 Name = "small",
                 Items = new[] { 1, 2, 3 }
             },
-            new CaptureLimits());
+            new());
 
         await Assert.That(truncated).IsFalse();
         await Assert.That(Render(property)).DoesNotContain(CaptureTruncator.Marker);
@@ -23,7 +23,7 @@ public class CaptureTruncatorTests
             {
                 Items = Enumerable.Range(0, 50).ToArray()
             },
-            new CaptureLimits(maxCollectionCount: 10));
+            new(maxCollectionCount: 10));
 
         await Assert.That(truncated).IsTrue();
 
@@ -40,7 +40,7 @@ public class CaptureTruncatorTests
             {
                 Items = Enumerable.Range(0, 50).ToArray()
             },
-            new CaptureLimits(maxCollectionCount: 3));
+            new(maxCollectionCount: 3));
 
         var items = (SequenceValue) ((StructureValue) property.Value).Properties.Single().Value;
         var kept = items.Elements
@@ -57,7 +57,7 @@ public class CaptureTruncatorTests
             {
                 Text = new string('x', 100)
             },
-            new CaptureLimits(maxStringLength: 10));
+            new(maxStringLength: 10));
 
         await Assert.That(truncated).IsTrue();
 
@@ -70,7 +70,7 @@ public class CaptureTruncatorTests
     {
         var (property, truncated) = Bind(
             Enumerable.Range(0, 20).ToDictionary(_ => $"key{_}", _ => _),
-            new CaptureLimits(maxCollectionCount: 5));
+            new(maxCollectionCount: 5));
 
         await Assert.That(truncated).IsTrue();
 
@@ -94,7 +94,7 @@ public class CaptureTruncatorTests
                     })
                     .ToArray()
             },
-            new CaptureLimits(maxCollectionCount: 10, maxNodes: 12));
+            new(maxCollectionCount: 10, maxNodes: 12));
 
         await Assert.That(truncated).IsTrue();
 
@@ -112,7 +112,7 @@ public class CaptureTruncatorTests
             {
                 Items = Enumerable.Range(0, 50).ToArray()
             },
-            new CaptureLimits(maxCollectionCount: 2));
+            new(maxCollectionCount: 2));
 
         await Assert.That(((StructureValue) property.Value).TypeTag).IsEqualTo(nameof(Tagged));
     }

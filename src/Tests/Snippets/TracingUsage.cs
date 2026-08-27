@@ -51,6 +51,32 @@ class TracingUsage
         #endregion
     }
 
+    static void LimitCapture(EndpointConfiguration configuration, ILogger logger)
+    {
+        #region LimitCapture
+
+        var serilogTracing = configuration.EnableSerilogTracing(logger);
+        serilogTracing.LimitCapture(
+            new(
+                maxCollectionCount: 20,
+                maxStringLength: 2048,
+                maxNodes: 500));
+
+        #endregion
+    }
+
+    static void LimitCaptureAtSource()
+    {
+        #region LimitCaptureAtSource
+
+        var configuration = new LoggerConfiguration();
+        configuration.Destructure.ToMaximumCollectionCount(20);
+        configuration.Destructure.ToMaximumStringLength(2048);
+        Log.Logger = configuration.CreateLogger();
+
+        #endregion
+    }
+
     static void Seq()
     {
         #region SerilogTracingSeq

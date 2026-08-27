@@ -253,6 +253,57 @@ HeaderAppender.Exclude("HeaderA", "HeaderB", "HeaderC");
 `Exclude` must be called during application startup, **before** the endpoint is started. Once the endpoint has started the exclude set is frozen and any subsequent call to `Exclude` throws `InvalidOperationException`. This makes the set effectively immutable for the lifetime of the endpoint and eliminates any race between configuration and the running pipeline.
 
 
+### Capture limits
+
+Saga tracing, message tracing, and exception enrichment capture the saga entity and the message body with destructuring enabled, so the full object graph is written into the log event. If one of those objects holds an unbounded collection or an oversized string, the resulting event can exceed the size limit of a sink. Sinks reject an oversized event whole, so a single large property discards the entire audit record, including the `SagaId`, `MessageId`, and timings needed to work out what happened. Whether a given saga or message will cross that threshold is not visible from the code, and typically only shows up under production data.
+
+To prevent that, captured payloads are bounded by default:
+
+| Limit | Default | Effect |
+| --- | --- | --- |
+| `MaxCollectionCount` | 100 | Items kept from any one collection or dictionary |
+| `MaxStringLength` | 8192 | Characters kept from any one string |
+| `MaxNodes` | 1000 | Values captured from a single payload |
+
+Clipping is never silent. Clipped values carry an inline `[truncated]` marker reporting how much was dropped, and the event gets a `SerilogTruncated` property set to `true`, so clipped events can be queried and alerted on:
+
+```
+SerilogTruncated = true
+```
+
+The limits can be changed per endpoint:
+
+<!-- snippet: LimitCapture -->
+<a id='snippet-LimitCapture'></a>
+```cs
+var serilogTracing = configuration.EnableSerilogTracing(logger);
+serilogTracing.LimitCapture(
+    new(
+        maxCollectionCount: 20,
+        maxStringLength: 2048,
+        maxNodes: 500));
+```
+<sup><a href='/src/Tests/Snippets/TracingUsage.cs#L56-L65' title='Snippet source file'>snippet source</a> | <a href='#snippet-LimitCapture' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
+
+Pass `CaptureLimits.None` to capture payloads in full, restoring the behavior of versions before these limits were introduced.
+
+Limits are applied after Serilog has captured the value, so they compose with, and never override, destructuring configured on the logger itself. Capping capture at the source avoids building the part of the graph that is then discarded, and is worth doing in addition to these limits on hot paths:
+
+<!-- snippet: LimitCaptureAtSource -->
+<a id='snippet-LimitCaptureAtSource'></a>
+```cs
+var configuration = new LoggerConfiguration();
+configuration.Destructure.ToMaximumCollectionCount(20);
+configuration.Destructure.ToMaximumStringLength(2048);
+Log.Logger = configuration.CreateLogger();
+```
+<sup><a href='/src/Tests/Snippets/TracingUsage.cs#L70-L77' title='Snippet source file'>snippet source</a> | <a href='#snippet-LimitCaptureAtSource' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
+
+A `Destructure.ByTransforming<T>` for a known-large type is a more targeted alternative, projecting it down to the fields worth logging.
+
+
 ### Saga tracing
 
 <!-- snippet: EnableSagaTracing -->
@@ -566,14 +617,14 @@ serilogTracing.EnableMessageTracing();
 <!-- snippet: WriteStartupDiagnostics -->
 <a id='snippet-WriteStartupDiagnostics'></a>
 ```cs
-class StartupDiagnostics(IReadOnlySettings settings, ILogger logger) :
+class StartupDiagnostics(IReadOnlySettings settings, ILogger logger, CaptureLimits limits) :
     FeatureStartupTask
 {
     readonly ILogger startupLogger = logger.ForContext<StartupDiagnostics>();
 
     protected override Task OnStart(IMessageSession session, Cancel cancel = default)
     {
-        var properties = BuildProperties(settings, startupLogger);
+        var properties = BuildProperties(settings, startupLogger, limits);
 
         var templateParser = new MessageTemplateParser();
         var messageTemplate = templateParser.Parse("DiagnosticEntries");
@@ -589,8 +640,10 @@ class StartupDiagnostics(IReadOnlySettings settings, ILogger logger) :
 
     static IEnumerable<LogEventProperty> BuildProperties(
         IReadOnlySettings settings,
-        ILogger logger)
+        ILogger logger,
+        CaptureLimits limits)
     {
+        var anyTruncated = false;
         var entries = settings.ReadStartupDiagnosticEntries();
         foreach (var entry in entries)
         {
@@ -600,10 +653,16 @@ class StartupDiagnostics(IReadOnlySettings settings, ILogger logger) :
             }
 
             var name = CleanEntry(entry.Name);
-            if (logger.BindProperty(name, entry.Data, out var property))
+            if (logger.BindProperty(name, entry.Data, limits, out var property, out var truncated))
             {
+                anyTruncated |= truncated;
                 yield return property;
             }
+        }
+
+        if (anyTruncated)
+        {
+            yield return SerilogExtensions.TruncatedProperty();
         }
     }
 
@@ -621,7 +680,7 @@ class StartupDiagnostics(IReadOnlySettings settings, ILogger logger) :
         Task.CompletedTask;
 }
 ```
-<sup><a href='/src/NServiceBus.Community.Serilog/StartupDiagnostics/WriteStartupDiagnostics.cs#L1-L58' title='Snippet source file'>snippet source</a> | <a href='#snippet-WriteStartupDiagnostics' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/NServiceBus.Community.Serilog/StartupDiagnostics/WriteStartupDiagnostics.cs#L1-L66' title='Snippet source file'>snippet source</a> | <a href='#snippet-WriteStartupDiagnostics' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 
@@ -638,7 +697,7 @@ configuration.WriteTo.Seq("http://localhost:5341");
 configuration.MinimumLevel.Information();
 var tracingLog = configuration.CreateLogger();
 ```
-<sup><a href='/src/Tests/Snippets/TracingUsage.cs#L56-L64' title='Snippet source file'>snippet source</a> | <a href='#snippet-SerilogTracingSeq' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/Tests/Snippets/TracingUsage.cs#L82-L90' title='Snippet source file'>snippet source</a> | <a href='#snippet-SerilogTracingSeq' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

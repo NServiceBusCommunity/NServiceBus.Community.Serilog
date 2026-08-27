@@ -1,13 +1,13 @@
 #region WriteStartupDiagnostics
 
-class StartupDiagnostics(IReadOnlySettings settings, ILogger logger) :
+class StartupDiagnostics(IReadOnlySettings settings, ILogger logger, CaptureLimits limits) :
     FeatureStartupTask
 {
     readonly ILogger startupLogger = logger.ForContext<StartupDiagnostics>();
 
     protected override Task OnStart(IMessageSession session, Cancel cancel = default)
     {
-        var properties = BuildProperties(settings, startupLogger);
+        var properties = BuildProperties(settings, startupLogger, limits);
 
         var templateParser = new MessageTemplateParser();
         var messageTemplate = templateParser.Parse("DiagnosticEntries");
@@ -23,8 +23,10 @@ class StartupDiagnostics(IReadOnlySettings settings, ILogger logger) :
 
     static IEnumerable<LogEventProperty> BuildProperties(
         IReadOnlySettings settings,
-        ILogger logger)
+        ILogger logger,
+        CaptureLimits limits)
     {
+        var anyTruncated = false;
         var entries = settings.ReadStartupDiagnosticEntries();
         foreach (var entry in entries)
         {
@@ -34,10 +36,16 @@ class StartupDiagnostics(IReadOnlySettings settings, ILogger logger) :
             }
 
             var name = CleanEntry(entry.Name);
-            if (logger.BindProperty(name, entry.Data, out var property))
+            if (logger.BindProperty(name, entry.Data, limits, out var property, out var truncated))
             {
+                anyTruncated |= truncated;
                 yield return property;
             }
+        }
+
+        if (anyTruncated)
+        {
+            yield return SerilogExtensions.TruncatedProperty();
         }
     }
 

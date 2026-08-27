@@ -6,7 +6,7 @@ public class ExceptionEnricherTests
         var captured = new List<LogEvent>();
         var logger = new LoggerConfiguration()
             .Destructure.ByTransforming<SecretMessage>(_ => new { Redacted = true })
-            .Enrich.With(new ExceptionEnricher(header: null))
+            .Enrich.With(new ExceptionEnricher(header: null, limits: CaptureLimits.Default))
             .WriteTo.Sink(new DelegatingSink(captured.Add))
             .CreateLogger();
 
@@ -32,10 +32,5 @@ public class ExceptionEnricherTests
     class SecretMessage(string token)
     {
         public string Token => token;
-    }
-
-    class DelegatingSink(Action<LogEvent> handler) : ILogEventSink
-    {
-        public void Emit(LogEvent logEvent) => handler(logEvent);
     }
 }

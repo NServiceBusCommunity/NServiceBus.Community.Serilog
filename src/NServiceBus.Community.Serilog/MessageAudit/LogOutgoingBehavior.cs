@@ -2,10 +2,14 @@
     Behavior<IOutgoingPhysicalMessageContext>
 {
     ConvertHeader convertHeader;
+    CaptureLimits limits;
     static MessageTemplate messageTemplate;
 
-    LogOutgoingBehavior(ConvertHeader convertHeader) =>
+    LogOutgoingBehavior(ConvertHeader convertHeader, CaptureLimits limits)
+    {
         this.convertHeader = convertHeader;
+        this.limits = limits;
+    }
 
     static LogOutgoingBehavior()
     {
@@ -31,9 +35,13 @@
     {
         var properties = new List<LogEventProperty>();
 
-        if (logger.BindProperty("OutgoingMessage", message, out var messageProperty))
+        if (logger.BindProperty("OutgoingMessage", message, limits, out var messageProperty, out var truncated))
         {
             properties.Add(messageProperty);
+            if (truncated)
+            {
+                properties.Add(SerilogExtensions.TruncatedProperty());
+            }
         }
 
         var addresses = context.UnicastAddresses();
@@ -54,10 +62,10 @@
         logger.WriteInfo(messageTemplate, properties);
     }
 
-    public class Registration(ConvertHeader convertHeader) :
+    public class Registration(ConvertHeader convertHeader, CaptureLimits limits) :
         RegisterStep(
             stepId: $"Serilog{nameof(LogOutgoingBehavior)}",
             behavior: typeof(LogOutgoingBehavior),
             description: "Logs outgoing messages",
-            factoryMethod: _ => new LogOutgoingBehavior(convertHeader));
+            factoryMethod: _ => new LogOutgoingBehavior(convertHeader, limits));
 }

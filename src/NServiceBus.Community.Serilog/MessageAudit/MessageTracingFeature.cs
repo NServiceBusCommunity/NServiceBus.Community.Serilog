@@ -8,7 +8,7 @@
     {
         var settings = context.Settings.TracingSettings();
         var pipeline = context.Pipeline;
-        pipeline.Register(new LogIncomingBehavior.Registration(settings.convertHeader));
-        pipeline.Register(new LogOutgoingBehavior.Registration(settings.convertHeader));
+        pipeline.Register(new LogIncomingBehavior.Registration(settings.convertHeader, settings.captureLimits));
+        pipeline.Register(new LogOutgoingBehavior.Registration(settings.convertHeader, settings.captureLimits));
     }
 }

@@ -8,6 +8,18 @@
     static LogEventProperty truncatedProperty = new(TruncatedPropertyName, new ScalarValue(true));
 
     /// <summary>
+    /// Captures a value with destructuring enabled and no limits applied.
+    /// </summary>
+    [Obsolete("Use the overload that takes a CaptureLimits. Pass CaptureLimits.None for the previous unbounded behavior.")]
+    [System.Runtime.CompilerServices.OverloadResolutionPriority(-1)]
+    public static bool BindProperty(
+        this ILogger logger,
+        string name,
+        object value,
+        [NotNullWhen(true)] out LogEventProperty? property) =>
+        logger.BindProperty(name, value, CaptureLimits.None, out property, out _);
+
+    /// <summary>
     /// Captures a value with destructuring enabled and the supplied limits applied.
     /// </summary>
     /// <remarks>

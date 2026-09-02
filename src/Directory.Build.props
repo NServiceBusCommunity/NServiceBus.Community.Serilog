@@ -2,7 +2,7 @@
 <Project>
   <PropertyGroup>
     <Version>14.2.0</Version>
-    <NoWarn>NU1608</NoWarn>
+    <NoWarn>NU1608;SC023</NoWarn>
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <LangVersion>preview</LangVersion>
     <Description>Add support for sending NServiceBus logging through Serilog</Description>
@@ -11,6 +11,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+    <Verify_SponsorshipLicenseIgnored>true</Verify_SponsorshipLicenseIgnored>
   </PropertyGroup>
 
   <ItemGroup>

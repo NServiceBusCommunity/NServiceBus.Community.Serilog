@@ -9,3 +9,4 @@ obj/
 nugets/
 *.learningtransport*
 TestResults
+*.lnk

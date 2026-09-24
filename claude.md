@@ -70,4 +70,4 @@ The package exposes two largely independent integration points with NServiceBus:
 
 ## CI
 
-AppVeyor (`src/appveyor.yml`) installs the SDK from `global.json`, builds, then runs tests against the solution. There is also a GitHub Actions docs workflow (`.github/workflows/on-push-do-docs.yml`).
+GitHub Actions (`.github/workflows/build.yml`) installs the SDK from `global.json`, builds, runs tests against the solution, and publishes to nuget.org on a tag via trusted publishing. There is also a docs workflow (`.github/workflows/on-push-do-docs.yml`).

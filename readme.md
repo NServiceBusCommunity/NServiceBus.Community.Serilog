@@ -1,6 +1,6 @@
 # <img src="/src/icon.png" height="30px"> NServiceBus.Community.Serilog
 
-[![Build status](https://img.shields.io/appveyor/build/SimonCropp/nservicebus-community-serilog)](https://ci.appveyor.com/project/SimonCropp/nservicebus-community-serilog)
+[![Build status](https://github.com/NServiceBusCommunity/NServiceBus.Community.Serilog/actions/workflows/build.yml/badge.svg)](https://github.com/NServiceBusCommunity/NServiceBus.Community.Serilog/actions/workflows/build.yml)
 [![NuGet Status](https://img.shields.io/nuget/v/NServiceBus.Community.Serilog.svg)](https://www.nuget.org/packages/NServiceBus.Community.Serilog/)
 
 Add support for sending [NServiceBus](http://particular.net/NServiceBus) logging through [Serilog](http://serilog.net/)

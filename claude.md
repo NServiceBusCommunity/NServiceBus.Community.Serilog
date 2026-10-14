@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Build and test
 
-All projects live under `src/`. The SDK is pinned by `global.json` (`10.0.300`, `rollForward: latestFeature`, prerelease allowed). Tests use Microsoft.Testing.Platform (`UseMicrosoftTestingPlatformRunner`) via TUnit + Verify, not VSTest.
+All projects live under `src/`. The SDK is pinned by `global.json`. Tests use Microsoft.Testing.Platform (`UseMicrosoftTestingPlatformRunner`) via TUnit + Verify, not VSTest.
 
 ```pwsh
 dotnet build src --configuration Release

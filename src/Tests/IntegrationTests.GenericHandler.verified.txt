@@ -3,7 +3,7 @@
     {
       Debug: Serializing message '{0}' with id '{1}', ToString() of the message yields: {2},
       Properties: {
-        0: StartGenericHandler`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
+        0: StartGenericHandler`1[[System.String, System.Private.CoreLib, Version=11.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], Tests, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6,
         1: Guid_1,
         2: StartGenericHandler`1[System.String],
         Endpoint: SerilogTestsStartGenericHandler_String_,

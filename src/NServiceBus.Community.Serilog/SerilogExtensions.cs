@@ -11,7 +11,7 @@
     /// Captures a value with destructuring enabled and no limits applied.
     /// </summary>
     [Obsolete("Use the overload that takes a CaptureLimits. Pass CaptureLimits.None for the previous unbounded behavior.")]
-    [System.Runtime.CompilerServices.OverloadResolutionPriority(-1)]
+    [OverloadResolutionPriority(-1)]
     public static bool BindProperty(
         this ILogger logger,
         string name,

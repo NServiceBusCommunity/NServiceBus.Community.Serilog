@@ -15,7 +15,7 @@ public static partial class SerilogTracingExtensions
     /// Take NSB specific info from <see cref="Exception.Data" /> and promotes it to Serilog properties.
     /// </summary>
     [Obsolete("Use the overload that takes a CaptureLimits. Pass CaptureLimits.None for the previous unbounded behavior.")]
-    [System.Runtime.CompilerServices.OverloadResolutionPriority(-1)]
+    [OverloadResolutionPriority(-1)]
     public static LoggerEnrichmentConfiguration WithNsbExceptionDetails(
         this LoggerEnrichmentConfiguration configuration,
         ConvertHeader? convertHeader = null) =>

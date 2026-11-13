@@ -45,11 +45,11 @@ public static class HeaderAppender
     public static void Exclude(params string[] names)
     {
         ThrowIfFrozen();
-        var updated = new HashSet<string>(excludeHeaders);
-        foreach (var name in names)
-        {
-            updated.Add(name);
-        }
+        HashSet<string> updated =
+        [
+            .. excludeHeaders,
+            .. names
+        ];
 
         excludeHeaders = updated.ToFrozenSet();
     }

@@ -8,9 +8,9 @@
     <PackageVersion Include="NServiceBus" Version="10.2.9" />
     <PackageVersion Include="NServiceBus.Persistence.NonDurable" Version="3.3.1" />
     <PackageVersion Include="NServiceBus.Testing" Version="11.0.0" />
-    <PackageVersion Include="ProjectDefaults" Version="1.0.189" />
+    <PackageVersion Include="ProjectDefaults" Version="1.0.190" />
     <PackageVersion Include="Polyfill" Version="11.4.5" />
-    <PackageVersion Include="Sbom" Version="0.3.1" />
+    <PackageVersion Include="Sbom" Version="1.0.0" />
     <PackageVersion Include="Serilog" Version="4.4.0" />
     <PackageVersion Include="Serilog.Extensions.Logging" Version="10.0.0" />
     <PackageVersion Include="Serilog.Exceptions" Version="8.4.0" />
@@ -19,14 +19,14 @@
     <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
     <PackageVersion Include="Serilog.Sinks.Seq" Version="9.1.0" />
     <PackageVersion Include="Serilog.Sinks.PeriodicBatching" Version="5.0.0" />
-    <PackageVersion Include="Verify.NServiceBus" Version="12.2.1" />
+    <PackageVersion Include="Verify.NServiceBus" Version="12.3.0" />
     <PackageVersion Include="Verify.Serilog" Version="3.4.0" />
-    <PackageVersion Include="Verify.TUnit" Version="33.3.4" />
+    <PackageVersion Include="Verify.TUnit" Version="33.5.0" />
     <PackageVersion Include="Argon" Version="0.38.2" />
-    <PackageVersion Include="DiffEngine" Version="20.9.0" />
+    <PackageVersion Include="DiffEngine" Version="21.0.0" />
     <PackageVersion Include="EmptyFiles" Version="8.20.1" />
     <PackageVersion Include="SimpleInfoName" Version="3.2.1" />
-    <PackageVersion Include="Verify" Version="33.3.4" />
-    <PackageVersion Include="TUnit" Version="1.85.7" />
+    <PackageVersion Include="Verify" Version="33.5.0" />
+    <PackageVersion Include="TUnit" Version="1.86.0" />
   </ItemGroup>
 </Project>

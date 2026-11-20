@@ -12,7 +12,7 @@
     <PackageVersion Include="Polyfill" Version="11.4.5" />
     <PackageVersion Include="Sbom" Version="1.0.0" />
     <PackageVersion Include="Serilog" Version="4.4.0" />
-    <PackageVersion Include="Serilog.Extensions.Logging" Version="10.0.0" />
+    <PackageVersion Include="Serilog.Extensions.Logging" Version="11.0.0" />
     <PackageVersion Include="Serilog.Exceptions" Version="8.4.0" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageVersion Include="Serilog.Formatting.Compact" Version="3.0.0" />
